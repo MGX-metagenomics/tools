@@ -62,7 +62,7 @@ test -z "\${JAVA}" && usage "No java found, aborting."
 # create a temporary input file if reading from stdin etc.
 if [ ! -f \${INFILE} ]; then
     HOST=\`/bin/hostname\`
-    TMP_IN=/tmp/rdp_\${HOST}_$$.in
+    TMP_IN=/tmp/rdp_\${HOST}_\$\$.in
     cat < \${INFILE} > \${TMP_IN} 
     chmod 600 \${TMP_IN}
     INFILE=\${TMP_IN}
