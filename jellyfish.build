@@ -1,0 +1,14 @@
+
+VERSION=2.2.6
+
+wget https://github.com/gmarcais/Jellyfish/releases/download/v${VERSION}/jellyfish-${VERSION}.tar.gz
+tar xzf jellyfish-${VERSION}.tar.gz && \
+rm jellyfish-${VERSION}.tar.gz && \
+cd jellyfish-${VERSION} && \
+./configure --prefix=/vol/mgx-sw && \
+make && \
+make check && \
+make install && \
+cd .. && \
+rm -rf jellyfish-${VERSION}
+

@@ -1,0 +1,14 @@
+MOTHURVER=1.37.4
+
+wget -O mothur${MOTHURVER}.tar.gz https://github.com/mothur/mothur/archive/v${MOTHURVER}.tar.gz
+tar xzf mothur${MOTHURVER}.tar.gz
+rm mothur${MOTHURVER}.tar.gz
+cd mothur-${MOTHURVER}
+make USEBOOST=no 
+install --mode=755 uchime /vol/mgx-sw/bin/uchime-${MOTHURVER}
+install --mode=755 mothur /vol/mgx-sw/bin/mothur-${MOTHURVER}
+
+cd ..
+rm -rf mothur-${MOTHURVER}
+
+

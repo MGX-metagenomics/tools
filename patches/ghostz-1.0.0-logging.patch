@@ -1,0 +1,24 @@
+diff -Nur ghostz-1.0.0/src/logger.h ghostz-1.0.0.patched/src/logger.h
+--- ghostz-1.0.0/src/logger.h	2014-12-27 06:29:42.000000000 +0100
++++ ghostz-1.0.0.patched/src/logger.h	2016-05-28 18:56:23.748312000 +0200
+@@ -22,17 +22,17 @@
+ 
+   void ErrorLog(std::string message) {
+ //#pragma omp critical(lock_)
+-    std::cout << "error : " << message << std::endl;
++    std::cerr << "error : " << message << std::endl;
+   }
+ 
+   void WarningLog(std::string message) {
+ //#pragma omp critical(lock_)
+-    std::cout << "warning : " << message << std::endl;
++    std::cerr << "warning : " << message << std::endl;
+   }
+ 
+   void Log(std::string message) {
+ //#pragma omp critical(lock_)
+-    std::cout << message << std::endl;
++    std::cerr << message << std::endl;
+   }
+ 
+ private:

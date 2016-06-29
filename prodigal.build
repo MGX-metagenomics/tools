@@ -1,0 +1,9 @@
+
+git clone https://github.com/hyattpd/Prodigal.git
+cd Prodigal
+sed -i 's/MAX_GENES 30000/MAX_GENES 100000/g' gene.h
+make 
+make INSTALLDIR=/vol/mgx-sw/bin install
+cd ..
+rm -rf Prodigal
+

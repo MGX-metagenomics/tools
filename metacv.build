@@ -1,0 +1,10 @@
+
+wget -O metacv_2_3_0.tgz https://sourceforge.net/projects/metacv/files/metacv_2_3_0.tgz/download
+tar xzf metacv_2_3_0.tgz
+rm metacv_2_3_0.tgz
+cd metacv_2_3_0/
+make
+install --mode=755 metacv /vol/mgx-sw/bin
+cd ..
+rm -rf metacv_2_3_0/
+

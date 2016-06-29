@@ -1,0 +1,13 @@
+
+git clone https://github.com/bioinformatics-centre/kaiju.git
+cd kaiju/src
+make
+cd ../bin
+install --mode=755 -d /vol/mgx-sw/lib/kaiju/
+for f in * ; do
+    install --mode=755 ${f} /vol/mgx-sw/lib/kaiju/
+done
+ln -s /vol/mgx-sw/lib/kaiju/kaiju /vol/mgx-sw/bin
+cd ../..
+rm -rf kaiju
+

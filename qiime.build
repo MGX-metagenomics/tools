@@ -1,0 +1,9 @@
+
+export PYTHONUSERBASE=/vol/mgx-sw/lib/qiime
+PIP="pip install --user"
+
+${PIP} numpy
+${PIP} qiime
+
+chgrp -R mgx /vol/mgx-sw/lib/qiime
+

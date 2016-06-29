@@ -1,0 +1,14 @@
+
+wget -O RAPSearch2.23_64bits.tar.gz https://sourceforge.net/projects/rapsearch2/files/RAPSearch2.23_64bits.tar.gz/download
+tar xzf RAPSearch2.23_64bits.tar.gz
+rm RAPSearch2.23_64bits.tar.gz
+
+cd RAPSearch2.23_64bits
+./install
+for f in rapsearch prerapsearch; do
+     install --mode=755 bin/${f} /vol/mgx-sw/bin
+done
+cd ..
+
+rm -rf RAPSearch2.23_64bits
+

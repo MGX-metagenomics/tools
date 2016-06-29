@@ -1,0 +1,10 @@
+
+git clone https://github.com/DerrickWood/kraken.git
+cd kraken
+patch -p 1 < ../patches/kraken_flock.patch
+mkdir -p /vol/mgx-sw/lib/kraken-0.10.6/
+./install_kraken.sh /vol/mgx-sw/lib/kraken-0.10.6/
+ln -s /vol/mgx-sw/lib/kraken-0.10.6/kraken /vol/mgx-sw/bin/kraken
+cd ..
+rm -rf kraken
+

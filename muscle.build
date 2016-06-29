@@ -1,0 +1,10 @@
+
+wget http://www.drive5.com/muscle/muscle_src_3.8.1551.tar.gz
+mkdir muscle && tar xzvf muscle_src_3.8.1551.tar.gz -C muscle
+rm muscle_src_3.8.1551.tar.gz
+cd muscle
+make
+install --mode=755 muscle /vol/mgx-sw/bin
+cd .. && rm -rf muscle
+
+

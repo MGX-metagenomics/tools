@@ -1,0 +1,12 @@
+diff -Nur hmmer-3.1b2.orig/documentation/man/Makefile.in hmmer-3.1b2/documentation/man/Makefile.in
+--- hmmer-3.1b2.orig/documentation/man/Makefile.in	2015-02-26 13:45:56.000000000 +0100
++++ hmmer-3.1b2/documentation/man/Makefile.in	2016-06-04 13:11:51.828672589 +0200
+@@ -44,7 +44,7 @@
+ 
+ install:
+ 	for file in ${MANS}; do \
+-	   ${INSTALL} -m 0755 ${srcdir}/$$file.man ${DESTDIR}${man1dir}/$${file}${man1ext} ;\
++	   ${INSTALL} -m 0644 ${srcdir}/$$file.man ${DESTDIR}${man1dir}/$${file}${man1ext} ;\
+ 	done
+ 
+ uninstall:

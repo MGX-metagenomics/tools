@@ -1,0 +1,52 @@
+diff --git a/src/kraken_headers.hpp b/src/kraken_headers.hpp
+index bca9858..f17d2bc 100644
+--- a/src/kraken_headers.hpp
++++ b/src/kraken_headers.hpp
+@@ -43,6 +43,7 @@
+ #include <sys/stat.h>
+ #include <sys/time.h>
+ #include <sys/types.h>
++#include <sys/file.h>
+ #include <sysexits.h>
+ #include <unistd.h>
+ #include <vector>
+diff --git a/src/quickfile.cpp b/src/quickfile.cpp
+index ddabe9a..27b7038 100644
+--- a/src/quickfile.cpp
++++ b/src/quickfile.cpp
+@@ -20,6 +20,8 @@
+ #include "kraken_headers.hpp"
+ #include "quickfile.hpp"
+ 
++#include <sys/file.h>
++
+ using std::string;
+ 
+ namespace kraken {
+@@ -41,6 +43,7 @@ void QuickFile::open_file(string filename_str, string mode, size_t size) {
+                   ? O_RDWR | O_CREAT | O_TRUNC
+                   : mode == "r" ? O_RDONLY : O_RDWR;
+   int m_flags = mode == "r" ? MAP_PRIVATE : MAP_SHARED;
++  int lockMode = mode == "w" ? LOCK_EX : LOCK_SH;
+ 
+   fd = open(filename, o_flags, 0666);
+   // Second try for R/W if failure was due to non-existence
+@@ -51,6 +54,10 @@ void QuickFile::open_file(string filename_str, string mode, size_t size) {
+   if (fd < 0)
+     err(EX_OSERR, "unable to open %s", filename);
+ 
++  if (0 != flock(fd, lockMode)) {
++    err(EX_OSERR, "unable to lock %s: %s", filename, strerror(errno));
++  }
++
+   if (o_flags & O_CREAT) {
+     if (lseek(fd, size - 1, SEEK_SET) < 0)
+       err(EX_OSERR, "unable to lseek (%s)", filename);
+@@ -125,6 +132,7 @@ void QuickFile::close_file() {
+     return;
+   sync_file();
+   munmap(fptr, filesize);
++  flock(fd, LOCK_UN);
+   close(fd);
+   valid = false;
+ }

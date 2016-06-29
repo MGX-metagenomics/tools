@@ -1,0 +1,10 @@
+
+git clone https://github.com/hallamlab/LAST-Plus.git
+cd LAST-Plus
+make clean && make
+for f in lastal+ lastdb+ last-split+ last-merge-batches+; do
+    install --mode=755 ${f} /vol/mgx-sw/bin
+done
+cd ..
+rm -rf LAST-Plus
+

@@ -1,0 +1,13 @@
+
+wget http://eddylab.org/software/hmmer3/3.1b2/hmmer-3.1b2.tar.gz
+tar xzf hmmer-3.1b2.tar.gz
+rm hmmer-3.1b2.tar.gz
+cd hmmer-3.1b2
+patch -p1 < ../patches/hmmer-3.1b2-manperms.patch
+./configure --prefix=/vol/mgx-sw
+make
+make check
+make install
+rmdir /vol/mgx-sw/share/doc/hmmer
+cd ..
+rm -rf hmmer-3.1b2

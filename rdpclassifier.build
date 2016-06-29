@@ -1,0 +1,83 @@
+
+wget -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_2.11.zip/download
+unzip rdp_classifier.zip
+rm rdp_classifier.zip
+cd rdp_classifier_2.11
+mkdir -p /vol/mgx-sw/lib/rdp_classifier_2.11
+cp -va dist/* /vol/mgx-sw/lib/rdp_classifier_2.11
+
+cat << EOS > /vol/mgx-sw/bin/rdp-classifier-2.11
+#!/bin/sh
+
+# Usage: rdp-classifier input-file
+#    or: rdp-classifier -s < input-file
+
+# configuration settings
+VERSION=2.11
+CP=/vol/mgx-sw/lib/rdp_classifier_\${VERSION}/lib
+JAR=/vol/mgx-sw/lib/rdp_classifier_\${VERSION}/classifier.jar
+# end of config
+
+usage() {
+    cat << EOU
+Usage: \$0 input-file
+or: \$0 -s < input-file
+
+Input is expected in FASTA format, Output to stdout.
+
+EOU
+    if [ \$# -gt 0 ]; then
+        echo ERROR: \"$@\"
+        exit 1
+    fi
+}
+
+cleanup() {
+    # remove temporary input file if necessary
+    if [ ! -z "\${TMP_IN}" ]; then
+        rm -f \${TMP_IN}
+    fi
+}
+
+if [ \$# -lt 1 ]; then
+    usage No inputfile or redirection flag given, aborting.
+fi
+
+# cleanup if this shell script terminates or aborts
+trap cleanup exit
+
+INFILE=\$1
+if [ "\${INFILE}" = "-s" ]; then
+    INFILE=/dev/fd/0
+fi 
+
+# check that we can read the input file
+test -e \${INFILE} || usage Input file \$INFILE does not exist, aborting.
+test -r \${INFILE} || usage Input file \$INFILE is not readable, aborting.
+
+# check that java is available
+JAVA=\`which java\`
+test -z "\${JAVA}" && usage "No java found, aborting."
+
+# create a temporary input file if reading from stdin etc.
+if [ ! -f \${INFILE} ]; then
+    HOST=\`/bin/hostname\`
+    TMP_IN=/tmp/rdp_\${HOST}_$$.in
+    cat < \${INFILE} > \${TMP_IN} 
+    chmod 600 \${TMP_IN}
+    INFILE=\${TMP_IN}
+fi
+
+err=0
+\${JAVA} -Xmx900m -cp \${CP} -jar \${JAR} -q \${INFILE} -o /dev/fd/1 2>/dev/null || err=\$?
+
+exit \${err}
+
+EOS
+
+chmod 750 /vol/mgx-sw/bin/rdp-classifier-2.11
+chgrp mgx /vol/mgx-sw/bin/rdp-classifier-2.11
+
+cd ..
+rm -rf rdp_classifier_2.11
+

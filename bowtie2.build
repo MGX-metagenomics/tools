@@ -1,0 +1,11 @@
+
+wget -O bowtie2-2.2.9-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.9/bowtie2-2.2.9-source.zip/download
+unzip bowtie2-2.2.9-source.zip
+rm bowtie2-2.2.9-source.zip
+cd bowtie2-2.2.9/
+make prefix=/vol/mgx-sw
+make prefix=/vol/mgx-sw install
+cd ..
+rm -rf bowtie2-2.2.9/
+
+

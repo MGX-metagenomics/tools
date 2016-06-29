@@ -1,0 +1,11 @@
+
+git clone https://github.com/hallamlab/FragGeneScanPlus.git
+cd FragGeneScanPlus
+make
+install --mode=755 FGS+ /vol/mgx-sw/bin
+install --mode=755 -d /vol/mgx-sw/share/FragGeneScanPlus
+install --mode=755 -d /vol/mgx-sw/share/FragGeneScanPlus/train
+install --mode=644 train/* /vol/mgx-sw/share/FragGeneScanPlus/train/
+cd ..
+rm -rf FragGeneScanPlus
+

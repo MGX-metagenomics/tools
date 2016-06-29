@@ -1,0 +1,64 @@
+VERSION=2.4.0
+
+wget ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz && \
+tar xzf ncbi-blast-${VERSION}+-src.tar.gz && \
+rm ncbi-blast-${VERSION}+-src.tar.gz && \
+cd ncbi-blast-${VERSION}+-src/c++ 
+
+PREFIX=/vol/mgx-sw
+
+sed -i 's,cgi,-cgi,g' scripts/projects/blast/project.lst
+
+./configure --prefix=${PREFIX} \
+   --libdir=${PREFIX}/lib/ncbi-blast+ \
+   --with-64 \
+   --with-lfs \
+   --with-strip \
+   --without-gui \
+   --without-mysql \
+   --without-krb5 \
+   --without-gcrypt \
+   --without-boost \
+   --without-python \
+   --without-perl \
+   --without-libxslt \
+   --without-openssl \
+   --without-vdb \
+   --without-wxwidgets \
+   --without-sqlite3 \
+   --without-icu \
+   --without-libxml \
+   --without-sge \
+   --without-curl \
+   --without-png --without-gif --without-jpeg --without-tiff \
+   --without-hdf5 \
+   --without-xerces \
+   --without-gnutls \
+   --without-expat \
+   --without-bz2 \
+   --without-pcre \
+   --without-gbench \
+   --without-fastcgi \
+   --without-dbapi --without-connext \
+   --with-dll --without-debug --with-mt \
+   --with-projects=scripts/projects/blast/project.lst
+
+cd ReleaseMT/build
+make all_p 
+cd ../..
+make install
+
+for file in seqdb_demo seqdb_perf gene_info_reader legacy_blast.pl update_blastdb.pl test_pcre datatool project_tree_builder windowmasker_2.2.22_adapter.py; do
+   rm -f ${PREFIX}/bin/${file}
+done
+
+rm -f ${PREFIX}/lib/ncbi-blast+/libtest*
+rm -f ${PREFIX}/lib/ncbi-blast+/lib*\.a
+rm -rf ${PREFIX}/include/ncbi-tools++/
+
+chgrp mgx /vol/mgx-sw/lib/ncbi-blast+
+chgrp mgx /vol/mgx-sw/lib/ncbi-blast+/*
+
+cd ../..
+rm -rf ncbi-blast-${VERSION}+-src
+
