@@ -1,0 +1,12 @@
+diff -Nur muscle.orig/Makefile muscle/Makefile
+--- muscle.orig/Makefile	2014-07-12 18:42:52.000000000 +0200
++++ muscle/Makefile	2016-06-29 10:57:43.198199603 +0200
+@@ -10,7 +10,7 @@
+ # this is fixed by deleting "-static" from the LDLIBS line.
+ 
+ CFLAGS = -O3 -funroll-loops -Winline -DNDEBUG=1
+-LDLIBS = -lm -static
++LDLIBS = -lm 
+ # LDLIBS = -lm
+ 
+ OBJ = .o
