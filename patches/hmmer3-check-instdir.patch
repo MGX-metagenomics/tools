@@ -1,0 +1,19 @@
+--- hmmer-3.1b2.orig/Makefile.in	2015-02-26 13:46:01.000000000 +0100
++++ hmmer-3.1b2/Makefile.in	2016-06-29 22:09:27.001161858 +0200
+@@ -140,11 +140,11 @@
+ #          Prefix those paths with ${DESTDIR} (rarely used, usually null;
+ #          may be set on a make command line when building contrib RPMs).
+ install: 
+-	${INSTALL} -d ${DESTDIR}${bindir}
+-	${INSTALL} -d ${DESTDIR}${libdir}
+-	${INSTALL} -d ${DESTDIR}${includedir}
+-	${INSTALL} -d ${DESTDIR}${man1dir}
+-	${INSTALL} -d ${DESTDIR}${pdfdir}
++	if [ ! -d ${DESTDIR}${bindir} ]; then ${INSTALL} -d ${DESTDIR}${bindir} ; fi
++	if [ ! -d ${DESTDIR}${libdir} ]; then ${INSTALL} -d ${DESTDIR}${libdir} ; fi
++	if [ ! -d ${DESTDIR}${includedir} ]; then  ${INSTALL} -d ${DESTDIR}${includedir} ; fi
++	if [ ! -d ${DESTDIR}${man1dir} ]; then  ${INSTALL} -d ${DESTDIR}${man1dir} ; fi
++	if [ ! -d ${DESTDIR}${pdfdir} ]; then  ${INSTALL} -d ${DESTDIR}${pdfdir} ; fi
+ 	${QUIET_SUBDIR0}src           ${QUIET_SUBDIR1} install
+ 	${QUIET_SUBDIR0}documentation ${QUIET_SUBDIR1} install
+ 
