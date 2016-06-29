@@ -1,0 +1,12 @@
+diff -Nur Prodigal.orig/Makefile Prodigal/Makefile
+--- Prodigal.orig/Makefile	2016-06-29 10:29:40.210379708 +0200
++++ Prodigal/Makefile	2016-06-29 10:32:22.889214345 +0200
+@@ -40,7 +40,7 @@
+ 	$(CC) $(CFLAGS) -c -o $@ $<
+ 
+ install: $(TARGET)
+-	install -d -m 0755 $(INSTALLDIR)
++	if [ ! -d $(INSTALLDIR) ]; then install -d -m 0755 $(INSTALLDIR) ; fi
+ 	install -m 0755 $(TARGET) $(INSTALLDIR)
+  
+ uninstall:
