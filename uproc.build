@@ -1,11 +1,14 @@
 
-wget http://uproc.gobics.de/downloads/uproc/uproc-1.2.0.tar.gz
-tar xzf uproc-1.2.0.tar.gz
-rm uproc-1.2.0.tar.gz
-cd uproc-1.2.0
-./configure --prefix=/vol/mgx-sw
-make
-make check
-make install
-cd ..
+PREFIX=/vol/mgx-sw
+
+wget http://uproc.gobics.de/downloads/uproc/uproc-1.2.0.tar.gz && \
+tar xzf uproc-1.2.0.tar.gz && \
+rm uproc-1.2.0.tar.gz && \
+cd uproc-1.2.0 && \
+./configure --prefix=${PREFIX} && \
+make && \
+make check && \
+make install && \
+rm -rf ${PREFIX}/share/doc/uproc && \
+cd .. && \
 rm -rf uproc-1.2.0
