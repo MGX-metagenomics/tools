@@ -5,9 +5,11 @@ tar xzf ncbi-blast-${VERSION}+-src.tar.gz && \
 rm ncbi-blast-${VERSION}+-src.tar.gz && \
 cd ncbi-blast-${VERSION}+-src/c++ 
 
+patch -p 2 < ../../patches/blast-check-instdir.patch 
+
 PREFIX=/vol/mgx-sw
 
-sed -i 's,cgi,-cgi,g' scripts/projects/blast/project.lst
+#sed -i 's,cgi,-cgi,g' scripts/projects/blast/project.lst
 
 ./configure --prefix=${PREFIX} \
    --libdir=${PREFIX}/lib/ncbi-blast+ \
@@ -43,9 +45,9 @@ sed -i 's,cgi,-cgi,g' scripts/projects/blast/project.lst
    --with-dll --without-debug --with-mt \
    --with-projects=scripts/projects/blast/project.lst
 
-cd ReleaseMT/build
-make all_p 
-cd ../..
+cd ReleaseMT/build && \
+make all_p && \
+cd ../.. && \
 make install
 
 for file in seqdb_demo seqdb_perf gene_info_reader legacy_blast.pl update_blastdb.pl test_pcre datatool project_tree_builder windowmasker_2.2.22_adapter.py; do
@@ -59,6 +61,6 @@ rm -rf ${PREFIX}/include/ncbi-tools++/
 chgrp mgx /vol/mgx-sw/lib/ncbi-blast+
 chgrp mgx /vol/mgx-sw/lib/ncbi-blast+/*
 
-cd ../..
+cd ../.. && \
 rm -rf ncbi-blast-${VERSION}+-src
 
