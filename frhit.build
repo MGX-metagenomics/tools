@@ -1,9 +1,10 @@
 
-wget http://weizhong-lab.ucsd.edu/frhit/fr-hit-v0.7.1-2013-02-20.tar.gz
-tar xzf fr-hit-v0.7.1-2013-02-20.tar.gz
-rm fr-hit-v0.7.1-2013-02-20.tar.gz
-cd fr-hit-v0.7
-make
-install --mode=755 fr-hit /vol/mgx-sw/bin
-cd ..
+wget http://weizhong-lab.ucsd.edu/frhit/fr-hit-v0.7.1-2013-02-20.tar.gz && \
+tar xzf fr-hit-v0.7.1-2013-02-20.tar.gz && \
+rm fr-hit-v0.7.1-2013-02-20.tar.gz && \
+cd fr-hit-v0.7 && \
+sed -i 's,-static,,g' makefile && \
+make && \
+install --mode=755 fr-hit /vol/mgx-sw/bin && \
+cd .. && \
 rm -rf fr-hit-v0.7
