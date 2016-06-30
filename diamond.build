@@ -1,14 +1,7 @@
 
-VERSION=0.8.6
+VERSION=0.8.9
 
-wget -O diamond.tar.gz https://github.com/bbuchfink/diamond/archive/v${VERSION}.tar.gz && \
+wget -O diamond.tar.gz https://github.com/bbuchfink/diamond/releases/download/v0.8.9/diamond-linux64.tar.gz 
 tar xzf diamond.tar.gz && \
 rm diamond.tar.gz && \
-cd diamond-${VERSION} && \
-mkdir bin && cd bin && \
-cmake .. && \
-make && \
-strip diamond && \
-install --mode=755 diamond /vol/mgx-sw/bin && \
-cd ../.. && \
-rm -rf diamond-${VERSION}
+install --mode=755 diamond /vol/mgx-sw/bin 
