@@ -7,6 +7,7 @@ cd mothur-${MOTHURVER}
 make USEBOOST=no 
 install --mode=755 uchime /vol/mgx-sw/bin/uchime-${MOTHURVER}
 install --mode=755 mothur /vol/mgx-sw/bin/mothur-${MOTHURVER}
+ln -s /vol/mgx-sw/bin/mothur-${MOTHURVER} /vol/mgx-sw/bin/mothur
 
 cd ..
 rm -rf mothur-${MOTHURVER}
