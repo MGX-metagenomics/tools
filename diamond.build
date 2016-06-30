@@ -4,4 +4,5 @@ VERSION=0.8.9
 wget -O diamond.tar.gz https://github.com/bbuchfink/diamond/releases/download/v0.8.9/diamond-linux64.tar.gz 
 tar xzf diamond.tar.gz && \
 rm diamond.tar.gz && \
-install --mode=755 diamond /vol/mgx-sw/bin 
+install --mode=755 diamond /vol/mgx-sw/bin && \
+rm diamond
