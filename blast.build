@@ -43,8 +43,7 @@ PREFIX=/vol/mgx-sw
    --without-fastcgi \
    --without-dbapi --without-connext \
    --with-dll --without-debug --with-mt \
-   --with-projects=scripts/projects/blast/project.lst
-
+   --with-projects=scripts/projects/blast/project.lst && \
 cd ReleaseMT/build && \
 make all_p && \
 cd ../.. && \
