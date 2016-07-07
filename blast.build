@@ -1,3 +1,6 @@
+
+. ./tools.config
+
 VERSION=2.4.0
 
 wget ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz && \
@@ -6,8 +9,6 @@ rm ncbi-blast-${VERSION}+-src.tar.gz && \
 cd ncbi-blast-${VERSION}+-src/c++ 
 
 patch -p 2 < ../../patches/blast-check-instdir.patch 
-
-PREFIX=/vol/mgx-sw
 
 #sed -i 's,cgi,-cgi,g' scripts/projects/blast/project.lst
 
@@ -57,8 +58,8 @@ rm -f ${PREFIX}/lib/ncbi-blast+/libtest*
 rm -f ${PREFIX}/lib/ncbi-blast+/lib*\.a
 rm -rf ${PREFIX}/include/ncbi-tools++/
 
-chgrp mgx /vol/mgx-sw/lib/ncbi-blast+
-chgrp mgx /vol/mgx-sw/lib/ncbi-blast+/*
+chgrp ${GROUP} /vol/mgx-sw/lib/ncbi-blast+
+chgrp ${GROUP} /vol/mgx-sw/lib/ncbi-blast+/*
 
 cd ../.. && \
 rm -rf ncbi-blast-${VERSION}+-src
