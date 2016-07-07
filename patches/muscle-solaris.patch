@@ -1,0 +1,171 @@
+diff -Nur muscle.orig/Makefile muscle/Makefile
+--- muscle.orig/Makefile	2016-07-07 10:43:46.008156000 +0200
++++ muscle/Makefile	2016-07-07 10:45:48.725591715 +0200
+@@ -9,7 +9,7 @@
+ # On OSX, using -static gives the error "ld: can't locate file for: -lcrt0.o",
+ # this is fixed by deleting "-static" from the LDLIBS line.
+ 
+-CFLAGS = -O3 -funroll-loops -Winline -DNDEBUG=1
++CFLAGS = -m64 -O3 -funroll-loops -Winline -DNDEBUG=1
+ LDLIBS = -lm -static-libstdc++ -static-libgcc
+ # LDLIBS = -lm
+ 
+diff -Nur muscle.orig/phy2.cpp muscle/phy2.cpp
+--- muscle.orig/phy2.cpp	2014-07-12 18:42:52.000000000 +0200
++++ muscle/phy2.cpp	2016-07-07 10:45:04.386305982 +0200
+@@ -4,24 +4,24 @@
+ #define TRACE	0
+ 
+ // Return false when done
+-bool PhyEnumEdges(const Tree &tree, PhyEnumEdgeState &ES)
++bool PhyEnumEdges(const Tree &tree, PhyEnumEdgeState &PES)
+ 	{
+ 	unsigned uNode1 = uInsane;
+ 
+-	if (!ES.m_bInit)
++	if (!PES.m_bInit)
+ 		{
+ 		if (tree.GetNodeCount() <= 1)
+ 			{
+-			ES.m_uNodeIndex1 = NULL_NEIGHBOR;
+-			ES.m_uNodeIndex2 = NULL_NEIGHBOR;
++			PES.m_uNodeIndex1 = NULL_NEIGHBOR;
++			PES.m_uNodeIndex2 = NULL_NEIGHBOR;
+ 			return false;
+ 			}
+ 		uNode1 = tree.FirstDepthFirstNode();
+-		ES.m_bInit = true;
++		PES.m_bInit = true;
+ 		}
+ 	else
+ 		{
+-		uNode1 = tree.NextDepthFirstNode(ES.m_uNodeIndex1);
++		uNode1 = tree.NextDepthFirstNode(PES.m_uNodeIndex1);
+ 		if (NULL_NEIGHBOR == uNode1)
+ 			return false;
+ 		if (tree.IsRooted() && tree.IsRoot(uNode1))
+@@ -33,29 +33,29 @@
+ 		}
+ 	unsigned uNode2 = tree.GetParent(uNode1);
+ 
+-	ES.m_uNodeIndex1 = uNode1;
+-	ES.m_uNodeIndex2 = uNode2;
++	PES.m_uNodeIndex1 = uNode1;
++	PES.m_uNodeIndex2 = uNode2;
+ 	return true;
+ 	}
+ 
+-bool PhyEnumEdgesR(const Tree &tree, PhyEnumEdgeState &ES)
++bool PhyEnumEdgesR(const Tree &tree, PhyEnumEdgeState &PES)
+ 	{
+ 	unsigned uNode1 = uInsane;
+ 
+-	if (!ES.m_bInit)
++	if (!PES.m_bInit)
+ 		{
+ 		if (tree.GetNodeCount() <= 1)
+ 			{
+-			ES.m_uNodeIndex1 = NULL_NEIGHBOR;
+-			ES.m_uNodeIndex2 = NULL_NEIGHBOR;
++			PES.m_uNodeIndex1 = NULL_NEIGHBOR;
++			PES.m_uNodeIndex2 = NULL_NEIGHBOR;
+ 			return false;
+ 			}
+ 		uNode1 = tree.FirstDepthFirstNodeR();
+-		ES.m_bInit = true;
++		PES.m_bInit = true;
+ 		}
+ 	else
+ 		{
+-		uNode1 = tree.NextDepthFirstNodeR(ES.m_uNodeIndex1);
++		uNode1 = tree.NextDepthFirstNodeR(PES.m_uNodeIndex1);
+ 		if (NULL_NEIGHBOR == uNode1)
+ 			return false;
+ 		if (tree.IsRooted() && tree.IsRoot(uNode1))
+@@ -67,8 +67,8 @@
+ 		}
+ 	unsigned uNode2 = tree.GetParent(uNode1);
+ 
+-	ES.m_uNodeIndex1 = uNode1;
+-	ES.m_uNodeIndex2 = uNode2;
++	PES.m_uNodeIndex1 = uNode1;
++	PES.m_uNodeIndex2 = uNode2;
+ 	return true;
+ 	}
+ 
+@@ -97,11 +97,11 @@
+ 	GetLeavesSubtree(tree, uNodeIndex1, uNodeIndex2, Leaves, ptruCount);
+ 	}
+ 
+-bool PhyEnumBiParts(const Tree &tree, PhyEnumEdgeState &ES,
++bool PhyEnumBiParts(const Tree &tree, PhyEnumEdgeState &PES,
+   unsigned Leaves1[], unsigned *ptruCount1,
+   unsigned Leaves2[], unsigned *ptruCount2)
+ 	{
+-	bool bOk = PhyEnumEdges(tree, ES);
++	bool bOk = PhyEnumEdges(tree, PES);
+ 	if (!bOk)
+ 		{
+ 		*ptruCount1 = 0;
+@@ -111,16 +111,16 @@
+ 
+ // Special case: in a rooted tree, both edges from the root
+ // give the same bipartition, so skip one of them.
+-	if (tree.IsRooted() && tree.IsRoot(ES.m_uNodeIndex2)
+-	  && tree.GetRight(ES.m_uNodeIndex2) == ES.m_uNodeIndex1)
++	if (tree.IsRooted() && tree.IsRoot(PES.m_uNodeIndex2)
++	  && tree.GetRight(PES.m_uNodeIndex2) == PES.m_uNodeIndex1)
+ 		{
+-		bOk = PhyEnumEdges(tree, ES);
++		bOk = PhyEnumEdges(tree, PES);
+ 		if (!bOk)
+ 			return false;
+ 		}
+ 
+-	PhyGetLeaves(tree, ES.m_uNodeIndex1, ES.m_uNodeIndex2, Leaves1, ptruCount1);
+-	PhyGetLeaves(tree, ES.m_uNodeIndex2, ES.m_uNodeIndex1, Leaves2, ptruCount2);
++	PhyGetLeaves(tree, PES.m_uNodeIndex1, PES.m_uNodeIndex2, Leaves1, ptruCount1);
++	PhyGetLeaves(tree, PES.m_uNodeIndex2, PES.m_uNodeIndex1, Leaves2, ptruCount2);
+ 
+ 	if (*ptruCount1 + *ptruCount2 != tree.GetLeafCount())
+ 		Quit("PhyEnumBiParts %u + %u != %u",
+@@ -158,18 +158,18 @@
+ 	unsigned *Leaves1 = new unsigned[uNodeCount];
+ 	unsigned *Leaves2 = new unsigned[uNodeCount];
+ 
+-	PhyEnumEdgeState ES;
++	PhyEnumEdgeState PES;
+ 	bool bDone = false;
+ 	for (;;)
+ 		{
+ 		unsigned uCount1 = uInsane;
+ 		unsigned uCount2 = uInsane;
+-		bool bOk = PhyEnumBiParts(tree, ES, Leaves1, &uCount1, Leaves2, &uCount2);
++		bool bOk = PhyEnumBiParts(tree, PES, Leaves1, &uCount1, Leaves2, &uCount2);
+ 		Log("PEBP=%d ES.Init=%d ES.ni1=%d ES.ni2=%d\n",
+ 		  bOk,
+-		  ES.m_bInit,
+-		  ES.m_uNodeIndex1,
+-		  ES.m_uNodeIndex2);
++		  PES.m_bInit,
++		  PES.m_uNodeIndex1,
++		  PES.m_uNodeIndex2);
+ 		if (!bOk)
+ 			break;
+ 		Log("\n");
+diff -Nur muscle.orig/tree.h muscle/tree.h
+--- muscle.orig/tree.h	2014-07-12 18:42:52.000000000 +0200
++++ muscle/tree.h	2016-07-07 10:45:04.392413572 +0200
+@@ -305,10 +305,10 @@
+ 
+ const unsigned NODE_CHANGED = (unsigned) (~0);
+ 
+-extern bool PhyEnumBiParts(const Tree &tree, PhyEnumEdgeState &ES,
++extern bool PhyEnumBiParts(const Tree &tree, PhyEnumEdgeState &PES,
+   unsigned Leaves1[], unsigned *ptruCount1,
+   unsigned Leaves2[], unsigned *ptruCount2);
+-extern bool PhyEnumBiPartsR(const Tree &tree, PhyEnumEdgeState &ES,
++extern bool PhyEnumBiPartsR(const Tree &tree, PhyEnumEdgeState &PES,
+   unsigned Leaves1[], unsigned *ptruCount1,
+   unsigned Leaves2[], unsigned *ptruCount2);
+ extern void ClusterByHeight(const Tree &tree, double dMaxHeight, unsigned Subtrees[],

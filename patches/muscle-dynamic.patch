@@ -6,7 +6,7 @@ diff -Nur muscle.orig/Makefile muscle/Makefile
  
  CFLAGS = -O3 -funroll-loops -Winline -DNDEBUG=1
 -LDLIBS = -lm -static
-+LDLIBS = -lm 
++LDLIBS = -lm -static-libstdc++ -static-libgcc
  # LDLIBS = -lm
  
  OBJ = .o
