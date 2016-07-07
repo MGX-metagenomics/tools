@@ -1,13 +1,18 @@
 
-git clone https://github.com/bioinformatics-centre/kaiju.git
-cd kaiju/src
-make
-cd ../bin
-install --mode=755 -d /vol/mgx-sw/lib/kaiju/
+. ./tools.config
+
+git clone https://github.com/bioinformatics-centre/kaiju.git && \
+cd kaiju && \
+patch -p 1 < ../patches/kaiju-64bit.patch && \
+cd src && \
+make && \
+cd ../bin && \
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/kaiju/
 for f in * ; do
-    install --mode=755 ${f} /vol/mgx-sw/lib/kaiju/
+    install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/kaiju/
 done
-ln -s /vol/mgx-sw/lib/kaiju/kaiju /vol/mgx-sw/bin
-cd ../..
+ln -sf ${PREFIX}/lib/kaiju/kaiju ${PREFIX}/bin && \
+chgrp ${GROUP} ${PREFIX}/bin/kaiju && \
+cd ../.. && \
 rm -rf kaiju
 
