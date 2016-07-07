@@ -1,0 +1,27 @@
+diff --git a/Makefile b/Makefile
+index 9c625d0..b30e149 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+ CC=	gcc 
+ CFLAG= -O3 -m64 -w
+-FLAGS= -lm -lpthread  
++FLAGS= -lm -lpthread -lrt
+ HEADER=	util_lib.h fasta.h
+ SRCS=	util_lib.c hmm_lib.c run_hmm.c fasta.c
+ OBJ=	util_lib.o hmm_lib.o run_hmm.o  fasta.o
+diff --git a/hmm.h b/hmm.h
+index 98cb5bf..2ff7dc6 100644
+--- a/hmm.h
++++ b/hmm.h
+@@ -107,6 +107,10 @@ char train_dir[STRINGLEN];
+   typedef sem_t SEM_T;
+   #define sem_wait(x) sem_wait(&x)
+   #define sem_post(x) sem_post(&x)
++#elif __sun__
++  typedef sem_t SEM_T;
++  #define sem_wait(x) sem_wait(&x)
++  #define sem_post(x) sem_post(&x)
+ #endif
+ 
+ SEM_T sema_Q;

@@ -1,11 +1,14 @@
 
-git clone https://github.com/hallamlab/FragGeneScanPlus.git
-cd FragGeneScanPlus
-make
-install --mode=755 FGS+ /vol/mgx-sw/bin
-install --mode=755 -d /vol/mgx-sw/share/FragGeneScanPlus
-install --mode=755 -d /vol/mgx-sw/share/FragGeneScanPlus/train
-install --mode=644 train/* /vol/mgx-sw/share/FragGeneScanPlus/train/
-cd ..
+. ./tools.config
+
+git clone https://github.com/hallamlab/FragGeneScanPlus.git && \
+cd FragGeneScanPlus && \
+patch -p 1 < ../patches/fraggenescanplus-semaphores.patch && \
+make && \
+install -g ${GROUP} --mode=755 FGS+ ${PREFIX}/bin && \
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanPlus && \
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanPlus/train && \
+install -g ${GROUP} --mode=644 train/* ${PREFIX}/share/FragGeneScanPlus/train/ && \
+cd .. && \
 rm -rf FragGeneScanPlus
 
