@@ -1,0 +1,25 @@
+Binary files fr-hit-v0.7.orig/libgomp.a and fr-hit-v0.7/libgomp.a differ
+diff -Nur fr-hit-v0.7.orig/makefile fr-hit-v0.7/makefile
+--- fr-hit-v0.7.orig/makefile	2013-03-04 20:09:50.000000000 +0100
++++ fr-hit-v0.7/makefile	2016-07-07 11:14:42.206929886 +0200
+@@ -1,7 +1,8 @@
+ CC=g++
+ 
+-#FLAGS= -ggdb -pg -O3 -static
+-FLAGS=-O3 -static -fopenmp
++#FLAGS= -ggdb -pg -O3 -m64 -static-libstdc++ -static-libgcc
++FLAGS=-O3 -m64 -fopenmp
++LDFLAGS=-m64 -L. -static-libstdc++ -static-libgcc -fopenmp -lrt
+ 
+ SOURCE = align refseq main param reads utilities 
+ OBJS= $(patsubst %,%.o,$(SOURCE))
+@@ -11,7 +12,8 @@
+ %.o:%.cpp
+ 	$(CC) $(FLAGS) -c $< -o $@
+ fr-hit: $(OBJS)
+-	$(CC) $(FLAGS) $^ -o $@ 
++	ln -sf `$(CC) $(LDFLAGS) -print-file-name=libgomp.a`
++	$(CC) $(LDFLAGS) $^ -o $@ 
+ 
+ clean:
+ 	rm -f *.o fr-hit
