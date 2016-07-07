@@ -1,12 +1,14 @@
 
-wget -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_2.11.zip/download
+. ./tools.config
+
+wget --no-check-certificate -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_2.11.zip/download
 unzip rdp_classifier.zip
 rm rdp_classifier.zip
 cd rdp_classifier_2.11
-mkdir -p /vol/mgx-sw/lib/rdp_classifier_2.11
-cp -va dist/* /vol/mgx-sw/lib/rdp_classifier_2.11
+mkdir -p ${PREFIX}/lib/rdp_classifier_2.11
+cp -va dist/* ${PREFIX}/lib/rdp_classifier_2.11
 
-cat << EOS > /vol/mgx-sw/bin/rdp-classifier-2.11
+cat << EOS > ${PREFIX}/bin/rdp-classifier-2.11
 #!/bin/sh
 
 # Usage: rdp-classifier input-file
@@ -14,8 +16,8 @@ cat << EOS > /vol/mgx-sw/bin/rdp-classifier-2.11
 
 # configuration settings
 VERSION=2.11
-CP=/vol/mgx-sw/lib/rdp_classifier_\${VERSION}/lib
-JAR=/vol/mgx-sw/lib/rdp_classifier_\${VERSION}/classifier.jar
+CP=${PREFIX}/lib/rdp_classifier_\${VERSION}/lib
+JAR=${PREFIX}/lib/rdp_classifier_\${VERSION}/classifier.jar
 # end of config
 
 usage() {
@@ -75,8 +77,8 @@ exit \${err}
 
 EOS
 
-chmod 750 /vol/mgx-sw/bin/rdp-classifier-2.11
-chgrp mgx /vol/mgx-sw/bin/rdp-classifier-2.11
+chmod 755 ${PREFIX}/bin/rdp-classifier-2.11
+chgrp ${GROUP} ${PREFIX}/bin/rdp-classifier-2.11
 
 cd ..
 rm -rf rdp_classifier_2.11
