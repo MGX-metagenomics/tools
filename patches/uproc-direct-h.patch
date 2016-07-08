@@ -1,0 +1,11 @@
+--- uproc-1.2.0/configure.ac	2015-06-23 00:03:45.000000000 +0200
++++ uproc-1.2.0.patched/configure.ac	2016-07-08 15:17:00.607583014 +0200
+@@ -27,7 +27,7 @@
+ # Checks for header files.
+ AC_HEADER_STDC
+ AC_CHECK_HEADERS([fcntl.h inttypes.h limits.h stdint.h stdlib.h string.h])
+-AC_CHECK_HEADERS([unistd.h zlib.h getopt.h time.h])
++AC_CHECK_HEADERS([unistd.h zlib.h getopt.h time.h direct.h])
+ 
+ AC_HEADER_STDBOOL
+ AC_C_CONST
