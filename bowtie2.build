@@ -1,11 +1,14 @@
 
-wget -O bowtie2-2.2.9-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.9/bowtie2-2.2.9-source.zip/download
-unzip bowtie2-2.2.9-source.zip
-rm bowtie2-2.2.9-source.zip
-cd bowtie2-2.2.9/
-make prefix=/vol/mgx-sw
-make prefix=/vol/mgx-sw install
+. ./tools.config
+
+wget --no-check-certificate -O bowtie2-2.2.9-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.9/bowtie2-2.2.9-source.zip/download
+unzip bowtie2-2.2.9-source.zip && \
+cd bowtie2-2.2.9/ && \
+patch -p 1 < ../patches/bowtie2-solaris.patch
+make prefix=${PREFIX}
+make prefix=${PREFIX} install
 cd ..
 rm -rf bowtie2-2.2.9/
+rm bowtie2-2.2.9-source.zip
 
 

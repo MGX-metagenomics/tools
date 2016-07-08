@@ -1,0 +1,73 @@
+diff -Nur bowtie2-2.2.9/Makefile bowtie2-2.2.9.patched/Makefile
+--- bowtie2-2.2.9/Makefile	2016-03-10 16:15:50.000000000 +0100
++++ bowtie2-2.2.9.patched/Makefile	2016-07-08 16:11:27.546056986 +0200
+@@ -55,6 +55,12 @@
+ 	endif
+ endif
+ 
++SOLARIS = 0
++ifneq (,$(findstring SunOS,$(shell uname)))
++	SOLARIS = 1
++endif
++
++
+ POPCNT_CAPABILITY ?= 1
+ ifeq (1, $(POPCNT_CAPABILITY))
+     override EXTRA_FLAGS += -DPOPCNT_CAPABILITY
+@@ -161,6 +167,15 @@
+ 		BITS=64
+ 	endif
+ endif
++
++UNAME = $(shell uname -s)
++ifeq ($(UNAME), SunOS)
++	ARCH = $(shell isainfo -k)
++	ifeq ($(ARCH), amd64)
++		BITS=64
++	endif
++endif
++
+ ifeq (32,$(BITS))
+   $(error bowtie2 compilation requires a 64-bit platform )
+ endif
+@@ -217,6 +232,12 @@
+ 	endif
+ endif
+ 
++ifeq (1,$(SOLARIS))
++        override EXTRA_FLAGS += -R/vol/gnu/lib/amd64
++        override LIBS += -lrt
++endif
++
++
+ # This is helpful on Windows under MinGW/MSYS, where Make might go for
+ # the Windows FIND tool instead.
+ FIND=$(shell which find)
+diff -Nur bowtie2-2.2.9/bt2_idx.h bowtie2-2.2.9.patched/bt2_idx.h
+--- bowtie2-2.2.9/bt2_idx.h	2016-01-15 20:22:38.000000000 +0100
++++ bowtie2-2.2.9.patched/bt2_idx.h	2016-07-08 16:19:03.147489592 +0200
+@@ -1005,7 +1005,7 @@
+ 			VMSG_NL("bmax according to bmaxDivN setting: " << bmax);
+ 		}
+ 		else {
+-			bmax = (TIndexOffU)sqrt(s.length());
++			bmax = (TIndexOffU)sqrt((double)s.length());
+ 			VMSG_NL("bmax defaulted to: " << bmax);
+ 		}
+ 		int iter = 0;
+diff -Nur bowtie2-2.2.9/processor_support.h bowtie2-2.2.9.patched/processor_support.h
+--- bowtie2-2.2.9/processor_support.h	2015-11-11 18:03:02.000000000 +0100
++++ bowtie2-2.2.9.patched/processor_support.h	2016-07-08 16:14:08.939504418 +0200
+@@ -20,6 +20,12 @@
+ #define USING MSC_COMPILER
+ #endif
+ 
++// Solaris defines them in <sys/regset.h>.
++#undef EAX
++#undef EBX
++#undef ECX
++#undef EDX
++
+ struct regs_t {unsigned int EAX, EBX, ECX, EDX;};
+ #define BIT(n) ((1<<n))
+ 
