@@ -1,0 +1,19 @@
+--- bwa-0.7.15/Makefile	2016-05-31 15:49:32.000000000 +0200
++++ bwa-0.7.15.patched/Makefile	2016-07-08 15:46:42.122611886 +0200
+@@ -1,6 +1,6 @@
+ CC=			gcc
+ #CC=			clang --analyze
+-CFLAGS=		-g -Wall -Wno-unused-function -O2
++CFLAGS=		-m64 -g -Wall -Wno-unused-function -O2
+ WRAP_MALLOC=-DUSE_MALLOC_WRAPPERS
+ AR=			ar
+ DFLAGS=		-DHAVE_PTHREAD $(WRAP_MALLOC)
+@@ -12,7 +12,7 @@
+ 			bwtsw2_chain.o fastmap.o bwtsw2_pair.o
+ PROG=		bwa
+ INCLUDES=	
+-LIBS=		-lm -lz -lpthread
++LIBS=		-lm -lz -lpthread -lnsl -lsocket -lrt
+ SUBDIRS=	.
+ 
+ ifeq ($(shell uname -s),Linux)

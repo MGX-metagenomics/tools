@@ -1,13 +1,20 @@
 
-wget -O bwa-0.7.15.tar.bz2 http://downloads.sourceforge.net/project/bio-bwa/bwa-0.7.15.tar.bz2
-tar xjf bwa-0.7.15.tar.bz2
-rm bwa-0.7.15.tar.bz2
+. ./tools.config
 
-cd bwa-0.7.15
-make
-install --mode=755 bwa /vol/mgx-sw/bin/
-install --mode=644 bwa.1 /vol/mgx-sw/share/man/man1/
-cd ..
-rm -rf bwa-0.7.15
+wget -O bwa-0.7.15.tar.bz2 http://downloads.sourceforge.net/project/bio-bwa/bwa-0.7.15.tar.bz2 && \
+tar xjf bwa-0.7.15.tar.bz2 && \
+cd bwa-0.7.15 
+
+if [ ${OS} = "Solaris" ]; then
+    sed -i 's,u_int32_t,uint32_t,g' *.c *.h 
+    patch -p 1 < ../patches/bwa-solaris.patch
+fi
+
+make && \
+install -g ${GROUP} --mode=755 bwa ${PREFIX}/bin/ && \
+install -g ${GROUP} --mode=644 bwa.1 ${PREFIX}/share/man/man1/ && \
+cd .. && \
+rm -rf bwa-0.7.15 && \
+rm bwa-0.7.15.tar.bz2
 
 
