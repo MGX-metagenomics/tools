@@ -11,6 +11,7 @@ if [ ${OS} = "Solaris" ]; then
     cp ../patches/strndup.c .
     cp ../patches/strnlen.c .
     patch -p 1 < ../patches/samtools-portability.patch
+    patch -p 1 < ../patches/samtools-bashism.patch
     ./configure CPPFLAGS="-m64 -I/vol/gnu/include/ncurses -I/vol/gnu/include" \
        LDFLAGS="-m64 -L/vol/gnu/lib/amd64 -R/vol/gnu/lib/amd64 -lnsl -lsocket" \
        --prefix=${PREFIX} \
