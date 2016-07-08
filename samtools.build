@@ -1,19 +1,34 @@
 
-wget https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2 && \
+. ./tools.config
+
+wget --no-check-certificate -O samtools-1.3.1.tar.bz2 https://github.com/samtools/samtools/releases/download/1.3.1/samtools-1.3.1.tar.bz2 && \
 tar xjf samtools-1.3.1.tar.bz2 && \
 rm samtools-1.3.1.tar.bz2 && \
-cd samtools-1.3.1/ && \
-./configure --prefix=/vol/mgx-sw \
-   --libexecdir=/vol/mgx-sw/share/libexec \
-   --with-ncurses \
-   --enable-plugins --with-plugin-path=$PWD/htslib-1.3.1 \
-   --disable-libcurl && \
+cd samtools-1.3.1/ 
+if [ ${OS} = "Solaris" ]; then
+    # copy non-portable strsep/strndup from gnulib
+    cp ../patches/strsep.c .
+    cp ../patches/strndup.c .
+    cp ../patches/strnlen.c .
+    patch -p 1 < ../patches/samtools-portability.patch
+    ./configure CPPFLAGS="-m64 -I/vol/gnu/include/ncurses -I/vol/gnu/include" \
+       LDFLAGS="-m64 -L/vol/gnu/lib/amd64 -R/vol/gnu/lib/amd64 -lnsl -lsocket" \
+       --prefix=${PREFIX} \
+       --libexecdir=${PREFIX}/share/libexec \
+       --enable-plugins --with-plugin-path=$PWD/htslib-1.3.1 \
+       --disable-libcurl 
+else
+    ./configure --prefix=${PREFIX} \
+       --libexecdir=${PREFIX}/share/libexec \
+       --enable-plugins --with-plugin-path=$PWD/htslib-1.3.1 \
+       --disable-libcurl 
+fi
 make all all-htslib && \
 make check && \
 make install install-htslib && \
 cd .. && \
 rm -rf samtools-1.3.1/ && \
-chgrp -R mgx /vol/mgx-sw/include/htslib && \
-chgrp mgx /vol/mgx-sw/lib/libhts* && \
-chgrp mgx /vol/mgx-sw/lib/pkgconfig/htslib.pc 
+chgrp -R ${GROUP} ${PREFIX}/include/htslib && \
+chgrp ${GROUP} ${PREFIX}/lib/libhts* && \
+chgrp ${GROUP} ${PREFIX}/lib/pkgconfig/htslib.pc 
 
