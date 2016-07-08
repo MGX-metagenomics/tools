@@ -1,13 +1,16 @@
-MOTHURVER=1.37.4
 
-wget -O mothur${MOTHURVER}.tar.gz https://github.com/mothur/mothur/archive/v${MOTHURVER}.tar.gz
-tar xzf mothur${MOTHURVER}.tar.gz
-rm mothur${MOTHURVER}.tar.gz
-cd mothur-${MOTHURVER}
-make USEBOOST=no 
-install --mode=755 uchime /vol/mgx-sw/bin/uchime-${MOTHURVER}
-install --mode=755 mothur /vol/mgx-sw/bin/mothur-${MOTHURVER}
-ln -s /vol/mgx-sw/bin/mothur-${MOTHURVER} /vol/mgx-sw/bin/mothur
+. ./tools.config
+
+MOTHURVER=1.37.4
+wget --no-check-certificate -O mothur${MOTHURVER}.tar.gz https://github.com/mothur/mothur/archive/v${MOTHURVER}.tar.gz && \
+tar xzf mothur${MOTHURVER}.tar.gz && \
+rm mothur${MOTHURVER}.tar.gz && \
+cd mothur-${MOTHURVER} && \
+patch -p 1 < ../patches/mothur-64bit.patch && \
+make USEBOOST=no USEREADLINE=no && \
+install -g ${GROUP} --mode=755 uchime ${PREFIX}/bin/uchime-${MOTHURVER} && \
+install -g ${GROUP} --mode=755 mothur ${PREFIX}/bin/mothur-${MOTHURVER} && \
+ln -sf ${PREFIX}/bin/mothur-${MOTHURVER} ${PREFIX}/bin/mothur
 
 cd ..
 rm -rf mothur-${MOTHURVER}
