@@ -1,6 +1,6 @@
-diff -Nur mothur-1.37.4/Makefile mothur-1.37.4.patched/Makefile
---- mothur-1.37.4/Makefile	2016-05-11 17:40:31.000000000 +0200
-+++ mothur-1.37.4.patched/Makefile	2016-07-08 11:27:47.637266359 +0200
+diff -Nur mothur-1.37.4.orig/Makefile mothur-1.37.4/Makefile
+--- mothur-1.37.4.orig/Makefile	2016-05-11 17:40:31.000000000 +0200
++++ mothur-1.37.4/Makefile	2016-07-08 17:20:04.861992040 +0200
 @@ -18,7 +18,8 @@
  VERSION = "\"1.37.1\""
  
@@ -20,9 +20,9 @@ diff -Nur mothur-1.37.4/Makefile mothur-1.37.4.patched/Makefile
  
  uchime:
  	cd source/uchime_src && ./mk && mv uchime ../../ && cd ..
-diff -Nur mothur-1.37.4/source/mothur.h mothur-1.37.4.patched/source/mothur.h
---- mothur-1.37.4/source/mothur.h	2016-05-11 17:40:31.000000000 +0200
-+++ mothur-1.37.4.patched/source/mothur.h	2016-07-07 13:52:31.809855385 +0200
+diff -Nur mothur-1.37.4.orig/source/mothur.h mothur-1.37.4/source/mothur.h
+--- mothur-1.37.4.orig/source/mothur.h	2016-05-11 17:40:31.000000000 +0200
++++ mothur-1.37.4/source/mothur.h	2016-07-08 17:20:04.868364018 +0200
 @@ -65,7 +65,9 @@
  	#include <sys/resource.h>
  	#include <sys/types.h>
@@ -34,9 +34,9 @@ diff -Nur mothur-1.37.4/source/mothur.h mothur-1.37.4.patched/source/mothur.h
  	#include <unistd.h>
  
  	
-diff -Nur mothur-1.37.4/source/mothurout.cpp mothur-1.37.4.patched/source/mothurout.cpp
---- mothur-1.37.4/source/mothurout.cpp	2016-05-11 17:40:31.000000000 +0200
-+++ mothur-1.37.4.patched/source/mothurout.cpp	2016-07-07 19:33:14.856966254 +0200
+diff -Nur mothur-1.37.4.orig/source/mothurout.cpp mothur-1.37.4/source/mothurout.cpp
+--- mothur-1.37.4.orig/source/mothurout.cpp	2016-05-11 17:40:31.000000000 +0200
++++ mothur-1.37.4/source/mothurout.cpp	2016-07-08 17:20:04.877661119 +0200
 @@ -596,7 +596,7 @@
  /***********************************************************************/
  unsigned long MothurOut::get_phys_pages () {
@@ -46,21 +46,30 @@ diff -Nur mothur-1.37.4/source/mothurout.cpp mothur-1.37.4.patched/source/mothur
      uint64_t mem;
      size_t len = sizeof(mem);
      sysctlbyname("hw.memsize", &mem, &len, NULL, 0);
-diff -Nur mothur-1.37.4/source/uchime_src/mk mothur-1.37.4.patched/source/uchime_src/mk
---- mothur-1.37.4/source/uchime_src/mk	2016-05-11 17:40:31.000000000 +0200
-+++ mothur-1.37.4.patched/source/uchime_src/mk	2016-07-08 11:28:45.195753904 +0200
+diff -Nur mothur-1.37.4.orig/source/uchime_src/mk mothur-1.37.4/source/uchime_src/mk
+--- mothur-1.37.4.orig/source/uchime_src/mk	2016-05-11 17:40:31.000000000 +0200
++++ mothur-1.37.4/source/uchime_src/mk	2016-07-08 17:21:39.548715389 +0200
+@@ -7,7 +7,7 @@
+ for CPPName in $CPPNames
+ do
+   echo $CPPName >&2
+-  g++ $ENV_GCC_OPTS -c -D_FILE_OFFSET_BITS=64 -DNDEBUG=1 -DUCHIMES=1 $CPPName.cpp -o $CPPName.o  >> mk.stdout 2>> tmp.stderr
++  g++ $ENV_GCC_OPTS -m64 -c -D_FILE_OFFSET_BITS=64 -DNDEBUG=1 -DUCHIMES=1 $CPPName.cpp -o $CPPName.o  >> mk.stdout 2>> tmp.stderr
+   cat tmp.stderr
+ 	cat tmp.stderr >> mk.stderr
+ 	rm -f tmp.stderr
 @@ -17,7 +17,7 @@
  #if [ `uname -s` == Linux ] ; then
  #    LINK_OPTS=-static
  #fi
 -g++ $LINK_OPTS $ENV_LINK_OPTS -g -o uchime $ObjNames >> mk.stdout 2>> tmp.stderr
-+g++ -static-libstdc++ -static-libgcc $LINK_OPTS $ENV_LINK_OPTS -g -o uchime $ObjNames >> mk.stdout 2>> tmp.stderr
++g++ -m64 -static-libstdc++ -static-libgcc $LINK_OPTS $ENV_LINK_OPTS -g -o uchime $ObjNames >> mk.stdout 2>> tmp.stderr
  cat tmp.stderr
  cat tmp.stderr >> mk.stderr
  rm -f tmp.stderr
-diff -Nur mothur-1.37.4/source/uchime_src/myutils.cpp mothur-1.37.4.patched/source/uchime_src/myutils.cpp
---- mothur-1.37.4/source/uchime_src/myutils.cpp	2016-05-11 17:40:31.000000000 +0200
-+++ mothur-1.37.4.patched/source/uchime_src/myutils.cpp	2016-07-07 20:23:56.963299474 +0200
+diff -Nur mothur-1.37.4.orig/source/uchime_src/myutils.cpp mothur-1.37.4/source/uchime_src/myutils.cpp
+--- mothur-1.37.4.orig/source/uchime_src/myutils.cpp	2016-05-11 17:40:31.000000000 +0200
++++ mothur-1.37.4/source/uchime_src/myutils.cpp	2016-07-08 17:20:04.890764820 +0200
 @@ -721,12 +721,12 @@
  	{
  	int HH = Secs/3600;
