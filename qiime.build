@@ -1,9 +1,19 @@
 
-export PYTHONUSERBASE=/vol/mgx-sw/lib/qiime
+. ./tools.config 
+
+export PYTHONUSERBASE=${PREFIX}/lib/qiime
 PIP="pip install --user"
 
-${PIP} numpy
-${PIP} qiime
+if [ -x /usr/bin/gcc ]; then
+    export CC=/usr/bin/gcc 
+fi
 
-chgrp -R mgx /vol/mgx-sw/lib/qiime
+${PIP} --upgrade pip
+if [ -x ${PYTHONUSERBASE}/bin/pip ]; then
+    PIP="${PYTHONUSERBASE}/bin/pip install --user"
+fi
+
+${PIP} numpy && \
+${PIP} qiime && \
+chgrp -R ${GROUP} ${PREFIX}/lib/qiime
 
