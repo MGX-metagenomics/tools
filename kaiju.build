@@ -8,6 +8,9 @@ cd src && \
 make && \
 cd ../bin && \
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/kaiju/
+for f in addTaxonNames convertNR kaiju kaiju2krona kaijuReport kaijup kaijux mergeOutputs mkbwt mkfmi; do
+    strip ${f}
+done
 for f in * ; do
     install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/kaiju/
 done

@@ -1,6 +1,6 @@
 diff -Nur kaiju.orig/src/bwt/Makefile kaiju/src/bwt/Makefile
---- kaiju.orig/src/bwt/Makefile	2016-07-07 11:37:28.552991000 +0200
-+++ kaiju/src/bwt/Makefile	2016-07-07 11:44:41.782809886 +0200
+--- kaiju.orig/src/bwt/Makefile	2016-08-04 18:39:24.380244959 +0200
++++ kaiju/src/bwt/Makefile	2016-08-04 18:41:39.823867215 +0200
 @@ -1,7 +1,7 @@
  CC      = gcc # -static -lm
  #CFLAGS  = -g
@@ -12,9 +12,9 @@ diff -Nur kaiju.orig/src/bwt/Makefile kaiju/src/bwt/Makefile
  ALL: mkbwt mkfmi
  
 diff -Nur kaiju.orig/src/makefile kaiju/src/makefile
---- kaiju.orig/src/makefile	2016-07-07 11:37:28.964295000 +0200
-+++ kaiju/src/makefile	2016-07-07 11:48:46.534015382 +0200
-@@ -1,8 +1,8 @@
+--- kaiju.orig/src/makefile	2016-08-04 18:39:24.853606247 +0200
++++ kaiju/src/makefile	2016-08-04 18:44:47.672800519 +0200
+@@ -1,8 +1,9 @@
  CC = gcc
  CXX = g++
 -CFLAGS = -g -O3 -DNDEBUG -Wall -Wno-uninitialized
@@ -23,10 +23,11 @@ diff -Nur kaiju.orig/src/makefile kaiju/src/makefile
 +CFLAGS = -g -m64 -O3 -DNDEBUG -Wall -Wno-uninitialized
 +CXXFLAGS = -m64 -ansi -pedantic -O3 -pthread -std=c++11 -DNDEBUG -g -Wall -Wconversion -Wno-unused-function
 +LDLIBS = -m64 -lpthread -static-libstdc++ -static-libgcc
++
  INCLUDES	= -I./include/ProducerConsumerQueue/src -I./include/ncbi-blast+
  
  BLASTOBJS = include/ncbi-blast+/algo/blast/core/pattern.o \
-@@ -42,19 +42,19 @@
+@@ -42,19 +43,19 @@
  	$(CXX) -o kaijup kaijup.o ReadItem.o Config.o ConsumerThread.o ConsumerThreadx.o ConsumerThreadp.o bwt/bwt.o bwt/compactfmi.o bwt/sequence.o bwt/suffixArray.o $(BLASTOBJS) $(LDLIBS)
  
  kaiju2krona: makefile kaiju2krona.o
@@ -51,12 +52,3 @@ diff -Nur kaiju.orig/src/makefile kaiju/src/makefile
  
  
  %.o : %.c
-@@ -63,7 +63,7 @@
- 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<
- 
- clean: 
--	rm -f -v bwt/mkbwt bwt/mkfmi kaiju kaijux kaijup kaiju2krona mergeOutputs kaijuReport convertNR ../bin/*
-+	rm -f -v bwt/mkbwt bwt/mkfmi kaiju kaijux kaijup kaiju2krona mergeOutputs kaijuReport convertNR addTaxonNames ../bin/*
- 	find . -name "*.o" -delete
- 	$(MAKE) -C bwt/ clean
- 
