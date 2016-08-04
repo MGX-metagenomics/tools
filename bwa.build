@@ -11,6 +11,7 @@ if [ ${OS} = "Solaris" ]; then
 fi
 
 make && \
+strip bwa && \
 install -g ${GROUP} --mode=755 bwa ${PREFIX}/bin/ && \
 install -g ${GROUP} --mode=644 bwa.1 ${PREFIX}/share/man/man1/ && \
 cd .. && \
