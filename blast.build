@@ -58,8 +58,8 @@ rm -f ${PREFIX}/lib/ncbi-blast+/libtest*
 rm -f ${PREFIX}/lib/ncbi-blast+/lib*\.a
 rm -rf ${PREFIX}/include/ncbi-tools++/
 
-chgrp ${GROUP} /vol/mgx-sw/lib/ncbi-blast+
-chgrp ${GROUP} /vol/mgx-sw/lib/ncbi-blast+/*
+chgrp ${GROUP} ${PREFIX}/lib/ncbi-blast+
+chgrp ${GROUP} ${PREFIX}/lib/ncbi-blast+/*
 
 cd ../.. && \
 rm -rf ncbi-blast-${VERSION}+-src
