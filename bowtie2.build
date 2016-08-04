@@ -11,4 +11,8 @@ cd ..
 rm -rf bowtie2-2.2.9/
 rm bowtie2-2.2.9-source.zip
 
+for f in bowtie2-align-l bowtie2-align-s bowtie2-build-l bowtie2-build-s bowtie2-inspect-l bowtie2-inspect-s; do
+    strip ${PREFIX}/bin/${f}
+done
+
 
