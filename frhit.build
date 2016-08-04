@@ -5,6 +5,7 @@ rm fr-hit-v0.7.1-2013-02-20.tar.gz && \
 cd fr-hit-v0.7 && \
 patch -p 1 < ../patches/frhit-link.patch && \
 make && \
+strip fr-hit && \
 install --mode=755 fr-hit /vol/mgx-sw/bin && \
 cd .. && \
 rm -rf fr-hit-v0.7
