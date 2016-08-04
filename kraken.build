@@ -1,10 +1,15 @@
 
+. ./tools.config
+
 git clone https://github.com/DerrickWood/kraken.git
 cd kraken
 patch -p 1 < ../patches/kraken_flock.patch
-mkdir -p /vol/mgx-sw/lib/kraken-0.10.6/
-./install_kraken.sh /vol/mgx-sw/lib/kraken-0.10.6/
-ln -s /vol/mgx-sw/lib/kraken-0.10.6/kraken /vol/mgx-sw/bin/kraken
+mkdir -p ${PREFIX}/lib/kraken-0.10.6/
+./install_kraken.sh ${PREFIX}/lib/kraken-0.10.6/
+for f in make_seqid_to_taxid_map db_shrink db_sort classify set_lcas; do
+    strip ${PREFIX}/lib/kraken-0.10.6/${f}
+done
+ln -sf ${PREFIX}/lib/kraken-0.10.6/kraken ${PREFIX}/bin/kraken
 cd ..
 rm -rf kraken
 
