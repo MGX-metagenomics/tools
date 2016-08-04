@@ -7,7 +7,7 @@ wget --no-check-certificate -O jellyfish-${VERSION}.tar.gz https://github.com/gm
 tar xzf jellyfish-${VERSION}.tar.gz && \
 rm jellyfish-${VERSION}.tar.gz && \
 cd jellyfish-${VERSION} && \
-./configure --prefix=/vol/mgx-sw && \
+./configure --prefix=${PREFIX} && \
 make && \
 make check && \
 make install && \
