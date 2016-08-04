@@ -31,6 +31,9 @@ cd .. && \
 rm -rf samtools-1.3.1/ && \
 chgrp -R ${GROUP} ${PREFIX}/include/htslib && \
 chgrp ${GROUP} ${PREFIX}/lib/libhts* && \
-chgrp ${GROUP} ${PREFIX}/lib/pkgconfig/htslib.pc && \
-strip ${PREFIX}/bin/samtools
+chgrp ${GROUP} ${PREFIX}/lib/pkgconfig/htslib.pc
+
+for f in samtools bgzip htsfile tabix; do 
+    strip ${PREFIX}/bin/${f}
+done
 
