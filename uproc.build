@@ -13,7 +13,10 @@ aclocal && \
 automake && \
 ./configure CFLAGS="-m64 -static-libgcc" LDFLAGS="-m64 -static-libgcc `gcc -m64 -print-file-name=libgomp.a`" --prefix=${PREFIX} && \
 make && \
-make check && \
+make check 
+for f in uproc-dna uproc-prot uproc-detailed uproc-import uproc-export uproc-orf uproc-makedb; do
+    strip .libs/${f}
+done
 make install && \
 rm -rf ${PREFIX}/share/doc/uproc && \
 cd .. && \
