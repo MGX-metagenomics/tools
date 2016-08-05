@@ -4,7 +4,7 @@
 git clone https://github.com/hallamlab/LAST-Plus.git
 cd LAST-Plus
 make clean && make
-for f in lastal+ lastdb+ last-split+ last-merge-batches+; do
+for f in lastal+ lastdb+; do
     strip ${f}
     install --mode=755 ${f} ${PREFIX}/bin
 done
