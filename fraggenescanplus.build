@@ -5,6 +5,7 @@ git clone https://github.com/hallamlab/FragGeneScanPlus.git && \
 cd FragGeneScanPlus && \
 patch -p 1 < ../patches/fraggenescanplus-semaphores.patch && \
 make && \
+strip FGS+ && \
 install -g ${GROUP} --mode=755 FGS+ ${PREFIX}/bin && \
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanPlus && \
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanPlus/train && \
