@@ -8,6 +8,7 @@ rm RAPSearch2.23_64bits.tar.gz && \
 cd RAPSearch2.23_64bits && \
 ./install && \
 for f in rapsearch prerapsearch; do
+     strip bin/${f}
      install --mode=755 bin/${f} ${PREFIX}/bin
 done
 cd .. && \
