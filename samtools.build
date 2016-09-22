@@ -37,3 +37,7 @@ for f in samtools bgzip htsfile tabix; do
     strip ${PREFIX}/bin/${f}
 done
 
+# not needed
+rm -f ${PREFIX}/bin/maq2sam-long
+rm -f ${PREFIX}/bin/maq2sam-short
+
