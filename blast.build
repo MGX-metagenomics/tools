@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-VERSION=2.4.0
+VERSION=2.5.0
 
 wget ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz && \
 tar xzf ncbi-blast-${VERSION}+-src.tar.gz && \
@@ -9,6 +9,7 @@ rm ncbi-blast-${VERSION}+-src.tar.gz && \
 cd ncbi-blast-${VERSION}+-src/c++ 
 
 patch -p 2 < ../../patches/blast-check-instdir.patch 
+patch -p 2 < ../../patches/blast-fix-header-install.patch
 
 #sed -i 's,cgi,-cgi,g' scripts/projects/blast/project.lst
 

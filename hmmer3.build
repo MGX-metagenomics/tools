@@ -5,10 +5,11 @@ rm hmmer-3.1b2.tar.gz && \
 cd hmmer-3.1b2 &&
 patch -p1 < ../patches/hmmer3-check-instdir.patch && \
 patch -p1 < ../patches/hmmer-3.1b2-manperms.patch && \
+patch -p1 < ../patches/hmmer-3.1b2-strip.patch && \
 ./configure --prefix=/vol/mgx-sw && \
 make && \
 make check && \
-make install && \
+make install-strip && \
 rmdir /vol/mgx-sw/share/doc/hmmer && \
 cd .. && \
 rm -rf hmmer-3.1b2
