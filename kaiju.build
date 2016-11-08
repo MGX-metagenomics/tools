@@ -1,9 +1,12 @@
 
 . ./tools.config
 
-git clone https://github.com/bioinformatics-centre/kaiju.git && \
-cd kaiju && \
-patch -p 1 < ../patches/kaiju-64bit.patch && \
+VERSION=1.4.4
+
+wget https://github.com/bioinformatics-centre/kaiju/archive/v${VERSION}.tar.gz && \
+tar xzf v${VERSION}.tar.gz && \
+rm v${VERSION}.tar.gz && \
+cd kaiju-${VERSION} && \
 cd src && \
 make && \
 cd ../bin && \
@@ -11,11 +14,12 @@ install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/kaiju/
 for f in addTaxonNames convertNR kaiju kaiju2krona kaijuReport kaijup kaijux mergeOutputs mkbwt mkfmi; do
     strip ${f}
 done
+rm -f taxonlist.tsv
 for f in * ; do
     install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/kaiju/
 done
 ln -sf ${PREFIX}/lib/kaiju/kaiju ${PREFIX}/bin && \
 chgrp ${GROUP} ${PREFIX}/bin/kaiju && \
 cd ../.. && \
-rm -rf kaiju
+rm -rf kaiju-${VERSION}
 
