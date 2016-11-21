@@ -3,7 +3,7 @@
 
 git clone https://github.com/DerrickWood/kraken.git
 cd kraken
-patch -p 1 < ../patches/kraken_flock.patch
+#patch -p 1 < ../patches/kraken_flock.patch
 mkdir -p ${PREFIX}/lib/kraken-0.10.6/
 ./install_kraken.sh ${PREFIX}/lib/kraken-0.10.6/
 for f in make_seqid_to_taxid_map db_shrink db_sort classify set_lcas; do
