@@ -1,8 +1,39 @@
 
+. ./tools.config
+
 wget http://metabin.riken.jp/archive/linux/x86_64/metabinv1.0.linux.x86_64.tar.gz
 tar xzf metabinv1.0.linux.x86_64.tar.gz
 rm metabinv1.0.linux.x86_64.tar.gz
 
-cd metabinv1.0
-./metabin -f /vol/biodb/ncbi_taxonomy
+cd metabinv1.0.linux.x86_64/ 
+
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/metabinv1.0/
+for f in ../obj/libjpeg.so.62 ../obj/libgd.so.2 ../obj/libpng16.so.16 prepareinput; do
+    install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/metabinv1.0/
+done
+install -g ${GROUP} --mode=755 metabin ${PREFIX}/lib/metabinv1.0/metabin.real
+
+
+if [ -d /vol/biodb/local_databases/MGX/MetaBin/data ]; then
+    ln -sf /vol/biodb/local_databases/MGX/MetaBin/data ${PREFIX}/lib/metabinv1.0/
+fi
+
+# config file
+cat > ${PREFIX}/lib/metabinv1.0/config << EOF
+blatdir = ${PREFIX}/bin
+nrdir = /vol/biodb/local_databases/MGX/MetaBin
+EOF
+
+# wrapper script
+cat > ${PREFIX}/lib/metabinv1.0/metabin << EOW
+#!/usr/bin/env bash
+
+export LD_LIBRARY_PATH=${PREFIX}/lib/metabinv1.0/
+exec ${PREFIX}/lib/metabinv1.0/metabin.real "\$@"
+EOW
+chmod 755 ${PREFIX}/lib/metabinv1.0/metabin
+
+
+cd ..
+rm -rf metabinv1.0.linux.x86_64/
 
