@@ -1,0 +1,20 @@
+
+. ./tools.config
+
+VERSION=4.6.1.5
+
+wget https://download.mono-project.com/sources/mono/mono-4.6.1.5.tar.bz2 && \
+tar xjf mono-4.6.1.5.tar.bz2 && \
+rm mono-4.6.1.5.tar.bz2 && \
+cd mono-4.6.1
+
+patch -p 1 < ../patches/mono_sgen_nursery.patch
+patch -p 1 < ../patches/mono_qsort_recursion.patch
+
+./configure --prefix=${PREFIX} \
+   --with-xen_opt=no --with-large-heap=yes
+make && make install
+cd .. && \
+rm -rf mono-4.6.1
+
+
