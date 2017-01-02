@@ -12,9 +12,9 @@ patch -p 1 < ../patches/mono_sgen_nursery.patch
 patch -p 1 < ../patches/mono_qsort_recursion.patch
 
 ./configure --prefix=${PREFIX} \
+   --sysconfdir=${PREFIX}/share \
    --with-xen_opt=no --with-large-heap=yes
 make && make install
 cd .. && \
 rm -rf mono-4.6.1
-
 
