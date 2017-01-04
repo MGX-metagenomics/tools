@@ -1,0 +1,26 @@
+
+. ./tools.config
+
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/Conveyor
+
+git clone -b development https://git.computational.bio.uni-giessen.de/burkhard.linke/conveyor.git
+cd conveyor
+${PREFIX}/bin/mozroots --import --sync
+wget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+${PREFIX}/bin/mono nuget.exe restore Conveyor.sln
+
+${PREFIX}/bin/xbuild /t:Clean
+${PREFIX}/bin/xbuild /p:Configuration=Debug 
+
+shopt -s nullglob
+
+find . -type d -name bin | while read bindir; do
+    if [ -d ${bindir}/Debug ]; then
+        install -g ${GROUP} --mode=755 ${bindir}/Debug/*.{dll,mdb,exe,config} ${PREFIX}/lib/Conveyor/
+    fi
+done
+
+shopt -u nullglob
+
+cd .. && rm -rf conveyor
+
