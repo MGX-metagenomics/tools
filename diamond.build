@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-VERSION=0.8.29
+VERSION=0.8.31
 
 if [ ${OS} = "Solaris" ]; then
     echo "Diamond is not available for Solaris."
