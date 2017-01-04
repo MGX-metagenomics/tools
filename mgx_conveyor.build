@@ -1,0 +1,24 @@
+
+. ./tools.config
+
+mkdir X && cd X && \
+patch -p 1 < ../patches/mgx_conveyor_templates.patch
+
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/config
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/exec
+
+for f in share/config/*.config; do
+    sed -i "s,PREFIX,${PREFIX},g" ${f}
+    install -g ${GROUP} --mode=444 ${f} ${PREFIX}/share/config/
+done
+
+for f in share/exec/*; do
+    sed -i "s,PREFIX,${PREFIX},g" ${f}
+    install -g ${GROUP} --mode=755 ${f} ${PREFIX}/share/exec/
+    y=`basename ${f}`
+    ln -sf ${PREFIX}/share/exec/${y} ${PREFIX}/bin/
+done
+
+cd .. && \
+rm -rf X
+
