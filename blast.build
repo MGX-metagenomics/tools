@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-VERSION=2.5.0
+VERSION=2.6.0
 
 wget ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz && \
 tar xzf ncbi-blast-${VERSION}+-src.tar.gz && \
