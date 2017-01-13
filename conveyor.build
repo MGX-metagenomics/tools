@@ -5,8 +5,14 @@ install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/Conveyor
 
 git clone -b development https://git.computational.bio.uni-giessen.de/burkhard.linke/conveyor.git
 cd conveyor
-${PREFIX}/bin/mozroots --import --sync
-wget https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+
+if [ -f /etc/ssl/certs/ca-certificates.crt ]; then
+    ${PREFIX}/bin/cert-sync /etc/ssl/certs/ca-certificates.crt
+else 
+    ${PREFIX}/bin/mozroots --import --sync
+fi
+
+wget http://dist.nuget.org/win-x86-commandline/latest/nuget.exe
 ${PREFIX}/bin/mono nuget.exe restore Conveyor.sln
 
 ${PREFIX}/bin/xbuild /t:Clean
