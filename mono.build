@@ -12,7 +12,7 @@ patch -p 1 < ../patches/mono_sgen_nursery.patch
 patch -p 1 < ../patches/mono_qsort_recursion.patch
 
 ./configure --prefix=${PREFIX} \
-   --sysconfdir=${PREFIX}/share \
+   --sysconfdir=${PREFIX}/lib/etc \
    --with-xen_opt=no --with-large-heap=yes
 make && make install
 cd .. && \
@@ -21,5 +21,5 @@ rm -rf mono-4.6.1
 # configure drmaa library location for UGE
 if [ -f /vol/codine-8.3/lib/lx-amd64/libdrmaa.so ]; then
     sed -i 's,</configuration>,        <dllmap dll="drmaa" target="/vol/codine-8.3/lib/lx-amd64/libdrmaa.so" os="!windows"/>\n</configuration>,g' \
-        ${PREFIX}/share/mono/config
+        ${PREFIX}/lib/etc/mono/config
 fi
