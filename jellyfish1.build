@@ -1,0 +1,14 @@
+
+. ./tools.config
+
+VERSION=1.1.11
+
+wget http://www.cbcb.umd.edu/software/jellyfish/jellyfish-${VERSION}.tar.gz && \
+tar xzf jellyfish-${VERSION}.tar.gz && \
+cd jellyfish-${VERSION} && \
+./configure --prefix=${PREFIX} && \
+make && \
+make check && \
+make install-strip && \
+rm -rf jellyfish-${VERSION} jellyfish-${VERSION}.tar.gz
+
