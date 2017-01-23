@@ -1,18 +1,18 @@
 
 . ./tools.config
 
-VERSION=2.2.6
-
-wget --no-check-certificate -O jellyfish-${VERSION}.tar.gz https://github.com/gmarcais/Jellyfish/releases/download/v${VERSION}/jellyfish-${VERSION}.tar.gz && \
-tar xzf jellyfish-${VERSION}.tar.gz && \
-rm jellyfish-${VERSION}.tar.gz && \
-cd jellyfish-${VERSION} && \
-./configure --prefix=${PREFIX} && \
-make && \
-make check && \
-make install && \
-cd .. && \
-rm -rf jellyfish-${VERSION}
-
-strip ${PREFIX}/bin/jellyfish
+#VERSION=2.2.6
+#
+#wget --no-check-certificate -O jellyfish-${VERSION}.tar.gz https://github.com/gmarcais/Jellyfish/releases/download/v${VERSION}/jellyfish-${VERSION}.tar.gz && \
+#tar xzf jellyfish-${VERSION}.tar.gz && \
+#rm jellyfish-${VERSION}.tar.gz && \
+#cd jellyfish-${VERSION} && \
+#./configure --prefix=${PREFIX} && \
+#make && \
+#make check && \
+#make install && \
+#cd .. && \
+#rm -rf jellyfish-${VERSION}
+#
+#strip ${PREFIX}/bin/jellyfish
 
