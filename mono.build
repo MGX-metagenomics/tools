@@ -13,7 +13,9 @@ patch -p 1 < ../patches/mono_qsort_recursion.patch
 
 ./configure --prefix=${PREFIX} \
    --sysconfdir=${PREFIX}/lib/etc \
-   --with-xen_opt=no --with-large-heap=yes
+   --with-xen_opt=no --with-large-heap=yes \
+   --disable-boehm \
+   --disable-nls --with-mcs-docs=no
 make && make install
 cd .. && \
 rm -rf mono-4.6.1

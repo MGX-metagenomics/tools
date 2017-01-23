@@ -1,9 +1,54 @@
 
 . ./tools.config
 
-mkdir X && cd X && \
+rm -rf X && mkdir X && cd X && \
 patch -p 1 < ../patches/mgx_conveyor_templates.patch
 
+
+if [ ! -d /ceph ]; then
+    sed -i 's,ceph,vol,g' share/config/settings.config
+fi
+
+# global network dir
+if [ -d /vol/codine-tmp ]; then
+    sed -i 's,sge-tmp,codine-tmp,g' share/config/settings.config
+fi
+
+#
+# find the correct arch request
+#
+NUMSLOTS=`qhost -l 'arch=lx26-amd64' | wc -l`
+if [ ${NUMSLOTS} -eq 0 ]; then
+    # assume CeBiTec UGE
+    sed -i 's,-l arch=lx26-amd64,-P mgx -l arch=lx-amd64,g' share/config/settings.config
+fi
+
+#
+# Decypher binaries
+#
+if [ ! -f /vol/decypher/bin/dc_run ]; then
+    # assume CeBiTec
+    sed -i 's,/vol/decypher/bin,/vol/decypher/bin/cli/bin,g' share/config/settings.config
+    sed -i 's,decypher01.internal.computational.bio.uni-giessen.de,decy04.CeBiTec.Uni-Bielefeld.DE,g' \
+        share/config/settings.config
+fi
+
+#
+# check for presence of 'large' complex
+#
+HAS_LARGE=`qhost -l 'large=1' 2>/dev/null | wc -l`
+if [ ${HAS_LARGE} -eq 0 ]; then
+    # no large complex, fallback to virtual_free request
+    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=30g',g" share/exec/GraphValidate
+    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=30g',g" share/exec/GraphRun
+else
+    sed -i "s,QREQ,-l 'large=1',g" share/exec/GraphValidate
+    sed -i "s,QREQ,-l 'large=1',g" share/exec/GraphRun
+fi
+
+#
+# install
+#
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share/config
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share/exec
 
