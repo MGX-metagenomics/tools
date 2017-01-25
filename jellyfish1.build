@@ -10,5 +10,6 @@ cd jellyfish-${VERSION} && \
 make && \
 make check && \
 make install-strip && \
+cd .. && \
 rm -rf jellyfish-${VERSION} jellyfish-${VERSION}.tar.gz
 
