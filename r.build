@@ -1,0 +1,21 @@
+
+. ./tools.config
+
+VERSION=3.3.2
+
+wget https://cran.r-project.org/src/base/R-3/R-${VERSION}.tar.gz && \
+tar xzf R-${VERSION}.tar.gz && \
+cd R-${VERSION} && \
+./configure --prefix=${PREFIX} \
+  --enable-R-shlib \
+  --disable-nls \
+  --enable-java=no \
+  --with-libpng=no \
+  --with-jpeglib=no \
+  --with-libtiff=no \
+  --with-x=no && \
+make && \
+make install && \
+cd .. && \
+rm -rf R-${VERSION} R-${VERSION}.tar.gz
+

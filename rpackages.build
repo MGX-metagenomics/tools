@@ -1,0 +1,31 @@
+
+. ./tools.config
+
+if [ ! -f ${PREFIX}/bin/R ]; then
+    echo "Install R before installing R packages"
+    exit 1
+fi
+
+wget https://cran.r-project.org/src/contrib/amap_0.8-14.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL amap_0.8-14.tar.gz && \
+rm amap_0.8-14.tar.gz 
+
+wget https://cran.r-project.org/src/contrib/permute_0.9-4.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL permute_0.9-4.tar.gz && \
+rm permute_0.9-4.tar.gz
+
+wget https://cran.r-project.org/src/contrib/vegan_2.4-2.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL vegan_2.4-2.tar.gz && \
+rm vegan_2.4-2.tar.gz
+
+wget https://cran.r-project.org/src/contrib/Rserve_1.7-3.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL Rserve_1.7-3.tar.gz && \
+rm Rserve_1.7-3.tar.gz
+
+#echo -e "source('https://bioconductor.org/biocLite.R')\nbiocLite('ctc')" \
+#  | ${PREFIX}/bin/R CMD BATCH /dev/fd/0 /dev/fd/1
+
+wget https://bioconductor.org/packages/3.4/bioc/src/contrib/ctc_1.48.0.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL ctc_1.48.0.tar.gz && \
+rm ctc_1.48.0.tar.gz
+
