@@ -1,0 +1,135 @@
+diff -Nur FragGeneScanPlus.orig/run_hmm.c FragGeneScanPlus/run_hmm.c
+--- FragGeneScanPlus.orig/run_hmm.c	2017-01-31 14:47:14.970438000 +0100
++++ FragGeneScanPlus/run_hmm.c	2017-01-31 14:50:27.373354000 +0100
+@@ -175,7 +175,7 @@
+ void setMemoryLimits() {
+     /* check for mem limit, allocate buffer */
+     if (max_mem <= 0) {
+-        printf("Max memory limit specified invalid, defaulting to 1024MB\n");
++        fprintf(stderr, "Max memory limit specified invalid, defaulting to 1024MB\n");
+         max_mem = 1024;
+     }
+ 
+@@ -309,7 +309,7 @@
+ 
+     // allocate memory for each thread only once!
+     if (verbose)
+-        printf("DEBUG: Allocating memory for all threads...\n");
++        fprintf(stderr, "DEBUG: Allocating memory for all threads...\n");
+ 
+     int k;
+     for(k=0; k< threadnum; k++) {
+@@ -317,8 +317,8 @@
+     }
+ 
+     if (verbose) {
+-        printf("DEBUG: Allocated memory for all threads!\n");
+-        printf("DEBUG: Starting writer thread...\n");
++        fprintf(stderr, "DEBUG: Allocated memory for all threads!\n");
++        fprintf(stderr, "DEBUG: Starting writer thread...\n");
+     }
+ 
+     pthread_create(&writer_thread, 0, writerThread, 0);
+@@ -326,12 +326,12 @@
+     fp = OpenFASTA(seq_file);
+ 
+     if (!fp) {
+-        printf("ERROR! Could not open seq_file %s for reading...!\n", seq_file);
++        fprintf(stderr, "ERROR! Could not open seq_file %s for reading...!\n", seq_file);
+         exit(EXIT_FAILURE);
+     }
+ 
+     if (verbose)
+-        printf("INFO : Giving workers initial inputs...\n");
++        fprintf(stderr, "INFO : Giving workers initial inputs...\n");
+ 
+     int i,j;
+     void *status;
+@@ -347,7 +347,7 @@
+     }
+ 
+     if (verbose)
+-        printf("INFO : Initializing worker threads...\n");
++        fprintf(stderr, "INFO : Initializing worker threads...\n");
+ 
+ }
+ 
+@@ -378,7 +378,7 @@
+     CloseFASTA(fp);
+ 
+     if (verbose)
+-        printf("INFO : Finished handing out all the work...\n");
++        fprintf(stderr, "INFO : Finished handing out all the work...\n");
+ 
+     num_reads_flag =1;
+ 
+@@ -401,7 +401,7 @@
+     initializeSemaphores();
+ 
+     if (verbose)
+-        printf("DEBUG: Max number of sequences per thread : %d, max bytes per thread : %d\n", MAX_SEQS_PER_BUFFER, MAX_BYTES_PER_BUFFER*5);
++        fprintf(stderr, "DEBUG: Max number of sequences per thread : %d, max bytes per thread : %d\n", MAX_SEQS_PER_BUFFER, MAX_BYTES_PER_BUFFER*5);
+ 
+     /* read all initial model */
+     get_train_from_file(hmm_file, &hmm, mstate_file, rstate_file, nstate_file, sstate_file, pstate_file,s1state_file, p1state_file, dstate_file, &train);
+@@ -415,7 +415,7 @@
+     // destroy the semaphores if we have a mac machine
+     destroySemaphores();
+ 
+-    printf("Run finished with %d threads.\n", threadnum);
++    fprintf(stderr, "Run finished with %d threads.\n", threadnum);
+ }
+ 
+ int read_seq_into_buffer(FASTAFILE* ffp, thread_data* thread_data, unsigned int buf) {
+@@ -484,7 +484,7 @@
+     read_counter1 += thread_data->input_num_sequences[buf];
+ 
+     if (ferror(fp)) {
+-        printf("Error with file encountered.\n");
++        fprintf(stderr, "Error with file encountered.\n");
+     } else if(feof(fp)) {
+         last_carat_position = -1; // terminating condition
+     }
+@@ -575,13 +575,13 @@
+     }
+     writeAminoAcids(aa_outfile_fp, td, buffer);
+     num_writes++;
+-    if (verbose) printf("INFO: Wrote results for thread %d, buffer %d.\n", td->id, buffer );
++    if (verbose) fprintf(stderr, "INFO: Wrote results for thread %d, buffer %d.\n", td->id, buffer );
+ }
+ 
+ void writeDNA() {
+     dna_outfile_fp = fopen(dna_file, "a");
+     if (!dna_outfile_fp) {
+-        printf("ERROR: Could not open dna output file %s for writing!\n", dna_file);
++        fprintf(stderr, "ERROR: Could not open dna output file %s for writing!\n", dna_file);
+         exit(EXIT_FAILURE);
+     }
+ }
+@@ -589,7 +589,7 @@
+ void writeMeta() {
+     outfile_fp = fopen(out_file, "a");
+     if(!outfile_fp) {
+-        printf("ERROR: Could not open meta output file %s for writing!\n", out_file);
++        fprintf(stderr, "ERROR: Could not open meta output file %s for writing!\n", out_file);
+         exit(EXIT_FAILURE);
+     }
+ }
+@@ -626,7 +626,7 @@
+     }
+ 
+     if(!aa_outfile_fp) {
+-        printf("ERROR: Could not open aa output file %s for writing!\n", aa_file);
++        fprintf(stderr, "ERROR: Could not open aa output file %s for writing!\n", aa_file);
+         exit(EXIT_FAILURE);
+     }
+ 
+@@ -724,7 +724,7 @@
+         td->output_num_sequences[b] = td->input_num_sequences[b];
+ 
+         if (verbose) {
+-            printf("INFO: Thread %d buffer %d done work on %d sequences!\n",
++            fprintf(stderr, "INFO: Thread %d buffer %d done work on %d sequences!\n",
+                    td->id, b, td->input_num_sequences[b]);
+         }
+ 
