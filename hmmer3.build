@@ -6,7 +6,9 @@ cd hmmer-3.1b2 &&
 patch -p1 < ../patches/hmmer3-check-instdir.patch && \
 patch -p1 < ../patches/hmmer-3.1b2-manperms.patch && \
 patch -p1 < ../patches/hmmer-3.1b2-strip.patch && \
-./configure --prefix=/vol/mgx-sw && \
+./configure --prefix=/vol/mgx-sw \
+    --enable-portable-binary \
+    --with-gcc-arch=i686 && \
 make && \
 make check && \
 make install-strip && \
