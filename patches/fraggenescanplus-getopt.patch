@@ -1,0 +1,51 @@
+diff --git a/run_hmm.c b/run_hmm.c
+index 4b2b7d2..380bef1 100644
+--- a/run_hmm.c
++++ b/run_hmm.c
+@@ -99,13 +99,6 @@ void parseArguments(int argc, char **argv) {
+             break;
+         case 't':
+             strcpy(train_file, optarg);
+-            strcpy(hmm_file, train_dir);
+-            strcat(hmm_file, train_file);
+-            if (access(hmm_file, F_OK)==-1) {
+-                fprintf(stderr, "ERROR: The file for model parameters [%s] does not exist\n", hmm_file);
+-                print_usage();
+-                exit(EXIT_FAILURE);
+-            }
+             break;
+         case 'f':
+             format = 1;
+@@ -123,13 +116,8 @@ void parseArguments(int argc, char **argv) {
+     }
+ 
+     optind = 1;
+-    while ((c=getopt(argc, argv, "fs:m:o:w:r:t:p:dev")) != -1) {
+-        switch (c) {
+-        case 'r':
+-            setTrainDirectory(optarg);
+-            break;
+-        }
+-    }
++
++    checkTrainFile();
+ }
+ 
+ void checkFiles() {
+@@ -213,6 +201,16 @@ void setTrainDirectory(char* train_path) {
+     strcat(dstate_file, "pwm");
+ }
+ 
++void checkTrainFile() {
++    strcpy(hmm_file, train_dir);
++    strcat(hmm_file, train_file);
++    if (access(hmm_file, F_OK)==-1) {
++         fprintf(stderr, "ERROR: The file for model parameters [%s] does not exist\n", hmm_file);
++         print_usage();
++         exit(EXIT_FAILURE);
++    }
++}
++
+ void initializeSemaphores() {
+ 
+ #ifdef __APPLE__
