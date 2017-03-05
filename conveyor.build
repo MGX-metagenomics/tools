@@ -1,6 +1,11 @@
 
 . ./tools.config
 
+if [ ! -f ${PREFIX}/bin/mono ]; then
+    echo "Mono installation missing."
+    exit 1
+fi
+
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/Conveyor
 
 git clone -b development https://git.computational.bio.uni-giessen.de/burkhard.linke/conveyor.git
