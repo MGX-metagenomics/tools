@@ -5,6 +5,7 @@ wget -O metacv_2_3_0.tgz https://sourceforge.net/projects/metacv/files/metacv_2_
 tar xzf metacv_2_3_0.tgz
 rm metacv_2_3_0.tgz
 cd metacv_2_3_0/
+patch -p1 < ../patches/metacv_printf_args.patch
 make
 strip metacv
 install --mode=755 metacv ${PREFIX}/bin
