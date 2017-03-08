@@ -13,7 +13,8 @@ cd R-${VERSION} && \
   --with-libpng=no \
   --with-jpeglib=no \
   --with-libtiff=no \
-  --with-x=no && \
+  --with-x=no \
+  --with-ICU=no && \
 make && \
 make install && \
 cd .. && \
