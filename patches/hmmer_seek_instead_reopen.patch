@@ -1,0 +1,191 @@
+diff -Nur /vol/mgx-sw/src/hmmer-3.1b2.ORIG/easel/esl_fileparser.c ./hmmer-3.1b2/easel/esl_fileparser.c
+--- /vol/mgx-sw/src/hmmer-3.1b2.ORIG/easel/esl_fileparser.c	2015-02-26 13:45:58.000000000 +0100
++++ ./hmmer-3.1b2/easel/esl_fileparser.c	2016-12-21 16:39:17.945361995 +0100
+@@ -535,6 +535,37 @@
+   esl_fileparser_Destroy(efp);
+ }
+ 
++/* Function:  esl_fileparser_Reset()
++ * Incept:    
++ *
++ * Purpose:   Resets an open <ESL_FILEPARSER> for reuse
++ * 
++ */
++void
++esl_fileparser_Reset(ESL_FILEPARSER *efp)
++{
++  if (efp == NULL) return;
++
++  if (efp->fp != NULL && efp->fp != stdin) fseeko(efp->fp, 0, SEEK_SET);
++  if (efp->buf != NULL) free(efp->buf);
++
++  efp->buf         = NULL;
++  efp->buflen      = 0;
++  efp->s           = NULL;
++  efp->commentchar = '\0';
++  efp->tok         = NULL;
++  efp->toklen      = 0;
++  efp->tokchar     = '\0';
++  efp->filename    = NULL;
++  efp->linenumber  = 0;
++  efp->errbuf[0]   = '\0';
++  efp->is_buffer   = FALSE;
++  efp->mem_buffer  = NULL;
++  efp->mem_size    = 0;
++  efp->mem_pos     = 0;
++
++}
++
+ 
+ 
+ /*****************************************************************
+diff -Nur /vol/mgx-sw/src/hmmer-3.1b2.ORIG/easel/esl_fileparser.h ./hmmer-3.1b2/easel/esl_fileparser.h
+--- /vol/mgx-sw/src/hmmer-3.1b2.ORIG/easel/esl_fileparser.h	2015-02-26 13:45:58.000000000 +0100
++++ ./hmmer-3.1b2/easel/esl_fileparser.h	2016-12-21 16:39:34.929343375 +0100
+@@ -37,6 +37,7 @@
+ extern int  esl_fileparser_GetTokenOnLine  (ESL_FILEPARSER *efp, char **opt_tok, int *opt_toklen);
+ extern int  esl_fileparser_GetRemainingLine(ESL_FILEPARSER *efp, char **ret_s);
+ extern void esl_fileparser_Destroy         (ESL_FILEPARSER *efp);
++extern void esl_fileparser_Reset           (ESL_FILEPARSER *efp);
+ extern void esl_fileparser_Close           (ESL_FILEPARSER *efp);
+ 
+ #endif /*eslFILEPARSER_INCLUDED */
+diff -Nur /vol/mgx-sw/src/hmmer-3.1b2.ORIG/easel/esl_ssi.c ./hmmer-3.1b2/easel/esl_ssi.c
+--- /vol/mgx-sw/src/hmmer-3.1b2.ORIG/easel/esl_ssi.c	2015-02-26 13:45:59.000000000 +0100
++++ ./hmmer-3.1b2/easel/esl_ssi.c	2016-12-21 16:39:08.545372310 +0100
+@@ -526,6 +526,21 @@
+ }  
+ 
+ 
++/* Function:  esl_ssi_Reset()
++ * Synopsis:  Reset an SSI index.
++ *
++ * Purpose:   Reset an open SSI index <ssi>.
++ * 
++ * Args:      <ssi>   - an open SSI index file.
++ */
++void
++esl_ssi_Reset(ESL_SSI *ssi)
++{
++  if (ssi == NULL) return;
++  if (ssi->fp != NULL) fseeko(ssi->fp, 0, SEEK_SET);
++}
++
++
+ /* binary_search()
+  * Date:     SRE, Sun Dec 31 16:05:03 2000 [St. Louis]
+  *
+diff -Nur /vol/mgx-sw/src/hmmer-3.1b2.ORIG/easel/esl_ssi.h ./hmmer-3.1b2/easel/esl_ssi.h
+--- /vol/mgx-sw/src/hmmer-3.1b2.ORIG/easel/esl_ssi.h	2015-02-26 13:45:59.000000000 +0100
++++ ./hmmer-3.1b2/easel/esl_ssi.h	2016-12-21 16:39:23.965355393 +0100
+@@ -110,6 +110,8 @@
+ /* 1. Using (reading) SSI indices */
+ extern int  esl_ssi_Open(const char *filename, ESL_SSI **ret_ssi);
+ extern void esl_ssi_Close(ESL_SSI *ssi);
++extern void esl_ssi_Reset(ESL_SSI *ssi);
++
+ extern int  esl_ssi_FindName(ESL_SSI *ssi, const char *key,
+ 			     uint16_t *ret_fh, off_t *ret_roff, off_t *opt_doff, int64_t *opt_L);
+ extern int  esl_ssi_FindNumber(ESL_SSI *ssi, int64_t nkey,
+diff -Nur /vol/mgx-sw/src/hmmer-3.1b2.ORIG/src/hmmer.h ./hmmer-3.1b2/src/hmmer.h
+--- /vol/mgx-sw/src/hmmer-3.1b2.ORIG/src/hmmer.h	2015-02-26 13:46:03.000000000 +0100
++++ ./hmmer-3.1b2/src/hmmer.h	2016-12-21 16:39:41.045336675 +0100
+@@ -1571,6 +1571,7 @@
+ extern int  p7_hmmfile_OpenNoDB (char *filename, char *env, P7_HMMFILE **ret_hfp); /* deprecated */
+ extern int  p7_hmmfile_OpenBuffer(char *buffer, int size, P7_HMMFILE **ret_hfp);
+ extern void p7_hmmfile_Close(P7_HMMFILE *hfp);
++extern int  p7_hmmfile_Reset(char* env, P7_HMMFILE *hfp, char *errbuf);
+ #ifdef HMMER_THREADS
+ extern int  p7_hmmfile_CreateLock(P7_HMMFILE *hfp);
+ #endif
+diff -Nur /vol/mgx-sw/src/hmmer-3.1b2.ORIG/src/hmmscan.c ./hmmer-3.1b2/src/hmmscan.c
+--- /vol/mgx-sw/src/hmmer-3.1b2.ORIG/src/hmmscan.c	2015-02-26 13:46:03.000000000 +0100
++++ ./hmmer-3.1b2/src/hmmscan.c	2016-12-21 16:39:40.789336956 +0100
+@@ -440,16 +440,19 @@
+     }
+ #endif
+ 
++  /* Open the target profile database */
++  status = p7_hmmfile_OpenE(cfg->hmmfile, p7_HMMDBENV, &hfp, NULL);
++  if (status != eslOK)        p7_Fail("Unexpected error %d in opening hmm file %s.\n",           status, cfg->hmmfile);  
++  
+   /* Outside loop: over each query sequence in <seqfile>. */
+   while ((sstatus = esl_sqio_Read(sqfp, qsq)) == eslOK)
+     {
+       nquery++;
+       esl_stopwatch_Start(w);	                          
+ 
+-      /* Open the target profile database */
+-      status = p7_hmmfile_OpenE(cfg->hmmfile, p7_HMMDBENV, &hfp, NULL);
+-      if (status != eslOK)        p7_Fail("Unexpected error %d in opening hmm file %s.\n",           status, cfg->hmmfile);  
+-  
++      status = p7_hmmfile_Reset(p7_HMMDBENV, hfp, NULL);
++      if (status != eslOK)        p7_Fail("Unexpected error %d rewinding hmm file %s.\n",           status, cfg->hmmfile);
++
+ #ifdef HMMER_THREADS
+       /* if we are threaded, create a lock to prevent multiple readers */
+       if (ncpus > 0)
+@@ -518,7 +521,6 @@
+       if (fprintf(ofp, "//\n") < 0) ESL_EXCEPTION_SYS(eslEWRITE, "write failed");
+       fflush(ofp);
+ 
+-      p7_hmmfile_Close(hfp);
+       p7_pipeline_Destroy(info->pli);
+       p7_tophits_Destroy(info->th);
+       esl_sq_Reuse(qsq);
+@@ -528,6 +530,8 @@
+   else if (sstatus != eslEOF)     esl_fatal("Unexpected error %d reading sequence file %s",
+ 					    sstatus, sqfp->filename);
+ 
++  p7_hmmfile_Close(hfp);
++
+   /* Terminate outputs - any last words?
+    */
+   if (tblfp)    p7_tophits_TabularTail(tblfp,    "hmmscan", p7_SCAN_MODELS, cfg->seqfile, cfg->hmmfile, go);
+diff -Nur /vol/mgx-sw/src/hmmer-3.1b2.ORIG/src/p7_hmmfile.c ./hmmer-3.1b2/src/p7_hmmfile.c
+--- /vol/mgx-sw/src/hmmer-3.1b2.ORIG/src/p7_hmmfile.c	2015-02-26 13:46:04.000000000 +0100
++++ ./hmmer-3.1b2/src/p7_hmmfile.c	2016-12-21 16:39:41.025336697 +0100
+@@ -498,6 +498,43 @@
+   free(hfp);
+ }
+ 
++/* Function:  p7_hmmfile_Reset()
++ *
++ * Purpose:   Reset internal state for an open HMM file <hfp> so it can be used again.
++ *
++ * Returns:   <eslOK> on success, <eslFAIL> otherwise
++ */
++int 
++p7_hmmfile_Reset(char* env, P7_HMMFILE *hfp, char *errbuf)
++{
++  int status;
++
++  if (hfp == NULL) return eslOK;
++ 
++#ifdef HAVE_POPEN /* gzip functionality, need to reopen */
++  if (hfp->do_gzip && hfp->f != NULL) {
++    p7_hmmfile_Close(hfp);
++    return p7_hmmfile_OpenE(hfp->fname, env, &hfp, NULL);
++  }
++#endif
++
++  hfp->errbuf[0] = '\0';
++
++  if (hfp->f     != NULL && fseeko(hfp->f,   0, SEEK_SET) != 0) ESL_EXCEPTION(eslESYS, "fseek failed");
++  if (hfp->ffp   != NULL && fseeko(hfp->ffp, 0, SEEK_SET) != 0) ESL_EXCEPTION(eslESYS, "fseek failed");
++  if (hfp->pfp   != NULL && fseeko(hfp->pfp, 0, SEEK_SET) != 0) ESL_EXCEPTION(eslESYS, "fseek failed");
++
++  if (hfp->ssi != NULL) {
++    esl_ssi_Reset(hfp->ssi);
++  }
++
++  if (hfp->efp != NULL) {
++    esl_fileparser_Reset(hfp->efp);
++  }
++
++  return eslOK;
++}
++
+ #ifdef HMMER_THREADS
+ /* Function:  p7_hmmfile_CreateLock()
+  *

@@ -8,6 +8,7 @@ cd hmmer-3.1b2 &&
 patch -p1 < ../patches/hmmer3-check-instdir.patch && \
 patch -p1 < ../patches/hmmer-3.1b2-manperms.patch && \
 patch -p1 < ../patches/hmmer-3.1b2-strip.patch && \
+patch -p2 < ../patches/hmmer_seek_instead_reopen.patch && \
 ./configure --prefix=${PREFIX} \
     --enable-portable-binary \
     --with-gcc-arch=i686 && \
