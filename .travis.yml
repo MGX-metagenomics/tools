@@ -5,6 +5,8 @@ notifications:
 
 language: bash
 
+dist: trusty
+
 branches:
   only:
     - master
