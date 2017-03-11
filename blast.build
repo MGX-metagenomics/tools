@@ -47,7 +47,7 @@ patch -p 2 < ../../patches/blast-fix-header-install.patch
    --with-dll --without-debug --with-mt \
    --with-projects=scripts/projects/blast/project.lst && \
 cd ReleaseMT/build && \
-make all_p && \
+make -j 10 all_p && \
 cd ../.. && \
 make install
 
