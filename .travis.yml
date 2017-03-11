@@ -1,0 +1,19 @@
+notifications:
+  email:
+    recipients:
+      - sebastian@jaenicke.org
+
+language: bash
+
+branches:
+  only:
+    - master
+
+before_install:
+  - sudo apt-get update -qq
+  - source tools.config 
+  - sudo groupadd ${GROUP}
+
+script:
+  - set -e ; for fragment in *.build; do bash ${fragment} ; done
+
