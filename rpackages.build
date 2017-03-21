@@ -22,8 +22,13 @@ wget https://cran.r-project.org/src/contrib/Rserve_1.7-3.tar.gz && \
 ${PREFIX}/bin/R CMD INSTALL Rserve_1.7-3.tar.gz && \
 rm Rserve_1.7-3.tar.gz
 
-#echo -e "source('https://bioconductor.org/biocLite.R')\nbiocLite('ctc')" \
-#  | ${PREFIX}/bin/R CMD BATCH /dev/fd/0 /dev/fd/1
+wget https://bioconductor.org/packages/release/bioc/src/contrib/Biobase_2.34.0.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL Biobase_2.34.0.tar.gz && \
+rm Biobase_2.34.0.tar.gz
+
+wget https://bioconductor.org/packages/release/bioc/src/contrib/BiocGenerics_0.20.0.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL BiocGenerics_0.20.0.tar.gz && \
+rm BiocGenerics_0.20.0.tar.gz
 
 wget https://bioconductor.org/packages/3.4/bioc/src/contrib/ctc_1.48.0.tar.gz && \
 ${PREFIX}/bin/R CMD INSTALL ctc_1.48.0.tar.gz && \
