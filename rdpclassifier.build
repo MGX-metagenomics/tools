@@ -55,6 +55,8 @@ if [ "\${INFILE}" = "-s" ]; then
     INFILE=/dev/fd/0
 fi 
 
+TRAINSET=\$2
+
 # check that we can read the input file
 test -e \${INFILE} || usage Input file \$INFILE does not exist, aborting.
 test -r \${INFILE} || usage Input file \$INFILE is not readable, aborting.
@@ -71,7 +73,7 @@ fi
 export JAVA_HOME=${PREFIX}/lib/jdk
 
 err=0
-${PREFIX}/lib/jdk/bin/java -Xmx900m -cp \${CP} -jar \${JAR} -q \${INFILE} -o /dev/fd/1 2>/dev/null || err=\$?
+${PREFIX}/lib/jdk/bin/java -Xmx900m -cp \${CP} -jar \${JAR} -q \${INFILE} -g \${TRAINSET} -o /dev/fd/1 2>/dev/null || err=\$?
 
 exit \${err}
 
