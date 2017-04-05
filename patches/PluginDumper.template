@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. PREFIX/share/config/conveyor.config
+
+${MONO} ${PLUGINDUMPER} "$@" | xmllint --format /dev/fd/0
+

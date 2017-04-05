@@ -1,0 +1,36 @@
+#!/bin/bash
+
+. PREFIX/share/config/conveyor.config
+
+conveyor_graph=$1
+projName=$2
+jobId=$3
+
+jobConfig=/vol/mgx-data/${projName}/jobs/${jobId}
+
+
+umask 0007
+
+if [ ! -r ${CEBITEC_SETTINGS_FILE} ]; then
+    echo "Cannot read Conveyor settings file."
+    exit 1
+fi
+
+if [ ! -r ${conveyor_graph} ]; then
+    echo "Cannot read Conveyor workflow file."
+    exit 1
+fi
+
+if [ ! -r ${jobConfig} ]; then
+    echo "Cannot read Conveyor workflow parameter file."
+    exit 1
+fi
+
+cd /vol/mgx-data/${projName}/jobs || exit 1
+
+jobName=validate-${projName/MGX_/}-${jobId}
+
+exec qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
+     -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
+     ${MONO} ${GRAPHRUN} --validate ${conveyor_graph} ${jobConfig}
+

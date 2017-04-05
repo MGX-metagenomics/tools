@@ -1,17 +1,22 @@
 
 . ./tools.config
 
-rm -rf X && mkdir X && cd X && \
-patch -p 1 < ../patches/mgx_conveyor_templates.patch
+rm -rf X && mkdir X && cd X 
+cp ../patches/settings.config.template settings.config
+cp ../patches/conveyor.config.template conveyor.config
+cp ../patches/PluginDumper.template PluginDumper
+cp ../patches/GraphValidate.template GraphValidate
+cp ../patches/GraphRun.template GraphRun
+
 
 
 if [ ! -d /ceph ]; then
-    sed -i 's,ceph,vol,g' share/config/settings.config
+    sed -i 's,ceph,vol,g' settings.config
 fi
 
 # global network dir
 if [ -d /vol/codine-tmp ]; then
-    sed -i 's,sge-tmp,codine-tmp,g' share/config/settings.config
+    sed -i 's,sge-tmp,codine-tmp,g' settings.config
 fi
 
 #
@@ -20,7 +25,7 @@ fi
 NUMSLOTS=`qhost -l 'arch=lx26-amd64' | wc -l`
 if [ ${NUMSLOTS} -eq 0 ]; then
     # assume CeBiTec UGE
-    sed -i 's,-l arch=lx26-amd64,-P mgx -l arch=lx-amd64,g' share/config/settings.config
+    sed -i 's,-l arch=lx26-amd64,-P mgx -l arch=lx-amd64,g' settings.config
 fi
 
 #
@@ -28,22 +33,22 @@ fi
 #
 if [ ! -f /vol/decypher/bin/dc_run ]; then
     # assume CeBiTec
-    sed -i 's,/vol/decypher/bin,/vol/decypher/bin/cli/bin,g' share/config/settings.config
+    sed -i 's,/vol/decypher/bin,/vol/decypher/bin/cli/bin,g' settings.config
     sed -i 's,decypher01.internal.computational.bio.uni-giessen.de,decy04.CeBiTec.Uni-Bielefeld.DE,g' \
-        share/config/settings.config
+        settings.config
 fi
 
 #
-# check for presence of 'large' complex
+# check for presence of 'large' queue
 #
-HAS_LARGE=`qhost -l 'large=1' 2>/dev/null | wc -l`
+HAS_LARGE=`qconf -sql | grep large | wc -l`
 if [ ${HAS_LARGE} -eq 0 ]; then
     # no large complex, fallback to virtual_free request
-    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=30g',g" share/exec/GraphValidate
-    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=30g',g" share/exec/GraphRun
+    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=30g',g" GraphValidate
+    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=30g',g" GraphRun
 else
-    sed -i "s,QREQ,-l 'large=1',g" share/exec/GraphValidate
-    sed -i "s,QREQ,-l 'large=1',g" share/exec/GraphRun
+    sed -i "s,QREQ,-l 'large=1',g" GraphValidate
+    sed -i "s,QREQ,-l 'large=1',g" GraphRun
 fi
 
 #
@@ -52,12 +57,12 @@ fi
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share/config
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share/exec
 
-for f in share/config/*.config; do
+for f in *.config; do
     sed -i "s,PREFIX,${PREFIX},g" ${f}
     install -g ${GROUP} --mode=444 ${f} ${PREFIX}/share/config/
 done
 
-for f in share/exec/*; do
+for f in PluginDumper GraphValidate GraphRun; do
     sed -i "s,PREFIX,${PREFIX},g" ${f}
     install -g ${GROUP} --mode=755 ${f} ${PREFIX}/share/exec/
     y=`basename ${f}`

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $# -ne 3 ]; then
+    echo "Usage: GraphRun graph.xml MGX_projectname jobId"
+    exit 1
+fi
+
+. PREFIX/share/config/conveyor.config
+
+umask 0007
+
+conveyor_graph=$1
+projName=$2
+jobId=$3
+
+jobConfig=/vol/mgx-data/${projName}/jobs/${jobId}
+
+cd /vol/mgx-data/${projName}/jobs || exit 1
+
+jobName=${projName/MGX_/}-${jobId}
+
+rm -f ${jobConfig}.stdout ${jobConfig}.stderr 
+
+exec qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
+     -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
+     ${MONO} --debug ${GRAPHRUN} --interval 120 ${conveyor_graph} ${jobConfig}
+

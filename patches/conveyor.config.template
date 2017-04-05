@@ -1,0 +1,33 @@
+
+CEBITEC_SETTINGS_FILE=PREFIX/share/config/settings.config
+
+export CEBITEC_SETTINGS_FILE
+if [ ! -r ${CEBITEC_SETTINGS_FILE} ]; then
+    echo "Settings file not found, aborting."
+    exit 1
+fi
+
+
+if [ -f /etc/default/gridengine ]; then
+  . /etc/default/gridengine
+  export SGE_ROOT
+  export SGE_CELL
+else
+  # CeBiTec UGE
+  export SGE_CELL=default
+  export SGE_ROOT=/vol/codine-8.3
+  export SGE_CLUSTER_NAME=p6444
+  if [ -d /vol/codine-8.3/bin/sol-amd64/ ]; then
+    export PATH=${PATH}:/vol/codine-8.3/bin/sol-amd64/
+  fi
+fi
+
+MONO=PREFIX/bin/mono
+MONO_GC_PARAMS=nursery-size=4g
+MONO_CFG_DIR=PREFIX/lib/etc
+export MONO MONO_GC_PARAMS MONO_CFG_DIR
+
+GRAPHRUN=PREFIX/lib/Conveyor/GraphRun.exe
+PLUGINDUMPER=PREFIX/lib/Conveyor/PluginDumper.exe
+
+
