@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-VERSION=0.8.31
+VERSION=0.8.37
 
 if [ ${OS} = "Solaris" ]; then
     echo "Diamond is not available for Solaris."
@@ -11,6 +11,6 @@ else
     strip diamond && \
     rm diamond.tar.gz && \
     install --mode=755 -g ${GROUP} diamond ${PREFIX}/bin && \
-    rm -f diamond diamond_manual.pdf
+    rm -f diamond diamond-sse2 diamond_manual.pdf
 fi
 
