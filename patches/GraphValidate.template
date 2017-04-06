@@ -8,6 +8,7 @@ jobId=$3
 
 jobConfig=/vol/mgx-data/${projName}/jobs/${jobId}
 
+set -e
 
 umask 0007
 
@@ -30,7 +31,12 @@ cd /vol/mgx-data/${projName}/jobs || exit 1
 
 jobName=validate-${projName/MGX_/}-${jobId}
 
-exec qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
+QSUBOUT=`qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
      -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
-     ${MONO} ${GRAPHRUN} --validate ${conveyor_graph} ${jobConfig}
+     ${MONO} ${GRAPHRUN} --validate ${conveyor_graph} ${jobConfig}`
+
+if [ -z "${QSUBOUT##*Unable to run*}" ] ; then
+    echo "Job was deleted on the cluster."
+    exit 2
+fi
 

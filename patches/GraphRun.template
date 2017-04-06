@@ -5,6 +5,8 @@ if [ $# -ne 3 ]; then
     exit 1
 fi
 
+set -e
+
 . PREFIX/share/config/conveyor.config
 
 umask 0007
@@ -21,7 +23,11 @@ jobName=${projName/MGX_/}-${jobId}
 
 rm -f ${jobConfig}.stdout ${jobConfig}.stderr 
 
-exec qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
+QSUBOUT=`qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
      -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
-     ${MONO} --debug ${GRAPHRUN} --interval 120 ${conveyor_graph} ${jobConfig}
+     ${MONO} --debug ${GRAPHRUN} --interval 120 ${conveyor_graph} ${jobConfig}`
 
+if [ -z "${QSUBOUT##*Unable to run*}" ] ; then
+    echo "Job was deleted on the cluster."
+    exit 2
+fi
