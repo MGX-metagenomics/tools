@@ -7,7 +7,7 @@ CeBiTec.Batch.Local.Configuration.maxProcesses=0
 CeBiTec.Settings.GlobalSettings.extraDirectories=/ceph/biotools/bin
 CeBiTec.Settings.GlobalSettings.networkDirectory=/ceph/sge-tmp
 Conveyor.ComputeCluster.Configuration.clusterDirectory=/ceph/sge-tmp
-Conveyor.ComputeCluster.ClusterExecution.classOptions=Conveyor.MetaCV.MetaCV`1=-l arch=lx26-amd64,virtual_free=35000m|Conveyor.Blast.BlastvsDB`2=-l arch=lx26-amd64,virtual_free=9500m|Conveyor.MetaBin.MetaBin`1=-l arch=lx26-amd64,virtual_free=7800m|Conveyor.Blast.GetNCBITaxonsForEntry`1=-l arch=lx26-amd64,virtual_free=2500m|Conveyor.RDPClassifier.RDPClassifier`1=-l arch=lx26-amd64,virtual_free=800m|Conveyor.ReadMapping.Applications.FRHIT.FR_HIT`2=-l arch=lx26-amd64,virtual_free=500m|Conveyor.ReadMapping.Applications.Bowtie.Bowtie`2=-l arch=lx26-amd64,virtual_free=500m|Conveyor.Blast.RAPSearch2.RAPSearch2`2=-l arch=lx26-amd64,virtual_free=3600m|Conveyor.Kraken.Kraken`1=-l arch=lx26-amd64,virtual_free=7600m -pe multislot 10|Conveyor.HMMER3.HMMScanv3`5=-l arch=lx26-amd64,virtual_free=1000m|Conveyor.Blast.GHOSTX.GHOSTX`2=-l arch=lx26-amd64,virtual_free=9000m|Conveyor.UProC.UProC`1=-l arch=lx26-amd64,virtual_free=13000m|Conveyor.Kaiju.Kaiju`1=-l arch=lx26-amd64,virtual_free=12000m|Conveyor.Centrifuge.Centrifuge`1=-l arch=lx26-amd64,virtual_free=16800m
+Conveyor.ComputeCluster.ClusterExecution.classOptions=Conveyor.MetaCV.MetaCV`1=-l arch=lx26-amd64,virtual_free=35000m|Conveyor.Blast.BlastvsDB`2=-l arch=lx26-amd64,virtual_free=9500m|Conveyor.MetaBin.MetaBin`1=-l arch=lx26-amd64,virtual_free=7800m|Conveyor.Blast.GetNCBITaxonsForEntry`1=-l arch=lx26-amd64,virtual_free=2500m|Conveyor.RDPClassifier.RDPClassifier`1=-l arch=lx26-amd64,virtual_free=800m -pe multislot 2|Conveyor.ReadMapping.Applications.FRHIT.FR_HIT`2=-l arch=lx26-amd64,virtual_free=500m|Conveyor.ReadMapping.Applications.Bowtie.Bowtie`2=-l arch=lx26-amd64,virtual_free=500m|Conveyor.Blast.RAPSearch2.RAPSearch2`2=-l arch=lx26-amd64,virtual_free=3600m|Conveyor.Kraken.Kraken`1=-l arch=lx26-amd64,virtual_free=13000m -pe multislot 10|Conveyor.HMMER3.HMMScanv3`5=-l arch=lx26-amd64,virtual_free=1000m|Conveyor.Blast.GHOSTX.GHOSTX`2=-l arch=lx26-amd64,virtual_free=9000m|Conveyor.UProC.UProC`1=-l arch=lx26-amd64,virtual_free=13000m|Conveyor.Kaiju.Kaiju`1=-l arch=lx26-amd64,virtual_free=12000m|Conveyor.Centrifuge.Centrifuge`1=-l arch=lx26-amd64,virtual_free=16800m
 Conveyor.Alignment.Applications.Configuration.clustalWWrapper=-- invalid path --
 Conveyor.Alignment.Applications.Configuration.muscle=PREFIX/bin/muscle
 Conveyor.Alignment.Applications.Configuration.revtrans=-- invalid path --
@@ -30,6 +30,7 @@ Conveyor.Blast.GHOSTX.Configuration.ghostxDatabaseMappingFile=/ceph/biodb/ghostx
 Conveyor.Blast.GHOSTX.Configuration.ghostxDatabaseMapping=/ceph/biodb/asn1/nr=/vol/biodb/ghostx/nr|/vol/biodb/asn1/swissprot=/vol/biodb/ghostx/swissprot|/ceph/biodb/eggNOG/3.0/protein.sequences.v3.fa=/vol/biodb/local_databases/MGX/eggNOG3/ghostx/eggNOG3
 Conveyor.Blast.GHOSTX.Configuration.ghostzDatabaseMapping=/ceph/biodb/eggNOG/3.0/protein.sequences.v3.fa=/vol/biodb/local_databases/MGX/eggNOG3/ghostx/eggNOG3
 Conveyor.Blast.GHOSTX.Configuration.ghostxBatchClass=
+Conveyor.Blast.GHOSTX.Configuration.ghostxBatchOptions=
 Conveyor.Blast.GHOSTX.Configuration.ghostxNumberOfJobs=1
 Conveyor.Blast.GHOSTX.Configuration.ghostx=PREFIX/bin/ghostx
 Conveyor.Blast.GHOSTX.Configuration.ghostz=PREFIX/bin/ghostz
@@ -64,7 +65,7 @@ Conveyor.Database.FunGene.Configuration.FunGeneSummary=/vol/biodb/local_database
 Conveyor.Centrifuge.Configuration.centrifuge=PREFIX/bin/centrifuge
 Conveyor.Centrifuge.Configuration.centrifugeDB=/vol/biodb/local_databases/MGX/centrifuge/refseq_microbial/current
 Conveyor.Kraken.Configuration.krakenBinary=PREFIX/bin/kraken
-Conveyor.Kraken.Configuration.krakenDB=/vol/biodb/local_databases/MGX/kraken/NCBI-20160323
+Conveyor.Kraken.Configuration.krakenDB=/vol/biodb/local_databases/MGX/kraken/current
 Conveyor.MetaBin.Configuration.metaBinDirectory=PREFIX/lib/metabinv1.0
 Conveyor.MetaPhlAn.Configuration.blastn=PREFIX/bin/blastn
 Conveyor.MetaPhlAn.Configuration.bowtie2=PREFIX/bin/bowtie2
@@ -113,3 +114,5 @@ Conveyor.UProC.Configuration.uprocdna=PREFIX/bin/uproc-dna
 Conveyor.UProC.Configuration.uprocModelDir=/vol/biodb/local_databases/MGX/UProC/model
 Conveyor.UProC.Configuration.databaseList=Pfam27-A=/vol/biodb/local_databases/MGX/UProC/Pfam-27
 Conveyor.Blast.TeraBlast.Configuration.databaseMappingFile=/ceph/decypher/db_mapping
+Conveyor.Geneprediction.FragGeneScan.Configuration.fraggenescan=PREFIX/bin/FGS+
+Conveyor.Geneprediction.FragGeneScan.Configuration.trainDir=PREFIX/share/FragGeneScanPlus/train/
