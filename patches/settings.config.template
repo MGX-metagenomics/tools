@@ -59,6 +59,8 @@ Conveyor.HMMER3.Configuration.databaseList=Pfam30-A=/vol/biodb/local_databases/M
 Conveyor.HMMER3.Configuration.hmmfetch=PREFIX/bin/hmmfetch
 Conveyor.HMMER3.Configuration.hmmpress=PREFIX/bin/hmmpress
 Conveyor.HMMER3.Configuration.hmmscan=PREFIX/bin/hmmscan
+Conveyor.Database.FunGene.Configuration.FunGeneDB=/vol/biodb/local_databases/MGX/FunGene/funGene.hmm
+Conveyor.Database.FunGene.Configuration.FunGeneSummary=/vol/biodb/local_databases/MGX/FunGene/funGenesummary.tsv
 Conveyor.Centrifuge.Configuration.centrifuge=PREFIX/bin/centrifuge
 Conveyor.Centrifuge.Configuration.centrifugeDB=/vol/biodb/local_databases/MGX/centrifuge/refseq_microbial/current
 Conveyor.Kraken.Configuration.krakenBinary=PREFIX/bin/kraken
@@ -76,10 +78,11 @@ Conveyor.Mothur.Configuration.mothurGreengenesDB=/vol/biodb/local_databases/MGX/
 Conveyor.Mothur.Configuration.mothurGreengenesTaxmap=/vol/biodb/local_databases/MGX/mothur/greengenes/13_8_99/gg_13_8_99.gg.tax
 Conveyor.Mothur.Configuration.mothurRdpDB=/vol/biodb/local_databases/MGX/mothur/rdp/v14/trainset14_032015.rdp.fasta
 Conveyor.Mothur.Configuration.mothurRdpTaxmap=/vol/biodb/local_databases/MGX/mothur/rdp/v14/trainset14_032015.rdp.tax
-Conveyor.Mothur.Configuration.mothurSilvaDB=/vol/biodb/local_databases/MGX/mothur/silva/R119/silva.nr_v119.align
-Conveyor.Mothur.Configuration.mothurSilvaTaxmap=/vol/biodb/local_databases/MGX/mothur/silva/R119/silva.nr_v119.tax
-Conveyor.Mothur.Configuration.origSilvaTaxmap=/vol/biodb/local_databases/MGX/mothur/silva/R119/taxmap_embl_ssu_parc_119.txt
-Conveyor.Processing.Plugins.PluginManager.pluginList=Conveyor.Alignment.Applications|Conveyor.Alignment.IO|Conveyor.Alignment.Pairwise|Conveyor.Alignment|Conveyor.BioIO|Conveyor.Annotation|Conveyor.BioinformaticsTypes|Conveyor.QualitySequence|Conveyor.SequencePair|Conveyor.Blast|Conveyor.Blast.TeraBlast|Conveyor.Geneprediction|Conveyor.Table|Conveyor.Comparison|Conveyor.Definition|Conveyor.Dictionary|Conveyor.List|Conveyor.Logic|Conveyor.Math|Conveyor.Pair|Conveyor.Text|Conveyor.HMMER3|Conveyor.BioIO.SFF|Conveyor.BioIO.Solexa|Conveyor.SolexaProcessing|Conveyor.Taxonomy.Bergey|Conveyor.Taxonomy.NCBI|Conveyor.RDPClassifier|Conveyor.MGX|Conveyor.EggNOG.V3|Conveyor.MetaPhyler|Conveyor.MetaPhlAn|Conveyor.MetaCV|Conveyor.EnzymeClassification|Conveyor.Database.UniProt|Conveyor.MetaBin|Conveyor.ReadMapping|Conveyor.ReadMapping.Applications.BWA|Conveyor.ReadMapping.Applications.FR-HIT|Conveyor.ReadMapping.Applications.Bowtie|Conveyor.MVir|Conveyor.Blast.RAPSearch2|Conveyor.Blast.ClusterMine360|Conveyor.Kraken|Conveyor.Blast.GHOSTX|Conveyor.UProC|Conveyor.Blast.DIAMOND|Conveyor.ReadMapping.BlastToSAM|Conveyor.Kaiju|Conveyor.Qiime|Conveyor.Mothur|Conveyor.Centrifuge|Conveyor.SequenceAssignment
+Conveyor.Mothur.Configuration.mothurSilvaDB=/vol/biodb/local_databases/MGX/mothur/silva/R123/silva.nr_v123.align
+Conveyor.Mothur.Configuration.mothurSilvaTaxmap=/vol/biodb/local_databases/MGX/mothur/silva/R123/silva.nr_v123.tax
+Conveyor.Mothur.Configuration.mothurUniteDB=/vol/biodb/local_databases/MGX/mothur/Unite/20161120/unite.fasta
+Conveyor.Mothur.Configuration.mothurUniteTaxmap=/vol/biodb/local_databases/MGX/mothur/Unite/20161120/unite.tax
+Conveyor.Processing.Plugins.PluginManager.pluginList=Conveyor.Alignment.Applications|Conveyor.Alignment.IO|Conveyor.Alignment.Pairwise|Conveyor.Alignment|Conveyor.BioIO|Conveyor.Annotation|Conveyor.BioinformaticsTypes|Conveyor.QualitySequence|Conveyor.SequencePair|Conveyor.Blast|Conveyor.Blast.TeraBlast|Conveyor.Geneprediction|Conveyor.Table|Conveyor.Comparison|Conveyor.Definition|Conveyor.Dictionary|Conveyor.List|Conveyor.Logic|Conveyor.Math|Conveyor.Pair|Conveyor.Text|Conveyor.HMMER3|Conveyor.BioIO.SFF|Conveyor.BioIO.Solexa|Conveyor.SolexaProcessing|Conveyor.Taxonomy.Bergey|Conveyor.Taxonomy.NCBI|Conveyor.RDPClassifier|Conveyor.MGX|Conveyor.EggNOG.V3|Conveyor.MetaPhyler|Conveyor.MetaPhlAn|Conveyor.MetaCV|Conveyor.EnzymeClassification|Conveyor.Database.UniProt|Conveyor.MetaBin|Conveyor.ReadMapping|Conveyor.ReadMapping.Applications.BWA|Conveyor.ReadMapping.Applications.FR-HIT|Conveyor.ReadMapping.Applications.Bowtie|Conveyor.MVir|Conveyor.Blast.RAPSearch2|Conveyor.Blast.ClusterMine360|Conveyor.Kraken|Conveyor.Blast.GHOSTX|Conveyor.UProC|Conveyor.Blast.DIAMOND|Conveyor.ReadMapping.BlastToSAM|Conveyor.Kaiju|Conveyor.Qiime|Conveyor.Mothur|Conveyor.Centrifuge|Conveyor.SequenceAssignment|Conveyor.Geneprediction.Application.FragGeneScan|Conveyor.Database.FunGene
 Conveyor.Processing.ProcessorFactory.processorType=(Conveyor.Processing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null)Conveyor.Processing.ThreadedProcessor
 Conveyor.RDPClassifier.Configuration.rdpClassifier=PREFIX/bin/rdp-classifier-2.12
 Conveyor.ReadMapping.Applications.Bowtie.Configuration.bowtie2build=PREFIX/bin/bowtie2-build
