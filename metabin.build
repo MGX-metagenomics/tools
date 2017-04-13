@@ -6,10 +6,14 @@ tar xzf metabinv1.0.linux.x86_64.tar.gz \
     metabinv1.0.linux.x86_64/metabin metabinv1.0.linux.x86_64/prepareinput
 rm metabinv1.0.linux.x86_64.tar.gz
 
-cd metabinv1.0.linux.x86_64/ 
+cd metabinv1.0.linux.x86_64/ && \
+unzip prepareinput && \
+patch -p 0 < ../patches/metabin_prepareinput.patch
 
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/metabinv1.0/
-for f in ../obj/libjpeg.so.62 ../obj/libgd.so.2 ../obj/libpng16.so.16 prepareinput; do
+install -g ${GROUP} --mode=755 script/prepareinput.pl ${PREFIX}/lib/metabinv1.0/prepareinput
+
+for f in ../obj/libjpeg.so.62 ../obj/libgd.so.2 ../obj/libpng16.so.16 ; do
     install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/metabinv1.0/
 done
 install -g ${GROUP} --mode=755 metabin ${PREFIX}/lib/metabinv1.0/metabin.real
