@@ -1,8 +1,9 @@
 
 . ./tools.config
 
+wget http://genome-test.cse.ucsc.edu/~kent/src/blatSrc36.zip
+
 if [ ${OS} = "Solaris" ]; then
-    wget http://genome-test.cse.ucsc.edu/~kent/src/blatSrc36.zip
     unzip blatSrc36.zip 
     rm blatSrc36.zip
     cd blatSrc
@@ -16,12 +17,14 @@ if [ ${OS} = "Solaris" ]; then
     cd ..
     rm -rf blatSrc
 else 
-    wget http://genome-test.cse.ucsc.edu/~kent/exe/linux/blatSuite.36.zip
-    unzip blatSuite.36.zip -d blat
-    rm blatSuite.36.zip
-    strip blat/blat
+    unzip blatSrc36.zip && \
+    rm blatSrc36.zip && \
+    cd blatSrc && \
+    make BINDIR=. USE_SSL=0 && \
+    #strip blat/blat
     install -g ${GROUP} --mode=755 blat/blat ${PREFIX}/bin
-    rm -rf blat
+    cd .. && \
+    rm -rf blatSrc
 fi
 
 
