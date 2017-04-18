@@ -7,10 +7,10 @@ CeBiTec.Batch.Local.Configuration.maxProcesses=0
 CeBiTec.Settings.GlobalSettings.extraDirectories=/ceph/biotools/bin
 CeBiTec.Settings.GlobalSettings.networkDirectory=/ceph/sge-tmp
 Conveyor.ComputeCluster.Configuration.clusterDirectory=/ceph/sge-tmp
-Conveyor.ComputeCluster.ClusterExecution.classOptions=Conveyor.MetaCV.MetaCV`1=-l arch=lx26-amd64,virtual_free=35000m|Conveyor.Blast.BlastvsDB`2=-l arch=lx26-amd64,virtual_free=9500m|Conveyor.MetaBin.MetaBin`1=-l arch=lx26-amd64,virtual_free=7800m|Conveyor.Blast.GetNCBITaxonsForEntry`1=-l arch=lx26-amd64,virtual_free=2500m|Conveyor.RDPClassifier.RDPClassifier`1=-l arch=lx26-amd64,virtual_free=800m -pe multislot 2|Conveyor.ReadMapping.Applications.FRHIT.FR_HIT`2=-l arch=lx26-amd64,virtual_free=500m|Conveyor.ReadMapping.Applications.Bowtie.Bowtie`2=-l arch=lx26-amd64,virtual_free=500m|Conveyor.Blast.RAPSearch2.RAPSearch2`2=-l arch=lx26-amd64,virtual_free=3600m|Conveyor.Kraken.Kraken`1=-l arch=lx26-amd64,virtual_free=13000m -pe multislot 10|Conveyor.HMMER3.HMMScanv3`5=-l arch=lx26-amd64,virtual_free=1000m|Conveyor.Blast.GHOSTX.GHOSTX`2=-l arch=lx26-amd64,virtual_free=9000m|Conveyor.UProC.UProC`1=-l arch=lx26-amd64,virtual_free=13000m|Conveyor.Kaiju.Kaiju`1=-l arch=lx26-amd64,virtual_free=12000m|Conveyor.Centrifuge.Centrifuge`1=-l arch=lx26-amd64,virtual_free=16800m
-Conveyor.Alignment.Applications.Configuration.clustalWWrapper=-- invalid path --
+Conveyor.ComputeCluster.ClusterExecution.classOptions=Conveyor.MetaCV.MetaCV`1=-l arch=lx26-amd64,virtual_free=35000m|Conveyor.Blast.BlastvsDB`2=-l arch=lx26-amd64,virtual_free=9500m|Conveyor.MetaBin.MetaBin`1=-l arch=lx26-amd64,virtual_free=7800m|Conveyor.Blast.GetNCBITaxonsForEntry`1=-l arch=lx26-amd64,virtual_free=2500m|Conveyor.RDPClassifier.RDPClassifier`1=-l arch=lx26-amd64,virtual_free=800m -pe multislot 2|Conveyor.ReadMapping.Applications.FRHIT.FR_HIT`2=-l arch=lx26-amd64,virtual_free=500m|Conveyor.ReadMapping.Applications.Bowtie.Bowtie`2=-l arch=lx26-amd64,virtual_free=500m|Conveyor.Blast.RAPSearch2.RAPSearch2`2=-l arch=lx26-amd64,virtual_free=3600m|Conveyor.Kraken.Kraken`1=-l arch=lx26-amd64,virtual_free=13000m -pe multislot 10|Conveyor.HMMER3.HMMScanv3`5=-l arch=lx26-amd64,virtual_free=1000m|Conveyor.Blast.GHOSTX.GHOSTX`2=-l arch=lx26-amd64,virtual_free=9000m|Conveyor.UProC.UProC`1=-l arch=lx26-amd64,virtual_free=13000m|Conveyor.Kaiju.Kaiju`1=-l arch=lx26-amd64,virtual_free=12000m|Conveyor.Centrifuge.Centrifuge`1=-l arch=lx26-amd64,virtual_free=16800m|Conveyor.Mothur.Mothur_ClassifyCustom`1=-l arch=lx26-amd64,virtual_free=13000m
+Conveyor.Alignment.Applications.Configuration.clustalWWrapper=/bin/false
 Conveyor.Alignment.Applications.Configuration.muscle=PREFIX/bin/muscle
-Conveyor.Alignment.Applications.Configuration.revtrans=-- invalid path --
+Conveyor.Alignment.Applications.Configuration.revtrans=/bin/false
 Conveyor.Biotools.EMBOSS.PhylipBase.phylipPath=/usr
 Conveyor.Blast.Configuration.blastdbcmd=PREFIX/bin/blastdbcmd
 Conveyor.Blast.Configuration.blastMethodPriorities=
@@ -52,8 +52,8 @@ Conveyor.Database.UniProt.Configuration.uniProtDatabases=SwissProt=SwissProt par
 Conveyor.Definition.Plugin.extraTypeProvider=(Conveyor.AutomaticNodes)Conveyor.AutomaticNodes.InterfaceScanner
 Conveyor.EggNOG.V3.Configuration.eggNOGDirectory=/ceph/biodb/eggNOG/3.0
 Conveyor.EnzymeClassification.Configuration.dataDirectory=/vol/biodb/enzyme
-Conveyor.Geneprediction.Configuration.criticaExecutable=-- invalid path --
-Conveyor.Geneprediction.Configuration.glimmerExecutable=-- invalid path --
+Conveyor.Geneprediction.Configuration.criticaExecutable=/bin/false
+Conveyor.Geneprediction.Configuration.glimmerExecutable=/bin/false
 Conveyor.Geneprediction.Configuration.prodigalExecutable=PREFIX/bin/prodigal
 Conveyor.Geneprediction.Configuration.rnammerExecutable=/vol/biotools/bin/rnammer
 Conveyor.HMMER3.Configuration.databaseList=Pfam30-A=/vol/biodb/local_databases/MGX/Pfam/current/Pfam-A.hmm|/vol/biodb/local_databases/MGX/Pfam/current/Pfam-A.seed;TIGRFAMS-14=/vol/biodb/tigrfam/tigrfam_hmm.lib;dbCAN=/vol/biodb/local_databases/MGX/dbCAN/20160719/dbCAN.hmm
