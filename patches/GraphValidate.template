@@ -27,9 +27,16 @@ if [ ! -r ${jobConfig} ]; then
     exit 1
 fi
 
+unset LC_MONETARY TERM LC_NUMERIC NLSPATH \
+  LC_COLLATE LC_TIME LC_MESSAGES LC_CTYPE \
+  SMF_FMRI SMF_METHOD SMF_ZONENAME SMF_RESTARTER \
+  XFILESEARCHPATH
+
 cd /vol/mgx-data/${projName}/jobs || exit 1
 
 jobName=validate-${projName/MGX_/}-${jobId}
+
+rm -f ${jobConfig}.stdout ${jobConfig}.stderr
 
 QSUBOUT=`qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
      -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
