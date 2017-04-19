@@ -11,6 +11,7 @@ else
     strip diamond && \
     rm diamond.tar.gz && \
     install --mode=755 -g ${GROUP} diamond ${PREFIX}/bin && \
+    install --mode=755 -g ${GROUP} diamond-sse2 ${PREFIX}/bin && \
     rm -f diamond diamond-sse2 diamond_manual.pdf
 fi
 
