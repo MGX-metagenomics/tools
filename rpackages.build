@@ -22,6 +22,15 @@ wget https://cran.r-project.org/src/contrib/Rserve_1.7-3.tar.gz && \
 ${PREFIX}/bin/R CMD INSTALL Rserve_1.7-3.tar.gz && \
 rm Rserve_1.7-3.tar.gz
 
+# required for rtk
+wget https://cran.r-project.org/src/contrib/Rcpp_0.12.10.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL Rcpp_0.12.10.tar.gz && \
+rm Rcpp_0.12.10.tar.gz
+
+wget https://cran.r-project.org/src/contrib/rtk_0.2.5.1.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL rtk_0.2.5.1.tar.gz && \
+rm rtk_0.2.5.1.tar.gz
+
 wget https://bioconductor.org/packages/release/bioc/src/contrib/Biobase_2.34.0.tar.gz && \
 ${PREFIX}/bin/R CMD INSTALL Biobase_2.34.0.tar.gz && \
 rm Biobase_2.34.0.tar.gz
