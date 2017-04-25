@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-VERSION=3.3.2
+VERSION=3.4.0
 
 wget https://cran.r-project.org/src/base/R-3/R-${VERSION}.tar.gz && \
 tar xzf R-${VERSION}.tar.gz && \
