@@ -37,7 +37,7 @@ Conveyor.Blast.GHOSTX.Configuration.ghostz=PREFIX/bin/ghostz
 Conveyor.Blast.RAPSearch2.Configuration.databaseMapping=/ceph/biodb/eggNOG/3.0/protein.sequences.v3.fa=/vol/biodb/local_databases/MGX/eggNOG3/rapsearch/eggNOG3
 Conveyor.Blast.RAPSearch2.Configuration.rapsearch2=PREFIX/bin/rapsearch
 Conveyor.Blast.DIAMOND.Configuration.diamond=PREFIX/bin/diamond
-Conveyor.Blast.DIAMOND.Configuration.databaseMapping=/ceph/biodb/eggNOG/3.0/protein.sequences.v3.fa=/vol/biodb/local_databases/MGX/eggNOG3/diamond/eggNOG3.dmnd|/ceph/biodb/uniprot/uniprot_sprot.fasta=/vol/biodb/local_databases/MGX/uniprot_swissprot/diamond/uniprot_sprot.dmnd
+Conveyor.Blast.DIAMOND.Configuration.databaseMapping=/ceph/biodb/eggNOG/3.0/protein.sequences.v3.fa=/vol/biodb/local_databases/MGX/eggNOG3/diamond/eggNOG3.dmnd|/ceph/biodb/uniprot/uniprot_sprot.fasta=/vol/biodb/local_databases/MGX/uniprot_swissprot/diamond/uniprot_sprot.dmnd|/vol/biodb/local_databases/MGX/ClusterMine360/cmDB.faa=/vol/biodb/local_databases/MGX/ClusterMine360/diamond/cmDB.dmnd
 Conveyor.Blast.TeraBlast.Configuration.databaseMapping=/ceph/biodb/asn1/nr=nr|/ceph/biodb/eggNOG/3.0/protein.sequences.v3.fa=eggNOG_3.0|/ceph/biodb/fasta/kegg_aa.fas=kegg_aa|/ceph/biodb/uniprot/uniprot_sprot.fasta=uniprot_swissprot
 Conveyor.Blast.TeraBlast.Configuration.dcRunBinary=/vol/decypher/bin/dc_run
 Conveyor.Blast.TeraBlast.Configuration.dcShowBinary=/vol/decypher/bin/dc_show
@@ -103,7 +103,7 @@ Conveyor.MetaPhyler.Configuration.MetaPhylerDBDirectory=/vol/biodb/local_databas
 Conveyor.MetaPhyler.Configuration.MetaPhylerDirectory=/vol/biodb/local_databases/MGX/MetaPhyler/current/
 Conveyor.Database.RefSeq.Configuration.refSeqDatabases=/ceph/biodb/refseq
 Conveyor.Kaiju.Configuration.kaijuBinary=PREFIX/bin/kaiju
-Conveyor.Kaiju.Configuration.kaijuDB=/vol/biodb/local_databases/MGX/kaiju/kaiju-20160415
+Conveyor.Kaiju.Configuration.kaijuDB=/vol/biodb/local_databases/MGX/kaiju/current
 Conveyor.Qiime.Configuration.qiime=/vol/qiime/bin/activate
 Conveyor.Qiime.Configuration.qiimeGGDB=/vol/biodb/local_databases/MGX/Qiime/greengenes/99_otus.fasta
 Conveyor.Qiime.Configuration.qiimeGGTaxmap=/vol/biodb/local_databases/MGX/Qiime/greengenes/99_otu_taxonomy.txt
