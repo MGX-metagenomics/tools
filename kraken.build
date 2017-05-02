@@ -10,6 +10,7 @@ for f in make_seqid_to_taxid_map db_shrink db_sort classify set_lcas; do
     strip ${PREFIX}/lib/kraken-0.10.6/${f}
 done
 ln -sf ${PREFIX}/lib/kraken-0.10.6/kraken ${PREFIX}/bin/kraken
+ln -sf ${PREFIX}/lib/kraken-0.10.6/kraken-build ${PREFIX}/bin/kraken-build
 cd ..
 rm -rf kraken
 
