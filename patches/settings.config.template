@@ -56,7 +56,7 @@ Conveyor.Geneprediction.Configuration.criticaExecutable=/bin/false
 Conveyor.Geneprediction.Configuration.glimmerExecutable=/bin/false
 Conveyor.Geneprediction.Configuration.prodigalExecutable=PREFIX/bin/prodigal
 Conveyor.Geneprediction.Configuration.rnammerExecutable=/vol/biotools/bin/rnammer
-Conveyor.HMMER3.Configuration.databaseList=Pfam-A=/vol/biodb/local_databases/MGX/Pfam/current/Pfam-A.hmm|/vol/biodb/local_databases/MGX/Pfam/current/Pfam-A.seed;TIGRFAMS=/vol/biodb/local_databases/MGX/TIGRFAM/current/tigrfam_hmm.lib;dbCAN=/vol/biodb/local_databases/MGX/dbCAN/20160719/dbCAN.hmm
+Conveyor.HMMER3.Configuration.databaseList=Pfam-A=/vol/biodb/local_databases/MGX/Pfam/current/Pfam-A.hmm|/vol/biodb/local_databases/MGX/Pfam/current/Pfam-A.seed;TIGRFAMS=/vol/biodb/local_databases/MGX/TIGRFAM/current/tigrfam_hmm.lib;dbCAN=/vol/biodb/local_databases/MGX/dbCAN/current/dbCAN.hmm
 Conveyor.HMMER3.Configuration.hmmfetch=PREFIX/bin/hmmfetch
 Conveyor.HMMER3.Configuration.hmmpress=PREFIX/bin/hmmpress
 Conveyor.HMMER3.Configuration.hmmscan=PREFIX/bin/hmmscan
