@@ -1,0 +1,288 @@
+diff -Nur hmmer-3.1b2/configure.ac hmmer-3.1b2.new/configure.ac
+--- hmmer-3.1b2/configure.ac	2015-02-26 13:45:55.000000000 +0100
++++ hmmer-3.1b2.new/configure.ac	2017-07-27 13:59:09.519270000 +0200
+@@ -236,6 +236,17 @@
+               XLC_ARCH=no)
+ fi
+ 
++
++# --enable-mmap         Enable mmapped() I/O
++#
++AC_ARG_ENABLE(mmap,[AS_HELP_STRING([--enable-mmap],[enable memory-mapping of HMM database files])], ok=$enableval, ok=no)
++if test "$ok" = "yes"; then
++  AC_MSG_NOTICE([Compiling with mmap() support.])
++  AC_DEFINE(HMMER_MMAP)
++  AC_DEFINE(EASEL_MMAP)
++fi
++
++
+ # --enable-threads      Enable POSIX multithreading
+ #
+ # Uses ACX_PTHREAD macro from the GNU macro archive.
+@@ -592,6 +603,8 @@
+   stdint.h\
+   unistd.h\
+   sys/types.h\
++  sys/stat.h\
++  sys/mman.h\
+   netinet/in.h
+ ]) 
+ 
+diff -Nur hmmer-3.1b2/easel/configure.ac hmmer-3.1b2.new/easel/configure.ac
+--- hmmer-3.1b2/easel/configure.ac	2015-02-26 13:45:56.000000000 +0100
++++ hmmer-3.1b2.new/easel/configure.ac	2017-07-27 13:59:09.535270000 +0200
+@@ -161,6 +161,16 @@
+      *)  AC_MSG_ERROR([Unknown argument to --enable-debugging: $enable_debugging]);;
+ esac
+ 
++
++# --enable-mmap         Enable mmapped() I/O
++#
++AC_ARG_ENABLE(mmap,[AS_HELP_STRING([--enable-mmap],[enable memory-mapping of database files])], ok=$enableval, ok=no)
++if test "$ok" = "yes"; then
++  AC_MSG_NOTICE([Compiling with mmap() support.])
++  AC_DEFINE(EASEL_MMAP)
++fi
++
++
+ # --enable-threads      Enable POSIX multithreading
+ #
+ # Uses ACX_PTHREAD macro from the GNU macro archive.
+diff -Nur hmmer-3.1b2/easel/esl_config.h.in hmmer-3.1b2.new/easel/esl_config.h.in
+--- hmmer-3.1b2/easel/esl_config.h.in	2015-02-26 13:45:58.000000000 +0100
++++ hmmer-3.1b2.new/easel/esl_config.h.in	2017-07-27 13:59:09.555270000 +0200
+@@ -76,6 +76,10 @@
+ 
+ #undef HAVE_SSE2_CAST
+ 
++/* mmap support
++ */
++#undef EASEL_MMAP
++
+ /* Programs */
+ #undef HAVE_GZIP
+ 
+diff -Nur hmmer-3.1b2/easel/esl_ssi.c hmmer-3.1b2.new/easel/esl_ssi.c
+--- hmmer-3.1b2/easel/esl_ssi.c	2017-07-27 14:40:15.778509000 +0200
++++ hmmer-3.1b2.new/easel/esl_ssi.c	2017-07-27 13:59:09.563270000 +0200
+@@ -12,6 +12,13 @@
+ #include <stdio.h>
+ #include <string.h>
+ 
++#ifdef EASEL_MMAP
++#include <sys/mman.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <unistd.h>
++#endif
++
+ #include "easel.h"
+ #include "esl_ssi.h"
+ 
+@@ -58,6 +65,10 @@
+    */
+   ESL_ALLOC(ssi, sizeof(ESL_SSI));
+   ssi->fp         = NULL;
++#ifdef EASEL_MMAP
++  ssi->origfp     = NULL;
++  ssi->mapped     = NULL;
++#endif
+   ssi->filename   = NULL;
+   ssi->fileformat = NULL;
+   ssi->fileflags  = NULL;
+@@ -70,6 +81,15 @@
+   status = eslENOTFOUND; 
+   if ((ssi->fp = fopen(filename, "rb")) == NULL) goto ERROR; 
+ 
++#ifdef EASEL_MMAP
++  //fprintf(stderr, "esl open %s\n", filename);
++  struct stat buf;
++  fstat(fileno(ssi->fp), &buf);
++  ssi->mapped = mmap(0, buf.st_size, PROT_READ, MAP_SHARED, fileno(ssi->fp), 0);
++  ssi->origfp = ssi->fp;
++  ssi->fp = fmemopen(ssi->mapped, buf.st_size, "r");
++#endif
++
+   /* Read the magic number: make sure it's an SSI file, and determine
+    * whether it's byteswapped.
+    */
+@@ -512,7 +533,18 @@
+ 
+   if (ssi == NULL) return;
+ 
++#ifdef EASEL_MMAP
++  if (ssi->fp != NULL) {
++    struct stat buf;
++    fstat(fileno(ssi->origfp), &buf);
++    fclose(ssi->fp);
++    if (ssi->mapped != NULL) munmap(ssi->mapped, buf.st_size);
++    if (ssi->origfp != NULL) fclose(ssi->origfp);
++  }
++#else
+   if (ssi->fp != NULL) fclose(ssi->fp);
++#endif
++
+   if (ssi->filename != NULL) {
+     for (i = 0; i < ssi->nfiles; i++) 
+       if (ssi->filename[i] != NULL) free(ssi->filename[i]);
+@@ -537,7 +569,9 @@
+ esl_ssi_Reset(ESL_SSI *ssi)
+ {
+   if (ssi == NULL) return;
+-  if (ssi->fp != NULL) fseeko(ssi->fp, 0, SEEK_SET);
++  if (ssi->fp != NULL && ftello(ssi->fp) != 0) {
++      fseeko(ssi->fp, 0, SEEK_SET);
++  }
+ }
+ 
+ 
+diff -Nur hmmer-3.1b2/easel/esl_ssi.h hmmer-3.1b2.new/easel/esl_ssi.h
+--- hmmer-3.1b2/easel/esl_ssi.h	2017-07-27 14:40:15.786509000 +0200
++++ hmmer-3.1b2.new/easel/esl_ssi.h	2017-07-27 13:59:09.567270000 +0200
+@@ -30,6 +30,10 @@
+  */ 
+ typedef struct {
+   FILE      *fp;              /* open SSI index file                 */
++#ifdef EASEL_MMAP
++  void      *mapped;          /* mmap'ed SSI index                   */
++  FILE      *origfp;          /* original SSI index file             */
++#endif
+   uint32_t   flags;	      /* optional behavior flags             */
+   uint32_t   offsz;	      /* sizeof(off_t)'s in the SSI file     */
+   uint16_t   nfiles;          /* number of files = 16 bit int        */
+diff -Nur hmmer-3.1b2/src/hmmer.h hmmer-3.1b2.new/src/hmmer.h
+--- hmmer-3.1b2/src/hmmer.h	2017-07-27 14:40:15.790509000 +0200
++++ hmmer-3.1b2.new/src/hmmer.h	2017-07-27 13:59:09.591270000 +0200
+@@ -427,6 +427,14 @@
+   FILE         *ffp;		/* MSV part of the optimized profile */
+   FILE         *pfp;		/* rest of the optimized profile     */
+ 
++#ifdef HMMER_MMAP
++  void      *fmapped;           /* mmap'ed .h3f file                 */
++  FILE      *origffp;           /* original .h3f file                */
++  void      *pmapped;           /* mmap'ed .h3p file                 */
++  FILE      *origpfp;           /* original .h3p file                */
++#endif
++
++
+ #ifdef HMMER_THREADS
+   int              syncRead;
+   pthread_mutex_t  readMutex;
+diff -Nur hmmer-3.1b2/src/p7_config.h.in hmmer-3.1b2.new/src/p7_config.h.in
+--- hmmer-3.1b2/src/p7_config.h.in	2015-02-26 13:46:04.000000000 +0100
++++ hmmer-3.1b2.new/src/p7_config.h.in	2017-07-27 13:59:09.615270000 +0200
+@@ -114,6 +114,7 @@
+ #undef HAVE_NETINET_IN_H        /* On FreeBSD, you need netinet/in.h for struct sockaddr_in */
+ #undef HAVE_SYS_PARAM_H         /* On OpenBSD, sys/sysctl.h needs sys/param.h */
+ #undef HAVE_SYS_SYSCTL_H
++#undef HAVE_SYS_MMAN_H
+ 
+ /* Optional parallel implementations
+  */
+@@ -124,6 +125,10 @@
+ #undef HAVE_PTHREAD_ATTR_SETSCOPE
+ #undef HAVE_PTHREAD_SETCONCURRENCY
+ 
++/* mmapped I/O
++ */
++#undef HMMER_MMAP
++
+ /* Optional processor specific support
+  */
+ #undef HAVE_FLUSH_ZERO_MODE
+diff -Nur hmmer-3.1b2/src/p7_hmmfile.c hmmer-3.1b2.new/src/p7_hmmfile.c
+--- hmmer-3.1b2/src/p7_hmmfile.c	2017-07-27 14:40:15.802509000 +0200
++++ hmmer-3.1b2.new/src/p7_hmmfile.c	2017-07-27 14:50:08.155557000 +0200
+@@ -18,6 +18,11 @@
+ #include <stdio.h>
+ #include <string.h>
+ 
++#ifdef HMMER_MMAP
++#include <sys/mman.h>
++#include <sys/stat.h>
++#endif
++
+ #ifdef HMMER_THREADS
+ #include <pthread.h>
+ #endif
+@@ -301,6 +306,12 @@
+   hfp->efp          = NULL;
+   hfp->ffp          = NULL;
+   hfp->pfp          = NULL;
++#ifdef HMMER_MMAP
++  hfp->origffp      = NULL;
++  hfp->fmapped      = NULL;
++  hfp->origpfp      = NULL;
++  hfp->pmapped      = NULL;
++#endif
+   hfp->ssi          = NULL;
+   hfp->errbuf[0]    = '\0';
+ 
+@@ -368,6 +379,15 @@
+     if ((tmpfp = fopen(dbfile, "rb")) != NULL)
+     {
+       if (hfp->f != NULL) fclose(hfp->f); /* preferentially read the .h3m file, not the original */
++
++#ifdef HMMER_MMAP
++      //fprintf(stderr, "p7hmm mmap() %s\n", dbfile);
++      struct stat buf;
++      fstat(fileno(tmpfp), &buf);
++      void* mapfp = mmap(0, buf.st_size, PROT_READ, MAP_SHARED, fileno(tmpfp), 0);
++      tmpfp = fmemopen(mapfp, buf.st_size, "rb");
++#endif
++
+       hfp->f = tmpfp;
+       hfp->is_pressed = TRUE;
+       free(hfp->fname);
+@@ -402,9 +422,24 @@
+ 
+     dbfile[n-1] = 'f';  /* the MSV filter part of the optimized profiles */
+     if ((hfp->ffp = fopen(dbfile, "rb")) == NULL) ESL_XFAIL(eslENOTFOUND, errbuf, "Opened %s, a pressed HMM file; but no .h3f file found", hfp->fname);
++#ifdef HMMER_MMAP
++    //fprintf(stderr, "p7hmm mmap() h3f %s\n", dbfile);
++    struct stat buf;
++    fstat(fileno(hfp->ffp), &buf);
++    hfp->fmapped = mmap(0, buf.st_size, PROT_READ, MAP_SHARED, fileno(hfp->ffp), 0);
++    hfp->origffp = hfp->ffp;
++    hfp->ffp = fmemopen(hfp->fmapped, buf.st_size, "r");
++#endif
+ 
+     dbfile[n-1] = 'p';  /* the remainder of the optimized profiles */
+     if ((hfp->pfp = fopen(dbfile, "rb")) == NULL) ESL_XFAIL(eslENOTFOUND, errbuf, "Opened %s, a pressed HMM file; but no .h3p file found", hfp->fname);
++#ifdef HMMER_MMAP
++    //fprintf(stderr, "p7hmm mmap() h3p %s\n", dbfile);
++    fstat(fileno(hfp->pfp), &buf);
++    hfp->pmapped = mmap(0, buf.st_size, PROT_READ, MAP_SHARED, fileno(hfp->pfp), 0);
++    hfp->origpfp = hfp->pfp;
++    hfp->pfp = fmemopen(hfp->pmapped, buf.st_size, "r");
++#endif
+ 
+     dbfile[n-1] = 'i';  /* the SSI index for the .h3m file */
+     status = esl_ssi_Open(dbfile, &(hfp->ssi));
+@@ -487,8 +522,26 @@
+   if (hfp->do_gzip && hfp->f != NULL)    pclose(hfp->f);
+ #endif
+   if (!hfp->do_gzip && !hfp->do_stdin && hfp->f != NULL) fclose(hfp->f);
++
+   if (hfp->ffp   != NULL) fclose(hfp->ffp);
++#ifdef HMMER_MMAP
++  struct stat buf;
++  if (hfp->is_pressed) {
++    fstat(fileno(hfp->origffp), &buf);
++    if (hfp->fmapped != NULL) munmap(hfp->fmapped, buf.st_size);
++    if (hfp->origffp != NULL) fclose(hfp->origffp);
++  }
++#endif
++
+   if (hfp->pfp   != NULL) fclose(hfp->pfp);
++#ifdef HMMER_MMAP
++  if (hfp->is_pressed) {
++    fstat(fileno(hfp->origpfp), &buf);
++    if (hfp->pmapped != NULL) munmap(hfp->pmapped, buf.st_size);
++    if (hfp->origpfp != NULL) fclose(hfp->origpfp);
++  }
++#endif
++
+   if (hfp->fname != NULL) free(hfp->fname);
+   if (hfp->efp   != NULL) esl_fileparser_Destroy(hfp->efp);
+   if (hfp->ssi   != NULL) esl_ssi_Close(hfp->ssi);
