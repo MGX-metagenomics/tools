@@ -1,17 +1,13 @@
 
 . ./tools.config
 
-VERSION=0.9.6
+VERSION=0.9.10
 
-if [ ${OS} = "Solaris" ]; then
-    echo "Diamond is not available for Solaris."
-else
-    wget -O diamond.tar.gz https://github.com/bbuchfink/diamond/releases/download/v${VERSION}/diamond-linux64.tar.gz && \
-    tar xzf diamond.tar.gz && \
-    strip diamond && \
-    rm diamond.tar.gz && \
-    install --mode=755 -g ${GROUP} diamond ${PREFIX}/bin && \
-    install --mode=755 -g ${GROUP} diamond-sse2 ${PREFIX}/bin && \
-    rm -f diamond diamond-sse2 diamond_manual.pdf
-fi
+wget -O diamond.tar.gz https://github.com/bbuchfink/diamond/releases/download/v${VERSION}/diamond-linux64.tar.gz && \
+tar xzf diamond.tar.gz && \
+strip diamond && \
+rm diamond.tar.gz && \
+install --mode=755 -g ${GROUP} diamond ${PREFIX}/bin && \
+install --mode=755 -g ${GROUP} diamond-sse2 ${PREFIX}/bin && \
+rm -f diamond diamond-sse2 diamond_manual.pdf
 
