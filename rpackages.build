@@ -29,7 +29,11 @@ wget https://cran.r-project.org/src/contrib/Rcpp_0.12.10.tar.gz && \
 ${PREFIX}/bin/R CMD INSTALL Rcpp_0.12.10.tar.gz && \
 rm Rcpp_0.12.10.tar.gz
 
-wget https://cran.r-project.org/src/contrib/rtk_0.2.5.3.tar.gz && \
+wget https://cran.r-project.org/src/contrib/rtk_0.2.5.3.tar.gz 
+tar xzf rtk_0.2.5.3.tar.gz && rm rtk_0.2.5.3.tar.gz
+patch -p0 < patches/rtk_richness_only.patch
+tar czf rtk_0.2.5.3.tar.gz rtk
+rm -rf rtk
 ${PREFIX}/bin/R CMD INSTALL rtk_0.2.5.3.tar.gz && \
 rm rtk_0.2.5.3.tar.gz
 
