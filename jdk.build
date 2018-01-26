@@ -4,8 +4,17 @@
 set -e 
 
 wget --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-  http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz
-tar xzf jdk-8u152-linux-x64.tar.gz -C ${PREFIX}/lib && \
-rm -f ${PREFIX}/lib/jdk && \
-ln -sf ${PREFIX}/lib/jdk1.8.0_152 ${PREFIX}/lib/jdk && \
-rm jdk-8u152-linux-x64.tar.gz
+  http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.tar.gz
+tar xzf jdk-8u162-linux-x64.tar.gz -C ${PREFIX}/lib 
+rm jdk-8u162-linux-x64.tar.gz
+
+# remove previous version
+if [ -e ${PREFIX}/lib/jdk ]; then
+    old=`readlink ${PREFIX}/lib/jdk`
+    if [ -d ${old} ]; then
+        rm -rf ${old}
+    fi
+    rm -f ${PREFIX}/lib/jdk 
+fi
+
+ln -sf ${PREFIX}/lib/jdk1.8.0_162 ${PREFIX}/lib/jdk 
