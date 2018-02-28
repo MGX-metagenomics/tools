@@ -1,19 +1,33 @@
 
 . ./tools.config
 
-VERSION=2.6.0
+set -e
 
-wget ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz && \
-tar xzf ncbi-blast-${VERSION}+-src.tar.gz && \
-rm ncbi-blast-${VERSION}+-src.tar.gz && \
+
+
+
+VERSION=2.7.1
+
+tar xzf LMDB_0.9.21.tar.gz
+cd lmdb-LMDB_0.9.21/libraries/liblmdb/
+make
+make prefix=$PREFIX install
+cd ../../..
+rm -rf lmdb-LMDB_0.9.21
+
+
+wget ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz 
+tar xzf ncbi-blast-${VERSION}+-src.tar.gz 
+rm ncbi-blast-${VERSION}+-src.tar.gz 
 cd ncbi-blast-${VERSION}+-src/c++ 
 
 patch -p 2 < ../../patches/blast-check-instdir.patch 
-patch -p 2 < ../../patches/blast-fix-header-install.patch
+#patch -p 2 < ../../patches/blast-fix-header-install.patch
 
 #sed -i 's,cgi,-cgi,g' scripts/projects/blast/project.lst
 
 ./configure --prefix=${PREFIX} \
+   --without-downloaded-vdb --without-lzo --without-libxlsxwriter \
    --libdir=${PREFIX}/lib/ncbi-blast+ \
    --with-64 \
    --with-lfs \
@@ -25,6 +39,7 @@ patch -p 2 < ../../patches/blast-fix-header-install.patch
    --without-boost \
    --without-python \
    --without-perl \
+   --with-lmdb=${PREFIX} \
    --without-libxslt \
    --without-openssl \
    --without-vdb \
@@ -43,15 +58,17 @@ patch -p 2 < ../../patches/blast-fix-header-install.patch
    --without-pcre \
    --without-gbench \
    --without-fastcgi \
+   --without-sasl2 \
+   --without-cassandra --without-mongodb --without-libssh2  \
    --without-dbapi --without-connext \
    --with-dll --without-debug --with-mt \
    --with-projects=scripts/projects/blast/project.lst && \
 cd ReleaseMT/build && \
-make -j 10 all_p && \
+make all_p && \
 cd ../.. && \
 make install
 
-for file in seqdb_demo seqdb_perf gene_info_reader legacy_blast.pl update_blastdb.pl test_pcre datatool project_tree_builder windowmasker_2.2.22_adapter.py; do
+for file in seqdb_demo seqdb_perf gene_info_reader legacy_blast.pl update_blastdb.pl test_pcre datatool project_tree_builder windowmasker_2.2.22_adapter.py run_with_lock gc_cli; do
    rm -f ${PREFIX}/bin/${file}
 done
 
