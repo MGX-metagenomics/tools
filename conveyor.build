@@ -1,6 +1,8 @@
 
 . ./tools.config
 
+set -e
+
 if [ ! -f ${PREFIX}/bin/mono ]; then
     echo "Mono installation missing."
     exit 1
