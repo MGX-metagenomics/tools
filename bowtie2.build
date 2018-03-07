@@ -1,15 +1,19 @@
 
 . ./tools.config
 
-wget --no-check-certificate -O bowtie2-2.2.9-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.9/bowtie2-2.2.9-source.zip/download
-unzip bowtie2-2.2.9-source.zip && \
-cd bowtie2-2.2.9/ && \
+set -e
+
+VERSION=2.3.4.1
+
+wget --no-check-certificate -O bowtie2-${VERSION}-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/${VERSION}/bowtie2-${VERSION}-source.zip/download
+unzip bowtie2-${VERSION}-source.zip 
+cd bowtie2-${VERSION}/
 patch -p 1 < ../patches/bowtie2-solaris.patch
-make prefix=${PREFIX}
+make prefix=${PREFIX} NO_TBB=1
 make prefix=${PREFIX} install
 cd ..
-rm -rf bowtie2-2.2.9/
-rm bowtie2-2.2.9-source.zip
+rm -rf bowtie2-${VERSION}
+rm bowtie2-${VERSION}-source.zip
 
 for f in bowtie2-align-l bowtie2-align-s bowtie2-build-l bowtie2-build-s bowtie2-inspect-l bowtie2-inspect-s; do
     strip ${PREFIX}/bin/${f}
