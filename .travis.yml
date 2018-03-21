@@ -14,9 +14,13 @@ branches:
 before_install:
   - sudo apt-get update -qq
   - sudo groupadd mgxserv
+  - sudo usermod -a -G mgxserv $USER
   - sudo install -d -m 02755 -g mgxserv /vol/mgx-sw
   - source tools.config
 
 script:
-  - set -e ; for fragment in *.build; do bash ${fragment} ; done
+  - for fragment in *.build; do 
+        bash ${fragment}
+        if [ $? != 0 ]; then exit 1 ; fi
+    done
 
