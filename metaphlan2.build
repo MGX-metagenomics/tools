@@ -3,11 +3,17 @@
 
 set -e
 
-wget https://bitbucket.org/biobakery/metaphlan2/get/default.zip
-unzip default.zip
-rm default.zip
-cd biobakery-metaphlan2-40d1bf693089
+VERSION=2.7.6
+
+if [ ! -d ${PREFIX}/bin ] ; then
+  install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
+fi
+
+wget https://bitbucket.org/biobakery/metaphlan2/get/${VERSION}.zip
+unzip ${VERSION}.zip
+rm ${VERSION}.zip
+cd biobakery-metaphlan2-*
 install -g ${GROUP} --mode=755 metaphlan2.py ${PREFIX}/bin/
 cd ..
-rm -rf biobakery-metaphlan2-40d1bf693089
+rm -rf biobakery-metaphlan2-*
 
