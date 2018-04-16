@@ -1,6 +1,6 @@
 diff -Nur rtk.orig/MD5 rtk/MD5
---- rtk.orig/MD5	2017-07-30 21:19:15.000000000 +0200
-+++ rtk/MD5	2018-01-11 15:54:10.889847573 +0100
+--- rtk.orig/MD5	2018-02-11 16:51:42.000000000 +0100
++++ rtk/MD5	2018-04-16 13:28:49.767479465 +0200
 @@ -2,8 +2,8 @@
  8a7c05e59254850952bae39b520caea4 *NAMESPACE
  88fa1e53a3f34832952c8ff99ed9dc90 *R/RcppExports.R
@@ -10,19 +10,19 @@ diff -Nur rtk.orig/MD5 rtk/MD5
 +e95fb3afacc34863aa92136bd3322316 *R/rarefaction.R
 +1b06b84cb2a0eb121a684d3b0c9e60c1 *R/rarefaction.plots.R
  852a185ed0631153f463156d8ff39d8c *README.md
- 670c65e0c28a41128ba36de09d55880a *build/partial.rdb
+ 43b7d14d13bb7412b4fe99e4c5d52694 *build/partial.rdb
  c892775da2853ff87fd91baee2f823f6 *inst/CITATION
-@@ -12,22 +12,23 @@
+@@ -12,20 +12,20 @@
  bb2caeb58209266610c4811125c98db4 *man/plot.rarefaction.Rd
  c22af6156447189c73a4eddd44042d01 *man/rtk-package.Rd
  2830e45915e6786b9cbff6c5c91ca7f5 *man/rtk.Rd
 -3b67f38e4520008747981f43d26a1477 *src/ClStr2Mat.cpp
 +080c2e39ef0516b3fb9ddbd40327250c *src/ClStr2Mat.cpp
  4ce487d7ff54b9ed85c7b98cadb9b8f6 *src/ClStr2Mat.h
--352427db2cf77a24a7edf281dfe82685 *src/IO.cpp
+-ee9736eeb39e3a764b88150e50cdc480 *src/IO.cpp
 -5a3907f205e778e554207b2264a9f31a *src/IO.h
 -e71f1957798f7be4611c99395483fdd0 *src/Makevars
-+49def259b755ea731d93f2ea774afddd *src/IO.cpp
++552dc1e5f5049e796a995bdeaa73d003 *src/IO.cpp
 +5b7614625beeaf67ce7189d95e0d0beb *src/IO.h
 +419fe6da30b159624af8bc8b74bad9ca *src/Makevars
  e71f1957798f7be4611c99395483fdd0 *src/Makevars.win
@@ -42,12 +42,9 @@ diff -Nur rtk.orig/MD5 rtk/MD5
  2228e977ebea8966e27929f43e39cb67 *src/Rwrapper.h
  87b500a847bfc24bb180f640c8e9c856 *src/options.h
  e294c9697c8fc478306fe6d170e39ad7 *src/register.c
-+907a334ad0572e78c6143b17de665728 *src/XorShift128Plus.h
- 3e76de486ec3e1fc4e1649d1e5eeca76 *tests/testthat.R
- b66261c32e346e6eac94496b01f27233 *tests/testthat/test_rare.R
 diff -Nur rtk.orig/R/rarefaction.plots.R rtk/R/rarefaction.plots.R
---- rtk.orig/R/rarefaction.plots.R	2017-04-24 18:33:30.000000000 +0200
-+++ rtk/R/rarefaction.plots.R	2018-01-04 12:51:30.714725314 +0100
+--- rtk.orig/R/rarefaction.plots.R	2018-02-05 15:38:47.000000000 +0100
++++ rtk/R/rarefaction.plots.R	2018-04-16 13:17:16.582823584 +0200
 @@ -1,7 +1,7 @@
  
  plot.rtk <- function(x, div = c("richness"),  groups = NA, col = NULL, lty = 1, pch = NA, fit = "arrhenius", legend = TRUE, legend.pos = "topleft", log.dim = "", boxplot = FALSE, ...){
@@ -58,8 +55,8 @@ diff -Nur rtk.orig/R/rarefaction.plots.R rtk/R/rarefaction.plots.R
    }
  
 diff -Nur rtk.orig/R/rarefaction.R rtk/R/rarefaction.R
---- rtk.orig/R/rarefaction.R	2017-07-30 20:29:38.000000000 +0200
-+++ rtk/R/rarefaction.R	2018-01-11 14:30:25.625227595 +0100
+--- rtk.orig/R/rarefaction.R	2018-02-05 15:38:47.000000000 +0100
++++ rtk/R/rarefaction.R	2018-04-16 13:17:16.591452208 +0200
 @@ -1,7 +1,7 @@
 -r.median <- function(n, x){
 +r.mean <- function(n, x){
@@ -94,8 +91,8 @@ diff -Nur rtk.orig/R/rarefaction.R rtk/R/rarefaction.R
      return(res)
    })
 diff -Nur rtk.orig/src/ClStr2Mat.cpp rtk/src/ClStr2Mat.cpp
---- rtk.orig/src/ClStr2Mat.cpp	2017-07-30 20:30:49.000000000 +0200
-+++ rtk/src/ClStr2Mat.cpp	2018-01-09 16:07:48.054731676 +0100
+--- rtk.orig/src/ClStr2Mat.cpp	2018-02-11 16:04:03.000000000 +0100
++++ rtk/src/ClStr2Mat.cpp	2018-04-16 13:17:16.600518108 +0200
 @@ -97,7 +97,6 @@
  			repFound = true;
  		}
@@ -114,8 +111,8 @@ diff -Nur rtk.orig/src/ClStr2Mat.cpp rtk/src/ClStr2Mat.cpp
  	}
  	incl.close();
 diff -Nur rtk.orig/src/IO.cpp rtk/src/IO.cpp
---- rtk.orig/src/IO.cpp	2017-07-30 20:30:49.000000000 +0200
-+++ rtk/src/IO.cpp	2018-01-11 15:46:28.844296313 +0100
+--- rtk.orig/src/IO.cpp	2018-02-11 16:04:03.000000000 +0100
++++ rtk/src/IO.cpp	2018-04-16 13:21:59.709648555 +0200
 @@ -1,5 +1,6 @@
  #include "IO.h"
 -std::mutex rarefyMutex;
@@ -600,10 +597,11 @@ diff -Nur rtk.orig/src/IO.cpp rtk/src/IO.cpp
          }
  
          // close streams
-@@ -903,81 +609,7 @@
+@@ -902,82 +608,7 @@
+     }
  }
  
- 
+-
 -
 -void computeChao2(std::vector<vector<mat_fl>>& chao2, vector<vector<vector<uint>>>& abundInRow){
 -    for(uint i = 0; i < abundInRow.size(); i++){
@@ -643,7 +641,7 @@ diff -Nur rtk.orig/src/IO.cpp rtk/src/IO.cpp
 -            std::vector< int > abundOneToTen(10,0);
 -            float nr = 0.0, sa = 0.0, sr = 0.0, f1 = 0.0, ca= 0.0,sumf= 0.0, g2a = 0.0;
 -
--            for(uint j = 0; j < abundInRow[i].size(); j++){
+-            for(uint j = 0; j < abundInRow[i][ii].size(); j++){
 -                val = abundInRow[i][ii][j];
 -                if(val < 11 && val != 0){
 -                    nr += val;
@@ -683,7 +681,7 @@ diff -Nur rtk.orig/src/IO.cpp rtk/src/IO.cpp
      ofstream out(outF.c_str());
      out << "depth";
  
-@@ -998,26 +630,5 @@
+@@ -998,26 +629,5 @@
      }    
      out << '\n';
  
@@ -711,8 +709,8 @@ diff -Nur rtk.orig/src/IO.cpp rtk/src/IO.cpp
      out.close();
  }
 diff -Nur rtk.orig/src/IO.h rtk/src/IO.h
---- rtk.orig/src/IO.h	2017-07-30 20:30:49.000000000 +0200
-+++ rtk/src/IO.h	2018-01-11 14:59:17.891239715 +0100
+--- rtk.orig/src/IO.h	2018-02-11 16:04:03.000000000 +0100
++++ rtk/src/IO.h	2018-04-16 13:17:16.624592584 +0200
 @@ -78,13 +78,11 @@
  
  class DivEsts{
@@ -784,8 +782,8 @@ diff -Nur rtk.orig/src/IO.h rtk/src/IO.h
 +void writeGlobalDiv(options* opts, string outF);
  //void writeGlobalDiv(vector<mat_fl>& ICE, vector<mat_fl>& ACE, vector<mat_fl>& chao2, string outF);
 diff -Nur rtk.orig/src/Makevars rtk/src/Makevars
---- rtk.orig/src/Makevars	2017-07-30 20:30:49.000000000 +0200
-+++ rtk/src/Makevars	2018-01-11 11:17:18.555744653 +0100
+--- rtk.orig/src/Makevars	2018-02-11 16:04:03.000000000 +0100
++++ rtk/src/Makevars	2018-04-16 13:17:16.632651337 +0200
 @@ -1,7 +1,2 @@
 -## -*- mode: makefile; -*-
 -
@@ -797,8 +795,8 @@ diff -Nur rtk.orig/src/Makevars rtk/src/Makevars
 +PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -Wall
 +PKG_LIBS = $(SHLIB_OPENMP_CXXFLAGS)
 diff -Nur rtk.orig/src/Matrix.cpp rtk/src/Matrix.cpp
---- rtk.orig/src/Matrix.cpp	2017-07-30 20:30:49.000000000 +0200
-+++ rtk/src/Matrix.cpp	2018-01-09 16:08:41.991743683 +0100
+--- rtk.orig/src/Matrix.cpp	2018-02-11 16:04:03.000000000 +0100
++++ rtk/src/Matrix.cpp	2018-04-16 13:17:16.641546282 +0200
 @@ -1572,12 +1572,10 @@
  		stringstream ss;
  		ss << line;
@@ -813,8 +811,8 @@ diff -Nur rtk.orig/src/Matrix.cpp rtk/src/Matrix.cpp
  			}
  			mat_fl tmp =  atof(segments.c_str());
 diff -Nur rtk.orig/src/Matrix.h rtk/src/Matrix.h
---- rtk.orig/src/Matrix.h	2017-07-30 20:30:49.000000000 +0200
-+++ rtk/src/Matrix.h	2018-01-11 11:04:30.837357533 +0100
+--- rtk.orig/src/Matrix.h	2018-02-11 16:04:03.000000000 +0100
++++ rtk/src/Matrix.h	2018-04-16 13:17:16.649350414 +0200
 @@ -133,7 +133,7 @@
  	size_t smplNum(){ return colIDs.size(); }
  	int rowNum(){ return rowIDs.size(); }
@@ -825,8 +823,8 @@ diff -Nur rtk.orig/src/Matrix.h rtk/src/Matrix.h
  
  	int SmplNum() { return (int)mat.size(); }
 diff -Nur rtk.orig/src/RRare.cpp rtk/src/RRare.cpp
---- rtk.orig/src/RRare.cpp	2017-07-30 20:30:49.000000000 +0200
-+++ rtk/src/RRare.cpp	2018-01-11 11:06:29.472241562 +0100
+--- rtk.orig/src/RRare.cpp	2018-02-11 16:04:03.000000000 +0100
++++ rtk/src/RRare.cpp	2018-04-16 13:17:16.657691868 +0200
 @@ -21,11 +21,8 @@
      vector<vector<rare_map>> cntsMap(opts->depth.size());
      vector<string> cntsName(opts->depth.size());
@@ -918,8 +916,8 @@ diff -Nur rtk.orig/src/RRare.cpp rtk/src/RRare.cpp
  	}
  
 diff -Nur rtk.orig/src/RRare.h rtk/src/RRare.h
---- rtk.orig/src/RRare.h	2017-07-30 20:30:49.000000000 +0200
-+++ rtk/src/RRare.h	2018-01-04 12:43:09.765325857 +0100
+--- rtk.orig/src/RRare.h	2018-02-11 16:04:03.000000000 +0100
++++ rtk/src/RRare.h	2018-04-16 13:17:16.665549623 +0200
 @@ -28,8 +28,5 @@
  	std::vector<vector<vector<rare_map>>> &MaRare,
  	std::vector<vector<string>>& cntsNames,
@@ -930,8 +928,8 @@ diff -Nur rtk.orig/src/RRare.h rtk/src/RRare.h
  	std::vector<string>& rowNames,
  	bool transpose);
 diff -Nur rtk.orig/src/Rwrapper.cpp rtk/src/Rwrapper.cpp
---- rtk.orig/src/Rwrapper.cpp	2017-07-30 20:30:49.000000000 +0200
-+++ rtk/src/Rwrapper.cpp	2018-01-11 11:18:12.629711104 +0100
+--- rtk.orig/src/Rwrapper.cpp	2018-02-11 16:04:03.000000000 +0100
++++ rtk/src/Rwrapper.cpp	2018-04-16 13:17:16.673463905 +0200
 @@ -39,12 +39,7 @@
  List createDivList(DivEsts * div, int di){
      List divLst         = List::create(
@@ -1012,7 +1010,7 @@ diff -Nur rtk.orig/src/Rwrapper.cpp rtk/src/Rwrapper.cpp
          Rcout << "All R objects were produced\n";
 diff -Nur rtk.orig/src/XorShift128Plus.h rtk/src/XorShift128Plus.h
 --- rtk.orig/src/XorShift128Plus.h	1970-01-01 01:00:00.000000000 +0100
-+++ rtk/src/XorShift128Plus.h	2018-01-11 13:48:47.288035317 +0100
++++ rtk/src/XorShift128Plus.h	2018-04-16 13:17:16.680729985 +0200
 @@ -0,0 +1,57 @@
 +
 +// https://stackoverflow.com/questions/35358501/what-is-performance-wise-the-best-way-to-generate-random-bools
