@@ -8,44 +8,53 @@ fi
 
 set -e
 
-wget https://cran.r-project.org/src/contrib/amap_0.8-14.tar.gz && \
-${PREFIX}/bin/R CMD INSTALL amap_0.8-14.tar.gz && \
+wget https://cran.r-project.org/src/contrib/amap_0.8-14.tar.gz 
+${PREFIX}/bin/R CMD INSTALL amap_0.8-14.tar.gz 
 rm amap_0.8-14.tar.gz 
 
-wget https://cran.r-project.org/src/contrib/permute_0.9-4.tar.gz && \
-${PREFIX}/bin/R CMD INSTALL permute_0.9-4.tar.gz && \
+wget https://cran.r-project.org/src/contrib/permute_0.9-4.tar.gz 
+${PREFIX}/bin/R CMD INSTALL permute_0.9-4.tar.gz 
 rm permute_0.9-4.tar.gz
 
-wget https://cran.r-project.org/src/contrib/vegan_2.4-2.tar.gz && \
-${PREFIX}/bin/R CMD INSTALL vegan_2.4-2.tar.gz && \
-rm vegan_2.4-2.tar.gz
+wget https://cran.r-project.org/src/contrib/vegan_2.5-1.tar.gz 
+${PREFIX}/bin/R CMD INSTALL vegan_2.5-1.tar.gz
+rm vegan_2.5-1.tar.gz
 
-wget https://cran.r-project.org/src/contrib/Rserve_1.7-3.tar.gz && \
-${PREFIX}/bin/R CMD INSTALL Rserve_1.7-3.tar.gz && \
+wget https://cran.r-project.org/src/contrib/Rserve_1.7-3.tar.gz 
+if [ ${OS} = "Solaris" ]; then
+  tar xzf Rserve_1.7-3.tar.gz && rm Rserve_1.7-3.tar.gz
+  patch -p0 < patches/rserve_solaris.patch
+  tar czf Rserve_1.7-3.tar.gz Rserve
+  rm -rf Rserve
+fi
+${PREFIX}/bin/R CMD INSTALL Rserve_1.7-3.tar.gz 
 rm Rserve_1.7-3.tar.gz
 
 # required for rtk
-wget https://cran.r-project.org/src/contrib/Rcpp_0.12.10.tar.gz && \
-${PREFIX}/bin/R CMD INSTALL Rcpp_0.12.10.tar.gz && \
-rm Rcpp_0.12.10.tar.gz
+wget https://cran.r-project.org/src/contrib/Rcpp_0.12.16.tar.gz 
+${PREFIX}/bin/R CMD INSTALL Rcpp_0.12.16.tar.gz 
+rm Rcpp_0.12.16.tar.gz
 
 wget https://cran.r-project.org/src/contrib/rtk_0.2.5.4.tar.gz 
 tar xzf rtk_0.2.5.4.tar.gz && rm rtk_0.2.5.4.tar.gz
 patch -p0 < patches/rtk_richness_only.patch
+if [ ${OS} = "Solaris" ]; then
+  patch -p0 < patches/rtk_solaris.patch
+fi
 tar czf rtk_0.2.5.4.tar.gz rtk
 rm -rf rtk
-${PREFIX}/bin/R CMD INSTALL rtk_0.2.5.4.tar.gz && \
+${PREFIX}/bin/R CMD INSTALL rtk_0.2.5.4.tar.gz 
 rm rtk_0.2.5.4.tar.gz
 
-wget https://bioconductor.org/packages/release/bioc/src/contrib/Biobase_2.34.0.tar.gz && \
-${PREFIX}/bin/R CMD INSTALL Biobase_2.34.0.tar.gz && \
-rm Biobase_2.34.0.tar.gz
+wget https://bioconductor.org/packages/release/bioc/src/contrib/BiocGenerics_0.26.0.tar.gz
+${PREFIX}/bin/R CMD INSTALL BiocGenerics_0.26.0.tar.gz
+rm BiocGenerics_0.26.0.tar.gz
 
-wget https://bioconductor.org/packages/release/bioc/src/contrib/BiocGenerics_0.20.0.tar.gz && \
-${PREFIX}/bin/R CMD INSTALL BiocGenerics_0.20.0.tar.gz && \
-rm BiocGenerics_0.20.0.tar.gz
+wget https://bioconductor.org/packages/release/bioc/src/contrib/Biobase_2.40.0.tar.gz
+${PREFIX}/bin/R CMD INSTALL Biobase_2.40.0.tar.gz
+rm Biobase_2.40.0.tar.gz
 
-wget https://bioconductor.org/packages/3.4/bioc/src/contrib/ctc_1.48.0.tar.gz && \
-${PREFIX}/bin/R CMD INSTALL ctc_1.48.0.tar.gz && \
-rm ctc_1.48.0.tar.gz
+wget https://bioconductor.org/packages/release/bioc/src/contrib/ctc_1.54.0.tar.gz
+${PREFIX}/bin/R CMD INSTALL ctc_1.54.0.tar.gz
+rm ctc_1.54.0.tar.gz
 
