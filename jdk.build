@@ -3,10 +3,18 @@
 
 set -e 
 
-wget --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-  http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.tar.gz
-tar xzf jdk-8u171-linux-x64.tar.gz -C ${PREFIX}/lib 
-rm jdk-8u171-linux-x64.tar.gz
+if [ ${OS} = "Solaris" ]; then
+  wget --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
+    -O jdk-8u171-solaris-x64.tar.gz \
+    http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-solaris-x64.tar.gz
+  tar xzf jdk-8u171-solaris-x64.tar.gz -C ${PREFIX}/lib 
+  rm jdk-8u171-solaris-x64.tar.gz
+else
+  wget --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
+    http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.tar.gz
+  tar xzf jdk-8u171-linux-x64.tar.gz -C ${PREFIX}/lib 
+  rm jdk-8u171-linux-x64.tar.gz
+fi
 
 # remove previous version
 if [ -e ${PREFIX}/lib/jdk ]; then
