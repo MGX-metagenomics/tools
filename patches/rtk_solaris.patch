@@ -1,0 +1,19 @@
+diff -Nur rtk.orig/MD5 rtk/MD5
+--- rtk.orig/MD5	2018-05-04 09:35:01.278098000 +0200
++++ rtk/MD5	2018-05-04 09:35:41.778870357 +0200
+@@ -16,7 +16,7 @@
+ 4ce487d7ff54b9ed85c7b98cadb9b8f6 *src/ClStr2Mat.h
+ 552dc1e5f5049e796a995bdeaa73d003 *src/IO.cpp
+ 5b7614625beeaf67ce7189d95e0d0beb *src/IO.h
+-419fe6da30b159624af8bc8b74bad9ca *src/Makevars
++7bdfd292e686e47add9f7ab0c2561869 *src/Makevars
+ e71f1957798f7be4611c99395483fdd0 *src/Makevars.win
+ 943a19b18c22eede019d6a6f73e1f06a *src/Math.cpp
+ 49976a0ec34f5c211808c435ccd657e6 *src/Math.h
+diff -Nur rtk.orig/src/Makevars rtk/src/Makevars
+--- rtk.orig/src/Makevars	2018-05-04 09:35:01.324811000 +0200
++++ rtk/src/Makevars	2018-05-04 09:35:14.997581918 +0200
+@@ -1,2 +1,2 @@
+-PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -Wall
++PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS) -Wall -D_GLIBCXX_USE_C99
+ PKG_LIBS = $(SHLIB_OPENMP_CXXFLAGS)
