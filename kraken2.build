@@ -1,0 +1,15 @@
+
+. ./tools.config
+
+set -e
+
+git clone https://github.com/DerrickWood/kraken2.git
+cd kraken2
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/kraken2/
+./install_kraken2.sh ${PREFIX}/lib/kraken2/
+install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
+ln -sf ${PREFIX}/lib/kraken2/kraken2 ${PREFIX}/bin/kraken2
+ln -sf ${PREFIX}/lib/kraken2/kraken2-build ${PREFIX}/bin/kraken2-build
+cd ..
+rm -rf kraken2
+
