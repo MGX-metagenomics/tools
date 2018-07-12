@@ -1,16 +1,22 @@
 
 . ./tools.config
 
-VERSION=1.5.0
+VERSION=1.6.2
 
-wget https://github.com/bioinformatics-centre/kaiju/archive/v${VERSION}.tar.gz && \
-tar xzf v${VERSION}.tar.gz && \
-rm v${VERSION}.tar.gz && \
-cd kaiju-${VERSION} && \
-cd src && \
-make && \
-cd ../bin && \
-install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
+set -e
+
+wget https://github.com/bioinformatics-centre/kaiju/archive/v${VERSION}.tar.gz 
+tar xzf v${VERSION}.tar.gz 
+rm v${VERSION}.tar.gz 
+cd kaiju-${VERSION}
+cd src 
+make 
+cd ../bin 
+
+if [ ! -d ${PREFIX}/bin ]; then
+  install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
+fi
+
 for f in addTaxonNames convertNR kaiju kaiju2krona kaijuReport kaijup kaijux mergeOutputs mkbwt mkfmi; do
     strip ${f}
 done
@@ -19,6 +25,6 @@ for f in * ; do
     install -g ${GROUP} --mode=755 ${f} ${PREFIX}/bin/
 done
 
-cd ../.. && \
+cd ../.. 
 rm -rf kaiju-${VERSION}
 
