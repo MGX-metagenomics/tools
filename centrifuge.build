@@ -1,11 +1,13 @@
 
 . ./tools.config
 
-git clone https://github.com/infphilo/centrifuge && \
-cd centrifuge && \
-chmod 755 doc && \
-make && \
-make install prefix=${PREFIX} && \
-cd .. && \
+set -e 
+
+git clone https://github.com/infphilo/centrifuge 
+cd centrifuge 
+chmod 755 doc 
+make 
+make install prefix=${PREFIX} 
+cd .. 
 rm -rf centrifuge
 
