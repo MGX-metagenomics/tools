@@ -3,10 +3,12 @@
 
 set -e
 
-wget --no-check-certificate -O samtools-1.4.1.tar.bz2 https://github.com/samtools/samtools/releases/download/1.4.1/samtools-1.4.1.tar.bz2 
-tar xjf samtools-1.4.1.tar.bz2 
-rm samtools-1.4.1.tar.bz2 
-cd samtools-1.4.1/ 
+VERSION=1.9
+
+wget --no-check-certificate -O samtools-${VERSION}.tar.bz2 https://github.com/samtools/samtools/releases/download/${VERSION}/samtools-${VERSION}.tar.bz2 
+tar xjf samtools-${VERSION}.tar.bz2 
+rm samtools-${VERSION}.tar.bz2 
+cd samtools-${VERSION}/ 
 if [ ${OS} = "Solaris" ]; then
     # copy non-portable strsep/strndup from gnulib
     cp ../patches/strsep.c .
@@ -18,19 +20,19 @@ if [ ${OS} = "Solaris" ]; then
        LDFLAGS="-m64 -L/vol/gnu/lib/amd64 -R/vol/gnu/lib/amd64 -lnsl -lsocket" \
        --prefix=${PREFIX} \
        --libexecdir=${PREFIX}/share/libexec \
-       --enable-plugins --with-plugin-path=$PWD/htslib-1.4.1 \
+       --enable-plugins --with-plugin-path=$PWD/htslib-${VERSION} \
        --disable-libcurl 
 else
     ./configure --prefix=${PREFIX} \
        --libexecdir=${PREFIX}/share/libexec \
-       --enable-plugins --with-plugin-path=$PWD/htslib-1.4.1 \
+       --enable-plugins --with-plugin-path=$PWD/htslib-${VERSION} \
        --disable-libcurl --disable-bz2
 fi
 make all all-htslib
 #make check 
 make install install-htslib 
 cd .. 
-rm -rf samtools-1.4.1/ 
+rm -rf samtools-${VERSION}
 chgrp -R ${GROUP} ${PREFIX}/include/htslib
 chgrp ${GROUP} ${PREFIX}/lib/libhts* 
 chgrp ${GROUP} ${PREFIX}/lib/pkgconfig/htslib.pc
