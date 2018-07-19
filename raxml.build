@@ -1,0 +1,17 @@
+
+. ./tools.config
+
+VERSION=8.2.12
+
+set -e
+
+wget https://github.com/stamatak/standard-RAxML/archive/v${VERSION}.tar.gz 
+tar xzf v${VERSION}.tar.gz 
+rm v${VERSION}.tar.gz 
+cd standard-RAxML-${VERSION}
+make -f Makefile.PTHREADS.gcc
+install -g ${GROUP} --mode=755 raxmlHPC-PTHREADS ${PREFIX}/bin
+
+cd .. 
+rm -rf standard-RAxML-${VERSION}
+
