@@ -3,17 +3,27 @@
 
 set -e
 
-VERSION=2.7.6
+VERSION=2.7.8
 
 if [ ! -d ${PREFIX}/bin ] ; then
   install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
 fi
 
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/metaphlan2
+
 wget https://bitbucket.org/biobakery/metaphlan2/get/${VERSION}.zip
 unzip ${VERSION}.zip
 rm ${VERSION}.zip
 cd biobakery-metaphlan2-*
-install -g ${GROUP} --mode=755 metaphlan2.py ${PREFIX}/bin/
+install -g ${GROUP} --mode=755 metaphlan2.py ${PREFIX}/lib/metaphlan2/
+install -g ${GROUP} --mode=755 strainphlan.py ${PREFIX}/lib/metaphlan2/
+
+ln -sf ${PREFIX}/lib/metaphlan2/metaphlan2.py ${PREFIX}/bin/
+ln -sf ${PREFIX}/lib/metaphlan2/strainphlan.py ${PREFIX}/bin/
+
+for f in strainphlan_src/* ; do
+  install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/metaphlan2
+done
 cd ..
 rm -rf biobakery-metaphlan2-*
 
