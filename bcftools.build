@@ -5,6 +5,12 @@ set -e
 
 VERSION=1.9
 
+if [ ! -f ${PREFIX}/bin/samtools ]; then
+    echo "Install samtools before bctools"
+    exit 1
+fi
+
+
 wget --no-check-certificate -O bcftools-${VERSION}.tar.bz2 https://github.com/samtools/bcftools/releases/download/${VERSION}/bcftools-${VERSION}.tar.bz2 
 tar xjf bcftools-${VERSION}.tar.bz2 
 rm bcftools-${VERSION}.tar.bz2 
