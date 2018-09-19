@@ -35,5 +35,8 @@ done
 
 shopt -u nullglob
 
+# remove unit tests
+rm -f ${PREFIX}/lib/Conveyor/*Test*.{dll,mdb}
+
 cd .. && rm -rf conveyor
 
