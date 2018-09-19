@@ -1,0 +1,20 @@
+--- biobakery-metaphlan2-9760413b180f/metaphlan2.py	2018-07-04 11:07:08.000000000 +0200
++++ ./metaphlan2.py	2018-09-19 13:34:30.944510000 +0200
+@@ -60,7 +60,7 @@
+ # set the location of the database download url
+ DATABASE_DOWNLOAD = "https://bitbucket.org/biobakery/metaphlan2/downloads/"
+ # get the directory that contains this script
+-metaphlan2_script_install_folder = os.path.dirname(os.path.abspath(__file__))
++metaphlan2_script_install_folder = os.path.dirname(os.path.abspath(os.path.realpath(__file__)))
+ # get the default database folder
+ DEFAULT_DB_FOLDER = os.path.join(metaphlan2_script_install_folder, "metaphlan_databases")
+ 
+@@ -850,7 +850,7 @@
+         subp.check_call([read_fastx, "-h"], stdout=DEVNULL)
+     except Exception as e:
+         try:
+-            read_fastx = os.path.join(os.path.join(os.path.dirname(__file__), "utils"), read_fastx)
++            read_fastx = os.path.join(os.path.join(metaphlan2_script_install_folder, "utils"), read_fastx)
+             subp.check_call([read_fastx, "-h"], stdout=DEVNULL)
+         except Exception as e:
+             sys.stderr.write("OSError: fatal error running '{}'. Is it in the system path?\n".format(read_fastx))
