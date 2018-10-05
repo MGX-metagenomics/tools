@@ -1,16 +1,18 @@
 
 . ./tools.config
 
-wget -O RAPSearch2.23_64bits.tar.gz https://sourceforge.net/projects/rapsearch2/files/RAPSearch2.23_64bits.tar.gz/download && \
-tar xzf RAPSearch2.23_64bits.tar.gz && \
-rm RAPSearch2.23_64bits.tar.gz && \
+set -e
 
-cd RAPSearch2.23_64bits && \
-./install && \
+wget -O RAPSearch2.24_64bits.tar.gz https://sourceforge.net/projects/rapsearch2/files/RAPSearch2.24_64bits.tar.gz/download 
+tar xzf RAPSearch2.24_64bits.tar.gz 
+rm RAPSearch2.24_64bits.tar.gz 
+
+cd RAPSearch2.24_64bits 
+#./install 
 for f in rapsearch prerapsearch; do
      strip bin/${f}
      install --mode=755 bin/${f} ${PREFIX}/bin
 done
-cd .. && \
-rm -rf RAPSearch2.23_64bits
+cd .. 
+rm -rf RAPSearch2.24_64bits
 
