@@ -1,14 +1,14 @@
 
 . ./tools.config
 
-wget http://www.bi.cs.titech.ac.jp/ghostz/releases/ghostz-1.0.0.tar.gz
-tar xzf ghostz-1.0.0.tar.gz
-rm ghostz-1.0.0.tar.gz
-cd ghostz-1.0.0
+wget http://www.bi.cs.titech.ac.jp/ghostz/releases/ghostz-1.0.2.tar.gz
+tar xzf ghostz-1.0.2.tar.gz
+rm ghostz-1.0.2.tar.gz
+cd ghostz-1.0.2
 patch -p 1 < ../patches/ghostz-1.0.0-logging.patch
 make
 strip ghostz
 install --mode=755 ghostz ${PREFIX}/bin
 cd ..
-rm -rf ghostz-1.0.0
+rm -rf ghostz-1.0.2
 
