@@ -4,18 +4,17 @@
 set -e
 
 
+VERSION=2.8.1
+LMDBVER=0.9.23
 
-
-VERSION=2.7.1
-
-wget https://github.com/LMDB/lmdb/archive/LMDB_0.9.21.tar.gz
-tar xzf LMDB_0.9.21.tar.gz
-rm LMDB_0.9.21.tar.gz
-cd lmdb-LMDB_0.9.21/libraries/liblmdb/
+wget https://github.com/LMDB/lmdb/archive/LMDB_${LMDBVER}.tar.gz
+tar xzf LMDB_${LMDBVER}.tar.gz
+rm LMDB_${LMDBVER}.tar.gz
+cd lmdb-LMDB_${LMDBVER}/libraries/liblmdb/
 make
 make prefix=$PREFIX install
 cd ../../..
-rm -rf lmdb-LMDB_0.9.21
+rm -rf lmdb-LMDB_${LMDBVER}
 
 
 wget ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz 
@@ -62,7 +61,7 @@ patch -p 2 < ../../patches/blast-check-instdir.patch
    --without-fastcgi \
    --without-sasl2 \
    --without-cassandra --without-mongodb --without-libssh2  \
-   --without-dbapi --without-connext \
+   --without-connext \
    --with-dll --without-debug --with-mt \
    --with-projects=scripts/projects/blast/project.lst && \
 cd ReleaseMT/build && \
