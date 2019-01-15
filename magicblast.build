@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-VERSION=1.3.0
+VERSION=1.4.0
 
 if [ ${OS} = "Solaris" ]; then
     echo "MagicBlast is not available for Solaris."
