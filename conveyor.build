@@ -37,6 +37,8 @@ shopt -u nullglob
 
 # remove unit tests
 rm -f ${PREFIX}/lib/Conveyor/*Test*.{dll,mdb}
+rm -f ${PREFIX}/lib/Conveyor/{MVirScanner.exe,GBKChecker.exe,AnnotationPipeline.exe}*
+rm -f ${PREFIX}/lib/Conveyor/{SFF2FastQ.exe,PairedReadInterleaver.exe}*
 
 cd .. && rm -rf conveyor
 
