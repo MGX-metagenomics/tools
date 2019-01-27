@@ -13,10 +13,6 @@ cd src
 make 
 cd ../bin 
 
-if [ ! -d ${PREFIX}/bin ]; then
-  install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
-fi
-
 for f in addTaxonNames convertNR kaiju kaiju2krona kaijuReport kaijup kaijux mergeOutputs mkbwt mkfmi; do
     strip ${f}
 done

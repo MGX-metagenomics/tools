@@ -16,7 +16,6 @@ fi
 
 make 
 strip bwa 
-install -g ${GROUP} --mode=755 -d ${PREFIX}/bin/
 install -g ${GROUP} --mode=755 bwa ${PREFIX}/bin/ 
 cd .. && \
 rm -rf bwa-${VERSION}
