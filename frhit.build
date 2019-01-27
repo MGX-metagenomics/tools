@@ -1,13 +1,13 @@
 
 . ./tools.config
 
-wget http://weizhong-lab.ucsd.edu/frhit/fr-hit-v0.7.1-2013-02-20.tar.gz && \
-tar xzf fr-hit-v0.7.1-2013-02-20.tar.gz && \
-rm fr-hit-v0.7.1-2013-02-20.tar.gz && \
-cd fr-hit-v0.7 && \
-patch -p 1 < ../patches/frhit-link.patch && \
-make && \
-strip fr-hit && \
-install --mode=755 fr-hit ${PREFIX}/bin && \
-cd .. && \
+wget http://weizhong-lab.ucsd.edu/frhit/fr-hit-v0.7.1-2013-02-20.tar.gz 
+tar xzf fr-hit-v0.7.1-2013-02-20.tar.gz 
+rm fr-hit-v0.7.1-2013-02-20.tar.gz 
+cd fr-hit-v0.7 
+sed -i 's/-static //' makefile
+make 
+strip fr-hit 
+install --mode=755 fr-hit ${PREFIX}/bin 
+cd ..
 rm -rf fr-hit-v0.7
