@@ -1,13 +1,17 @@
 
 . ./tools.config
 
-git clone https://github.com/hyattpd/Prodigal.git && \
-cd Prodigal && \
-patch -p 1 < ../patches/prodigal-check-instdir.patch && \
-sed -i 's/MAX_GENES 30000/MAX_GENES 100000/g' gene.h && \
-make CFLAGS="-m64" && \
-strip prodigal && \
-make INSTALLDIR=${PREFIX}/bin install && \
-cd .. && \
-rm -rf Prodigal
+set -e
+
+wget https://github.com/hyattpd/Prodigal/archive/v2.6.3.tar.gz
+tar xzf v2.6.3.tar.gz
+rm v2.6.3.tar.gz
+cd Prodigal-2.6.3
+patch -p 1 < ../patches/prodigal-check-instdir.patch 
+sed -i 's/MAX_GENES 30000/MAX_GENES 100000/g' gene.h 
+make CFLAGS="-m64" 
+strip prodigal 
+make INSTALLDIR=${PREFIX}/bin install 
+cd .. 
+rm -rf Prodigal-2.6.3
 
