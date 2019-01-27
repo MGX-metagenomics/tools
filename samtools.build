@@ -26,7 +26,8 @@ else
     ./configure --prefix=${PREFIX} \
        --libexecdir=${PREFIX}/share/libexec \
        --enable-plugins --with-plugin-path=$PWD/htslib-${VERSION} \
-       --disable-libcurl --disable-bz2
+       --disable-libcurl --disable-bz2 \
+       --without-curses
 fi
 make all all-htslib
 #make check 
