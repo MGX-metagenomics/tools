@@ -16,4 +16,8 @@ if [ -e ${PREFIX}/lib/jdk ]; then
     rm -f ${PREFIX}/lib/jdk 
 fi
 
+rm -f ${PREFIX}/lib/jdk1.8.0_201/{README.html,src.zip,javafx-src.zip}
+rm -rf ${PREFIX}/lib/jdk1.8.0_201/lib/visualvm
+
+chgrp -R ${GROUP} ${PREFIX}/lib/jdk1.8.0_201
 ln -sf ${PREFIX}/lib/jdk1.8.0_201 ${PREFIX}/lib/jdk 

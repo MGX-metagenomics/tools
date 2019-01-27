@@ -30,3 +30,7 @@ make install-strip
 rmdir ${PREFIX}/share/doc/hmmer 
 cd .. 
 rm -rf hmmer-3.1b2
+
+rm -rf ${PREFIX}/include/hmmer.h
+rm -rf ${PREFIX}/include/impl_sse.h
+rm -rf ${PREFIX}/include/p7_*.h

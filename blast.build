@@ -83,3 +83,6 @@ chgrp ${GROUP} ${PREFIX}/lib/ncbi-blast+/*
 cd ../.. && \
 rm -rf ncbi-blast-${VERSION}+-src
 
+rm -f ${PREFIX}/include/lmdb.h
+rm -f ${PREFIX}/bin/mdb_{copy,dump,load,stat}
+rm -f ${PREFIX}/bin/lmdbxx_sample
