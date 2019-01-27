@@ -29,7 +29,7 @@ make
 make install
 cd .. 
 rm -rf bcftools-${VERSION}
+rm -f ${PREFIX}/share/man/man1/bcftools.1
 
 chgrp ${GROUP} ${PREFIX}/bin/bcftools
-chgrp ${GROUP} ${PREFIX}/share/man/man1/bcftools.1
 
