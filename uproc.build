@@ -22,5 +22,6 @@ for f in uproc-dna uproc-prot uproc-detailed uproc-import uproc-export uproc-orf
 done
 make install
 rm -rf ${PREFIX}/share/doc/uproc 
+rm -rf ${PREFIX}/include/uproc ${PREFIX}/include/uproc.h
 cd .. 
 rm -rf uproc-1.2.0
