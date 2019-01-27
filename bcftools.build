@@ -6,7 +6,7 @@ set -e
 VERSION=1.9
 
 if [ ! -f ${PREFIX}/bin/samtools ]; then
-    echo "Install samtools before bctools"
+    echo "Install samtools before bcftools"
     exit 1
 fi
 
