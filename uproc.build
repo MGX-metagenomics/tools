@@ -1,23 +1,26 @@
 
 . ./tools.config
 
-wget http://uproc.gobics.de/downloads/uproc/uproc-1.2.0.tar.gz && \
-tar xzf uproc-1.2.0.tar.gz && \
-rm uproc-1.2.0.tar.gz && \
-cd uproc-1.2.0 && \
-patch -p 1 < ../patches/uproc-direct-h.patch && \
-patch -p 1 < ../patches/uproc-mkdir.patch && \
-autoconf && \
-autoheader && \
-aclocal && \
-automake && \
-./configure CFLAGS="-m64 -static-libgcc" LDFLAGS="-m64 -ldl -static-libgcc `gcc -m64 -print-file-name=libgomp.a`" --prefix=${PREFIX} && \
-make && \
+set -e
+
+wget http://uproc.gobics.de/downloads/uproc/uproc-1.2.0.tar.gz 
+tar xzf uproc-1.2.0.tar.gz 
+rm uproc-1.2.0.tar.gz 
+cd uproc-1.2.0 
+patch -p 1 < ../patches/uproc-direct-h.patch 
+patch -p 1 < ../patches/uproc-mkdir.patch 
+patch -p 1 < ../patches/uproc-configure.patch
+autoconf 
+autoheader
+aclocal
+automake
+./configure CFLAGS="-m64 -static-libgcc" LDFLAGS="-m64 -ldl -static-libgcc `gcc -m64 -print-file-name=libgomp.a`" --prefix=${PREFIX} 
+make 
 make check 
 for f in uproc-dna uproc-prot uproc-detailed uproc-import uproc-export uproc-orf uproc-makedb; do
     strip .libs/${f}
 done
-make install && \
-rm -rf ${PREFIX}/share/doc/uproc && \
-cd .. && \
+make install
+rm -rf ${PREFIX}/share/doc/uproc 
+cd .. 
 rm -rf uproc-1.2.0
