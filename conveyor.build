@@ -38,7 +38,12 @@ shopt -u nullglob
 # remove unit tests
 rm -f ${PREFIX}/lib/Conveyor/*Test*.{dll,mdb}
 rm -f ${PREFIX}/lib/Conveyor/{MVirScanner.exe,GBKChecker.exe,AnnotationPipeline.exe}*
-rm -f ${PREFIX}/lib/Conveyor/{SFF2FastQ.exe,PairedReadInterleaver.exe}*
+rm -f ${PREFIX}/lib/Conveyor/{SFF2FastQ.exe,PairedReadInterleaver.exe,IterateTB.exe}*
+rm -f ${PREFIX}/lib/Conveyor/{EMBL2FAS.exe,EggNOG3Table.exe,CoreGenomePhylogeny.exe}*
+rm -f ${PREFIX}/lib/Conveyor/{SingleEndQualityFilter.exe,PairedEndQualityFilter.exe,IterateFasta.exe}*
+rm -f ${PREFIX}/lib/Conveyor/{PairedEndOverlap.exe,MatePairSplitting.exe,Conveyor.Configurator.exe}*
+rm -f ${PREFIX}/lib/Conveyor/{PairedEndFrontIndexSplitter.exe,EggNOGTable.exe,SingleEndReferenceFilter.exe}*
+rm -f ${PREFIX}/lib/Conveyor/{SingleEndFrontIndexSplitter.exe,PairedEndReferenceFilter.exe,MatePairProcessing.exe}*
 
 cd .. && rm -rf conveyor
 
