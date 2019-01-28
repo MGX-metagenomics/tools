@@ -44,8 +44,8 @@ fi
 HAS_LARGE=`qconf -sql | grep large | wc -l`
 if [ ${HAS_LARGE} -eq 0 ]; then
     # no large complex, fallback to virtual_free request
-    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=30g',g" GraphValidate
-    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=30g',g" GraphRun
+    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=5g',g" GraphValidate
+    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=40g',g" GraphRun
 else
     sed -i "s,QREQ,-l 'large=1',g" GraphValidate
     sed -i "s,QREQ,-l 'large=1',g" GraphRun
