@@ -23,5 +23,6 @@ done
 make install
 rm -rf ${PREFIX}/share/doc/uproc 
 rm -rf ${PREFIX}/include/uproc ${PREFIX}/include/uproc.h
+rm -f ${PREFIX}/lib/libuproc.a ${PREFIX}/lib/libuproc.la
 cd .. 
 rm -rf uproc-1.2.0

@@ -18,6 +18,7 @@ fi
 
 rm -f ${PREFIX}/lib/jdk1.8.0_201/{README.html,src.zip,javafx-src.zip}
 rm -rf ${PREFIX}/lib/jdk1.8.0_201/man ${PREFIX}/lib/jdk1.8.0_201/lib/visualvm
+rm -rf ${PREFIX}/lib/jdk1.8.0_201/lib/missioncontrol
 
 chgrp -R ${GROUP} ${PREFIX}/lib/jdk1.8.0_201
 ln -sf ${PREFIX}/lib/jdk1.8.0_201 ${PREFIX}/lib/jdk 
