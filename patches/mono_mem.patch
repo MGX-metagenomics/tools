@@ -1,0 +1,55 @@
+diff -Nur mono-5.18.0.240.orig/mono/sgen/sgen-gray.h mono-5.18.0.240/mono/sgen/sgen-gray.h
+--- mono-5.18.0.240.orig/mono/sgen/sgen-gray.h	2019-01-17 08:45:20.000000000 +0100
++++ mono-5.18.0.240/mono/sgen/sgen-gray.h	2019-01-31 11:06:09.828192000 +0100
+@@ -47,7 +47,7 @@
+ #define SGEN_GRAY_QUEUE_HEADER_SIZE	3
+ #endif
+ 
+-#define SGEN_GRAY_QUEUE_SECTION_SIZE	(512 - SGEN_GRAY_QUEUE_HEADER_SIZE)
++#define SGEN_GRAY_QUEUE_SECTION_SIZE	(1024 - SGEN_GRAY_QUEUE_HEADER_SIZE)
+ 
+ #ifdef SGEN_CHECK_GRAY_OBJECT_SECTIONS
+ typedef enum {
+diff -Nur mono-5.18.0.240.orig/mono/sgen/sgen-internal.c mono-5.18.0.240/mono/sgen/sgen-internal.c
+--- mono-5.18.0.240.orig/mono/sgen/sgen-internal.c	2019-01-17 08:45:20.000000000 +0100
++++ mono-5.18.0.240/mono/sgen/sgen-internal.c	2019-01-31 11:17:37.238788000 +0100
+@@ -40,13 +40,13 @@
+ 	   8,   16,   24,   32,   40,   48,   64,   80,
+ 	  96,  124,  160,  192,  224,  252,  292,  340,
+ 	 408,  452,  508,  584,  680,  816, 1020,
+-	1364, 2044, 2728, 4092, 5460, 8188 };
++	1364, 2044, 2728, 4092, 5460, 8188, 16384-4 };
+ #else
+ static const int allocator_sizes [] = {
+ 	   8,   16,   24,   32,   40,   48,   64,   80,
+ 	  96,  128,  160,  192,  224,  248,  288,  336,
+ 	 368,  448,  504,  584,  680,  816, 1016,
+-	1360, 2040, 2728, 4088, 5456, 8184 };
++	1360, 2040, 2728, 4088, 5456, 8184, 16384-8 };
+ #endif
+ 
+ #define NUM_ALLOCATORS	(sizeof (allocator_sizes) / sizeof (int))
+diff -Nur mono-5.18.0.240.orig/mono/utils/lock-free-alloc.h mono-5.18.0.240/mono/utils/lock-free-alloc.h
+--- mono-5.18.0.240.orig/mono/utils/lock-free-alloc.h	2019-01-17 08:45:20.000000000 +0100
++++ mono-5.18.0.240/mono/utils/lock-free-alloc.h	2019-01-31 11:27:46.869912000 +0100
+@@ -45,7 +45,7 @@
+ 	MonoMemAccountType account_type;
+ } MonoLockFreeAllocator;
+ 
+-#define LOCK_FREE_ALLOC_SB_MAX_SIZE					16384
++#define LOCK_FREE_ALLOC_SB_MAX_SIZE					16384 << 1
+ #define LOCK_FREE_ALLOC_SB_HEADER_SIZE				(sizeof (gpointer))
+ #define LOCK_FREE_ALLOC_SB_USABLE_SIZE(block_size)	((block_size) - LOCK_FREE_ALLOC_SB_HEADER_SIZE)
+ 
+diff -Nur mono-5.18.0.240.orig/mono/utils/mono-utility-thread.c mono-5.18.0.240/mono/utils/mono-utility-thread.c
+--- mono-5.18.0.240.orig/mono/utils/mono-utility-thread.c	2019-01-17 08:45:20.000000000 +0100
++++ mono-5.18.0.240/mono/utils/mono-utility-thread.c	2019-01-31 11:34:42.920625000 +0100
+@@ -85,7 +85,7 @@
+ 	MonoUtilityThread *thread = g_malloc0 (sizeof (MonoUtilityThread));
+ 	size_t entry_size = offsetof (UtilityThreadQueueEntry, payload) + payload_size;
+ 
+-	thread->message_block_size = mono_pagesize ();
++	thread->message_block_size = mono_pagesize () << 1;
+ 	thread->payload_size = payload_size;
+ 	thread->callbacks = *callbacks;
+ 

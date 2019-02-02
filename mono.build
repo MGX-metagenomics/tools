@@ -1,27 +1,30 @@
 
 . ./tools.config
 
-VERSION=4.6.1.5
+set -e
 
-wget https://download.mono-project.com/sources/mono/mono-4.6.1.5.tar.bz2 && \
-tar xjf mono-4.6.1.5.tar.bz2 && \
-rm mono-4.6.1.5.tar.bz2 && \
-cd mono-4.6.1
-
-patch -p 1 < ../patches/mono_sgen_nursery.patch
-patch -p 1 < ../patches/mono_qsort_recursion.patch
-
-./configure --prefix=${PREFIX} \
-   --sysconfdir=${PREFIX}/lib/etc \
-   --with-xen_opt=no --with-large-heap=yes \
-   --disable-boehm \
-   --disable-nls --with-mcs-docs=no
+VERSION=5.18.0.240
+wget https://github.com/mono/mono/archive/mono-${VERSION}.tar.gz
+tar xzf mono-${VERSION}.tar.gz
+cd mono-${VERSION}
+patch -p 1 < ../patches/mono_mem.patch
+export CFLAGS="-g"
+export CXXFLAGS="-g"
+./configure --prefix=/vol/mgx-sw/lib/mono-5.18 \
+    --sysconfdir=/vol/mgx-sw/lib/mono-5.18/etc \
+    --with-xen_opt=no \
+    --with-large-heap=yes \
+    --disable-boehm \
+    --disable-nls \
+    --with-mcs-docs=no \
+    --without-x 
 make && make install
-cd .. && \
-rm -rf mono-4.6.1
+cd .. 
+rm -rf mono-${VERSION}
 
 # configure drmaa library location for UGE
 if [ -f /vol/codine-8.3/lib/lx-amd64/libdrmaa.so ]; then
     sed -i 's,</configuration>,        <dllmap dll="drmaa" target="/vol/codine-8.3/lib/lx-amd64/libdrmaa.so" os="!windows"/>\n</configuration>,g' \
         ${PREFIX}/lib/etc/mono/config
 fi
+
