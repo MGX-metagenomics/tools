@@ -31,5 +31,8 @@ cd ..
 rm -rf bcftools-${VERSION}
 rm -f ${PREFIX}/share/man/man1/bcftools.1
 
+# rm samtools headers
+rm -rf ${PREFIX}/include/htslib ${PREFIX}/lib/pkgconfig/htslib.pc
+
 chgrp ${GROUP} ${PREFIX}/bin/bcftools
 
