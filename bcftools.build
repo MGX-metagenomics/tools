@@ -22,6 +22,7 @@ if [ ${OS} = "Solaris" ]; then
        --prefix=${PREFIX} \
        --libexecdir=${PREFIX}/share/libexec --with-htslib=${PREFIX}
 else
+    export LDFLAGS="-Wl,-rpath -Wl,${PREFIX}/lib"
     ./configure --prefix=${PREFIX} \
        --libexecdir=${PREFIX}/share/libexec --with-htslib=${PREFIX}
 fi
