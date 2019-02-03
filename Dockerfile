@@ -14,7 +14,7 @@ RUN apt-get -y update && apt-get -y install \
 # libperl5.26: Sys::Hostname for bowtie2
 RUN apt-get -y install libgomp1 libxml2 libperl5.26
 
-RUN groupadd mgxserv && useradd -g mgxserv mgxserv
+RUN groupadd mgxserv && useradd -m -g mgxserv mgxserv
 
 COPY . /tmp/tools
 RUN cd /tmp/tools && for f in `cat build_order`; do \
