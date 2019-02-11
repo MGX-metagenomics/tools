@@ -7,7 +7,7 @@ patch -p 1 < ../patches/fraggenescanplus-semaphores.patch && \
 patch -p 1 < ../patches/fraggenescanplus-stderr.patch && \
 patch -p 1 < ../patches/fraggenescanplus-getopt.patch && \
 patch -p 1 < ../patches/fraggenescanplus-fixstrand.patch && \
-make && \
+make ${MAKE_FLAGS} && \
 strip FGS+ && \
 install -g ${GROUP} --mode=755 FGS+ ${PREFIX}/bin && \
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanPlus && \

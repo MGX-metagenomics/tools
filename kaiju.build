@@ -10,7 +10,7 @@ tar xzf v${VERSION}.tar.gz
 rm v${VERSION}.tar.gz 
 cd kaiju-${VERSION}
 cd src 
-make 
+make ${MAKE_FLAGS}
 cd ../bin 
 
 for f in addTaxonNames convertNR kaiju kaiju2krona kaijuReport kaijup kaijux mergeOutputs mkbwt mkfmi; do

@@ -26,7 +26,7 @@ else
     ./configure --prefix=${PREFIX} \
        --libexecdir=${PREFIX}/share/libexec --with-htslib=${PREFIX}
 fi
-make
+make ${MAKE_FLAGS}
 make install
 cd .. 
 rm -rf bcftools-${VERSION}

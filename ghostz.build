@@ -6,7 +6,7 @@ tar xzf ghostz-1.0.2.tar.gz
 rm ghostz-1.0.2.tar.gz
 cd ghostz-1.0.2
 patch -p 1 < ../patches/ghostz-1.0.0-logging.patch
-make
+make ${MAKE_FLAGS}
 strip ghostz
 install --mode=755 ghostz ${PREFIX}/bin
 cd ..

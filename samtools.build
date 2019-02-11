@@ -29,14 +29,11 @@ else
        --disable-libcurl --disable-bz2 \
        --without-curses --disable-lzma
 fi
-make all all-htslib
+make ${MAKE_FLAGS} all all-htslib
 #make check 
 make install install-htslib 
 cd .. 
 rm -rf samtools-${VERSION}
-chgrp -R ${GROUP} ${PREFIX}/include/htslib
-chgrp ${GROUP} ${PREFIX}/lib/libhts* 
-chgrp ${GROUP} ${PREFIX}/lib/pkgconfig/htslib.pc
 
 for f in samtools bgzip htsfile; do 
     strip ${PREFIX}/bin/${f}

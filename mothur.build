@@ -8,7 +8,7 @@ wget --no-check-certificate -O mothur${MOTHURVER}.tar.gz https://github.com/moth
 tar xzf mothur${MOTHURVER}.tar.gz 
 rm mothur${MOTHURVER}.tar.gz 
 cd mothur-${MOTHURVER} 
-make USEBOOST=no USEREADLINE=no 
+make ${MAKE_FLAGS} USEBOOST=no USEREADLINE=no 
 strip uchime 
 strip mothur
 install -g ${GROUP} --mode=755 uchime ${PREFIX}/bin/uchime-${MOTHURVER} 
