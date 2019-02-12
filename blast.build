@@ -11,7 +11,7 @@ wget https://github.com/LMDB/lmdb/archive/LMDB_${LMDBVER}.tar.gz
 tar xzf LMDB_${LMDBVER}.tar.gz
 rm LMDB_${LMDBVER}.tar.gz
 cd lmdb-LMDB_${LMDBVER}/libraries/liblmdb/
-make
+make ${MAKE_FLAGS}
 make prefix=$PREFIX install
 cd ../../..
 rm -rf lmdb-LMDB_${LMDBVER}
@@ -65,7 +65,7 @@ patch -p 2 < ../../patches/blast-check-instdir.patch
    --with-dll --without-debug --with-mt \
    --with-projects=scripts/projects/blast/project.lst && \
 cd ReleaseMT/build && \
-make all_p && \
+make ${MAKE_FLAGS} all_p && \
 cd ../.. && \
 make install
 
