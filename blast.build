@@ -56,6 +56,7 @@ patch -p 2 < ../../patches/blast-check-instdir.patch
    --without-gnutls \
    --without-expat \
    --without-bz2 \
+   --without-lzo \
    --without-pcre \
    --without-gbench \
    --without-fastcgi \
