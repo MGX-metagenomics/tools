@@ -44,4 +44,5 @@ rm -f ${PREFIX}/bin/{maq2sam-long,maq2sam-short,varfilter.py,zoom2sam.pl,soap2sa
 rm -f ${PREFIX}/bin/{novo2sam.pl,color-chrs.pl,tabix,md5fa,md5sum-lite}
 rm -f ${PREFIX}/share/man/man1/{samtools.1,bgzip.1,htsfile.1,tabix.1,wgsim.1}
 rm -f ${PREFIX}/share/man/man5/{faidx.5,vcf.5,sam.5}
+rm -f ${PREFIX}/lib/libhts.a
 

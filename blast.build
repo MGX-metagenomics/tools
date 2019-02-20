@@ -88,3 +88,5 @@ rm -f ${PREFIX}/include/lmdb.h
 rm -f ${PREFIX}/share/man/man1/mdb_*
 rm -f ${PREFIX}/bin/mdb_{copy,dump,load,stat}
 rm -f ${PREFIX}/bin/lmdbxx_sample
+rm -f ${PREFIX}/lib/liblmdb.a
+
