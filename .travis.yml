@@ -20,7 +20,7 @@ before_install:
 
 script:
   - for fragment in `cat build_order`; do 
-        bash ${fragment};
+        bash ${fragment}.build;
         if [ $? != 0 ]; then exit 1 ; fi;
     done
 
