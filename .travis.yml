@@ -19,7 +19,7 @@ before_install:
   - source tools.config
 
 script:
-  - for fragment in *.build; do 
+  - for fragment in `cat build_order`; do 
         bash ${fragment};
         if [ $? != 0 ]; then exit 1 ; fi;
     done
