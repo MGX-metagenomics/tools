@@ -25,7 +25,6 @@ cd ..
     --enable-mmap \
     --disable-threads
 make ${MAKE_FLAGS}
-make check 
 make install-strip 
 rmdir ${PREFIX}/share/doc/hmmer 
 cd .. 
