@@ -29,7 +29,7 @@ shopt -s nullglob
 
 find . -type d -name bin | while read bindir; do
     if [ -d ${bindir}/Debug ]; then
-        install -g ${GROUP} --mode=755 ${bindir}/Debug/*.{dll,mdb,exe,config} ${PREFIX}/lib/Conveyor/
+        install -g ${GROUP} --mode=755 ${bindir}/Debug/*.{dll,mdb,pdb,exe,config} ${PREFIX}/lib/Conveyor/
     fi
 done
 
