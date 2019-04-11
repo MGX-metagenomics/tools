@@ -10,7 +10,7 @@ if [ ${OS} = "Solaris" ]; then
     patch -p 1 < ../patches/blat-solaris.patch
     for d in lib jkOwnLib blat; do
         cd ${d}
-        make PNGLIB="" SOCKETLIB="-lnsl -lsocket"
+        make ${MAKE_FLAGS} PNGLIB="" SOCKETLIB="-lnsl -lsocket"
         cd ..
     done
     install -g ${GROUP} --mode=755 blat/blat ${PREFIX}/bin
@@ -20,7 +20,7 @@ else
     unzip blatSrc36.zip && \
     rm blatSrc36.zip && \
     cd blatSrc && \
-    make BINDIR=. USE_SSL=0 && \
+    make ${MAKE_FLAGS} BINDIR=. USE_SSL=0 && \
     #strip blat/blat
     install -g ${GROUP} --mode=755 blat/blat ${PREFIX}/bin
     cd .. && \

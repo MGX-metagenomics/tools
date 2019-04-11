@@ -8,32 +8,17 @@ fi
 
 set -e
 
-wget https://cran.r-project.org/src/contrib/amap_0.8-14.tar.gz 
-${PREFIX}/bin/R CMD INSTALL amap_0.8-14.tar.gz 
-rm amap_0.8-14.tar.gz 
-
-wget https://cran.r-project.org/src/contrib/permute_0.9-4.tar.gz 
-${PREFIX}/bin/R CMD INSTALL permute_0.9-4.tar.gz 
-rm permute_0.9-4.tar.gz
-
-wget https://cran.r-project.org/src/contrib/vegan_2.5-1.tar.gz 
-${PREFIX}/bin/R CMD INSTALL vegan_2.5-1.tar.gz
-rm vegan_2.5-1.tar.gz
-
-wget https://cran.r-project.org/src/contrib/Rserve_1.7-3.tar.gz 
 if [ ${OS} = "Solaris" ]; then
+  wget https://cran.r-project.org/src/contrib/Rserve_1.7-3.tar.gz 
   tar xzf Rserve_1.7-3.tar.gz && rm Rserve_1.7-3.tar.gz
   patch -p0 < patches/rserve_solaris.patch
   tar czf Rserve_1.7-3.tar.gz Rserve
   rm -rf Rserve
+  ${PREFIX}/bin/R CMD INSTALL Rserve_1.7-3.tar.gz 
+  rm Rserve_1.7-3.tar.gz
+else
+  echo "install.packages('Rserve')" | ${PREFIX}/bin/Rscript /dev/fd/0
 fi
-${PREFIX}/bin/R CMD INSTALL Rserve_1.7-3.tar.gz 
-rm Rserve_1.7-3.tar.gz
-
-# required for rtk
-wget https://cran.r-project.org/src/contrib/Rcpp_0.12.16.tar.gz 
-${PREFIX}/bin/R CMD INSTALL Rcpp_0.12.16.tar.gz 
-rm Rcpp_0.12.16.tar.gz
 
 wget https://cran.r-project.org/src/contrib/rtk_0.2.5.4.tar.gz 
 tar xzf rtk_0.2.5.4.tar.gz && rm rtk_0.2.5.4.tar.gz
@@ -58,3 +43,9 @@ wget https://bioconductor.org/packages/release/bioc/src/contrib/ctc_1.54.0.tar.g
 ${PREFIX}/bin/R CMD INSTALL ctc_1.54.0.tar.gz
 rm ctc_1.54.0.tar.gz
 
+
+echo "install.packages('vegan')" | ${PREFIX}/bin/Rscript /dev/fd/0
+echo "install.packages('compositions')" | ${PREFIX}/bin/Rscript /dev/fd/0
+
+echo "install.packages('devtools')" | ${PREFIX}/bin/Rscript /dev/fd/0
+echo "library(devtools); install_github('zdk123/SpiecEasi')" | ${PREFIX}/bin/Rscript /dev/fd/0

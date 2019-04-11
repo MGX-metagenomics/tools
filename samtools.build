@@ -29,14 +29,11 @@ else
        --disable-libcurl --disable-bz2 \
        --without-curses --disable-lzma
 fi
-make all all-htslib
+make ${MAKE_FLAGS} all all-htslib
 #make check 
 make install install-htslib 
 cd .. 
 rm -rf samtools-${VERSION}
-chgrp -R ${GROUP} ${PREFIX}/include/htslib
-chgrp ${GROUP} ${PREFIX}/lib/libhts* 
-chgrp ${GROUP} ${PREFIX}/lib/pkgconfig/htslib.pc
 
 for f in samtools bgzip htsfile; do 
     strip ${PREFIX}/bin/${f}
@@ -45,6 +42,7 @@ done
 # not needed
 rm -f ${PREFIX}/bin/{maq2sam-long,maq2sam-short,varfilter.py,zoom2sam.pl,soap2sam.pl,blast2sam.pl,export2sam.pl,bowtie2sam.pl,psl2sam.pl}
 rm -f ${PREFIX}/bin/{novo2sam.pl,color-chrs.pl,tabix,md5fa,md5sum-lite}
-rm -f ${PREFIX}/share/man/man1/samtools.1
+rm -f ${PREFIX}/share/man/man1/{samtools.1,bgzip.1,htsfile.1,tabix.1,wgsim.1}
 rm -f ${PREFIX}/share/man/man5/{faidx.5,vcf.5,sam.5}
+rm -f ${PREFIX}/lib/libhts.a
 

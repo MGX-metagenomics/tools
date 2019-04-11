@@ -14,7 +14,7 @@ if [ ${OS} = "Solaris" ]; then
     patch -p 1 < ../patches/bwa-solaris.patch
 fi
 
-make 
+make ${MAKE_FLAGS}
 strip bwa 
 install -g ${GROUP} --mode=755 bwa ${PREFIX}/bin/ 
 cd .. && \

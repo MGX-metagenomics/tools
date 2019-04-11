@@ -7,7 +7,7 @@ rm metacv_2_3_0.tgz
 cd metacv_2_3_0/
 patch -p1 < ../patches/metacv_printf_args.patch
 patch -p1 < ../patches/metacv_cxxflags.patch
-make
+make ${MAKE_FLAGS}
 strip metacv
 install --mode=755 metacv ${PREFIX}/bin
 cd ..

@@ -7,7 +7,7 @@ rm ghostx-1.3.7.tar.gz
 cd ghostx-1.3.7
 patch -p1 < ../patches/ghostx-1.3.7-logging.patch
 cd src
-make
+make ${MAKE_FLAGS}
 strip ghostx
 install --mode=755 ghostx ${PREFIX}/bin
 cd ../..

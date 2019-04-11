@@ -1,1 +1,1 @@
-base mothur jdk frhit bwa samtools bcftools bowtie2 kraken kraken2 ghostz fraggenescanplus rdpclassifier uproc hmmer3 blast magicblast
+base minimap2 mothur jdk frhit bwa samtools bcftools bowtie2 kraken kraken2 ghostz fraggenescanplus rdpclassifier uproc hmmer3 blast magicblast

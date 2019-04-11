@@ -24,8 +24,7 @@ cd ..
     --with-gcc-arch=i686 \
     --enable-mmap \
     --disable-threads
-make 
-make check 
+make ${MAKE_FLAGS}
 make install-strip 
 rmdir ${PREFIX}/share/doc/hmmer 
 cd .. 

@@ -1,0 +1,13 @@
+
+. ./tools.config
+
+set -e
+
+git clone https://github.com/lh3/minimap2
+cd minimap2
+make ${MAKE_FLAGS}
+install --mode=755 minimap2 ${PREFIX}/bin
+cd ..
+rm -rf minimap2
+
+

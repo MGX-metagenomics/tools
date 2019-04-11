@@ -1,18 +1,20 @@
 
 . ./tools.config
 
-git clone https://github.com/hallamlab/FragGeneScanPlus.git && \
-cd FragGeneScanPlus && \
-patch -p 1 < ../patches/fraggenescanplus-semaphores.patch && \
-patch -p 1 < ../patches/fraggenescanplus-stderr.patch && \
-patch -p 1 < ../patches/fraggenescanplus-getopt.patch && \
-patch -p 1 < ../patches/fraggenescanplus-fixstrand.patch && \
-make && \
-strip FGS+ && \
-install -g ${GROUP} --mode=755 FGS+ ${PREFIX}/bin && \
-install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanPlus && \
-install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanPlus/train && \
-install -g ${GROUP} --mode=644 train/* ${PREFIX}/share/FragGeneScanPlus/train/ && \
-cd .. && \
+set -e 
+
+git clone https://github.com/hallamlab/FragGeneScanPlus.git 
+cd FragGeneScanPlus 
+patch -p 1 < ../patches/fraggenescanplus-semaphores.patch 
+patch -p 1 < ../patches/fraggenescanplus-stderr.patch 
+patch -p 1 < ../patches/fraggenescanplus-getopt.patch 
+patch -p 1 < ../patches/fraggenescanplus-fixstrand.patch
+make ${MAKE_FLAGS} 
+strip FGS+ 
+install -g ${GROUP} --mode=755 FGS+ ${PREFIX}/bin 
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanPlus 
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanPlus/train 
+install -g ${GROUP} --mode=644 train/* ${PREFIX}/share/FragGeneScanPlus/train/ 
+cd .. 
 rm -rf FragGeneScanPlus
 

@@ -14,7 +14,7 @@ RUN apt-get -y update && apt-get -y install \
 # libperl5.26: Sys::Hostname for bowtie2
 RUN apt-get -y install libgomp1 libxml2 libperl5.26
 
-RUN groupadd mgxserv && useradd -g mgxserv mgxserv
+RUN groupadd mgxserv && useradd -m -g mgxserv mgxserv && chown -R mgxserv /home/mgxserv
 
 COPY . /tmp/tools
 RUN cd /tmp/tools && for f in `cat build_order`; do \
@@ -23,6 +23,6 @@ RUN cd /tmp/tools && for f in `cat build_order`; do \
 
 RUN apt-get -y purge git wget make gcc g++ zlib1g-dev unzip autoconf file cpio
 RUN apt-get -y autoremove && apt-get -y clean && rm -rf /tmp/tools && \
-    rm -rf /var/lib/apt/lists/* /var/lib/dpkg/info/* /var/log/dpkg.log
+    rm -rf /var/lib/apt/lists/* /var/lib/dpkg/info/* /var/log/dpkg.log /root/.wget-hsts
 
 #USER mgxserv

@@ -26,14 +26,17 @@ else
     ./configure --prefix=${PREFIX} \
        --libexecdir=${PREFIX}/share/libexec --with-htslib=${PREFIX}
 fi
-make
-make install
+make ${MAKE_FLAGS}
+
+mkdir -p -m 755 ${PREFIX}/bin ${PREFIX}/share/libexec/bcftools
+install -p bcftools ${PREFIX}/bin
+install -p misc/vcfutils.pl ${PREFIX}/bin
+install -p plugins/*.so ${PREFIX}/share/libexec/bcftools
+
 cd .. 
 rm -rf bcftools-${VERSION}
-rm -f ${PREFIX}/share/man/man1/bcftools.1
 
 # rm samtools headers
 rm -rf ${PREFIX}/include/htslib ${PREFIX}/lib/pkgconfig/htslib.pc
 
-chgrp ${GROUP} ${PREFIX}/bin/bcftools
 
