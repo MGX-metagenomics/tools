@@ -3,7 +3,7 @@
 
 VERSION=2.12
 
-wget --no-check-certificate -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_${VERSION}.zip/download
+wget -q --no-check-certificate -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_${VERSION}.zip/download
 unzip rdp_classifier.zip
 rm rdp_classifier.zip
 cd rdp_classifier_${VERSION}

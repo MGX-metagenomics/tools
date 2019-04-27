@@ -4,7 +4,7 @@
 set -e
 
 VERSION=5.18.0.240
-wget https://github.com/mono/mono/archive/mono-${VERSION}.tar.gz
+wget -q https://github.com/mono/mono/archive/mono-${VERSION}.tar.gz
 tar xzf mono-${VERSION}.tar.gz
 cd mono-${VERSION}
 patch -p 1 < ../patches/mono_mem.patch

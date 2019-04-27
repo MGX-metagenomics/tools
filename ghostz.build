@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-wget http://www.bi.cs.titech.ac.jp/ghostz/releases/ghostz-1.0.2.tar.gz
+wget -q http://www.bi.cs.titech.ac.jp/ghostz/releases/ghostz-1.0.2.tar.gz
 tar xzf ghostz-1.0.2.tar.gz
 rm ghostz-1.0.2.tar.gz
 cd ghostz-1.0.2

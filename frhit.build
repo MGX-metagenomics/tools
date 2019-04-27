@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-wget http://weizhong-lab.ucsd.edu/frhit/fr-hit-v0.7.1-2013-02-20.tar.gz 
+wget -q http://weizhong-lab.ucsd.edu/frhit/fr-hit-v0.7.1-2013-02-20.tar.gz 
 tar xzf fr-hit-v0.7.1-2013-02-20.tar.gz 
 rm fr-hit-v0.7.1-2013-02-20.tar.gz 
 cd fr-hit-v0.7 

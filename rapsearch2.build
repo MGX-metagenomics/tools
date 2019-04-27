@@ -3,7 +3,7 @@
 
 set -e
 
-wget -O RAPSearch2.24_64bits.tar.gz https://sourceforge.net/projects/rapsearch2/files/RAPSearch2.24_64bits.tar.gz/download 
+wget -q -O RAPSearch2.24_64bits.tar.gz https://sourceforge.net/projects/rapsearch2/files/RAPSearch2.24_64bits.tar.gz/download 
 tar xzf RAPSearch2.24_64bits.tar.gz 
 rm RAPSearch2.24_64bits.tar.gz 
 

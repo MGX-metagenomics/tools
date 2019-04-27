@@ -7,7 +7,7 @@ set -e
 VERSION=2.9.0
 LMDBVER=0.9.23
 
-wget https://github.com/LMDB/lmdb/archive/LMDB_${LMDBVER}.tar.gz
+wget -q https://github.com/LMDB/lmdb/archive/LMDB_${LMDBVER}.tar.gz
 tar xzf LMDB_${LMDBVER}.tar.gz
 rm LMDB_${LMDBVER}.tar.gz
 cd lmdb-LMDB_${LMDBVER}/libraries/liblmdb/
@@ -17,7 +17,7 @@ cd ../../..
 rm -rf lmdb-LMDB_${LMDBVER}
 
 
-wget ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz 
+wget -q ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz 
 tar xzf ncbi-blast-${VERSION}+-src.tar.gz 
 rm ncbi-blast-${VERSION}+-src.tar.gz 
 cd ncbi-blast-${VERSION}+-src/c++ 

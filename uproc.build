@@ -3,7 +3,7 @@
 
 set -e
 
-wget http://uproc.gobics.de/downloads/uproc/uproc-1.2.0.tar.gz 
+wget -q http://uproc.gobics.de/downloads/uproc/uproc-1.2.0.tar.gz 
 tar xzf uproc-1.2.0.tar.gz 
 rm uproc-1.2.0.tar.gz 
 cd uproc-1.2.0 

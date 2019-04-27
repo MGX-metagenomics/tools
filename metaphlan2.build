@@ -5,14 +5,10 @@ set -e
 
 VERSION=2.7.8
 
-if [ ! -d ${PREFIX}/bin ] ; then
-  install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
-fi
-
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/metaphlan2
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/metaphlan2/utils
 
-wget https://bitbucket.org/biobakery/metaphlan2/get/${VERSION}.zip
+wget -q https://bitbucket.org/biobakery/metaphlan2/get/${VERSION}.zip
 unzip ${VERSION}.zip
 rm ${VERSION}.zip
 cd biobakery-metaphlan2-*

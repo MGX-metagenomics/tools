@@ -5,7 +5,7 @@ set -e
 
 VERSION=0.9.24
 
-wget -O diamond.tar.gz https://github.com/bbuchfink/diamond/releases/download/v${VERSION}/diamond-linux64.tar.gz 
+wget -q -O diamond.tar.gz https://github.com/bbuchfink/diamond/releases/download/v${VERSION}/diamond-linux64.tar.gz 
 tar xzf diamond.tar.gz 
 strip diamond 
 rm diamond.tar.gz

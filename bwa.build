@@ -5,7 +5,7 @@ set -e
 
 VERSION=0.7.17
 
-wget -O bwa-${VERSION}.tar.bz2 http://downloads.sourceforge.net/project/bio-bwa/bwa-${VERSION}.tar.bz2 
+wget -q -O bwa-${VERSION}.tar.bz2 http://downloads.sourceforge.net/project/bio-bwa/bwa-${VERSION}.tar.bz2 
 tar xjf bwa-${VERSION}.tar.bz2 
 cd bwa-${VERSION} 
 

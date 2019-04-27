@@ -5,7 +5,7 @@ VERSION=1.6.2
 
 set -e
 
-wget https://github.com/bioinformatics-centre/kaiju/archive/v${VERSION}.tar.gz 
+wget -q https://github.com/bioinformatics-centre/kaiju/archive/v${VERSION}.tar.gz 
 tar xzf v${VERSION}.tar.gz 
 rm v${VERSION}.tar.gz 
 cd kaiju-${VERSION}
