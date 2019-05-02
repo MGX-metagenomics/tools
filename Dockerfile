@@ -5,14 +5,15 @@ LABEL version="1.0"
 LABEL maintainer="sebastian@jaenicke.org"
 
 # build dependencies
-RUN apt-get -y update && apt-get -y install \
+RUN apt-get -y update && apt-get -y upgrade && apt-get -y install \
     git wget make gcc g++ zlib1g-dev unzip autoconf file cpio
 
 # runtime dependencies
 #
 # libxml2: magicblast
 # libperl5.26: Sys::Hostname for bowtie2
-RUN apt-get -y install libgomp1 libxml2 libperl5.26
+# python: bowtie2
+RUN apt-get -y install libgomp1 libxml2 libperl5.26 openjdk-8-jre-headless python
 
 RUN groupadd mgxserv && useradd -m -g mgxserv mgxserv && chown -R mgxserv /home/mgxserv
 
