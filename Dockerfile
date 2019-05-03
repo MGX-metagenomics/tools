@@ -13,7 +13,8 @@ RUN apt-get -y update && apt-get -y upgrade && apt-get -y install \
 # libxml2: magicblast
 # libperl5.26: Sys::Hostname for bowtie2
 # python: bowtie2
-RUN apt-get -y install libgomp1 libxml2 libperl5.26 openjdk-8-jre-headless python
+# metaphlan2: python, python-numpy
+RUN apt-get -y install libgomp1 libxml2 libperl5.26 openjdk-8-jre-headless python python-numpy
 
 RUN groupadd mgxserv && useradd -m -g mgxserv mgxserv && chown -R mgxserv /home/mgxserv
 
