@@ -3,22 +3,22 @@
 
 set -e
 
-VERSION=5.18.0.240
-wget https://github.com/mono/mono/archive/mono-${VERSION}.tar.gz
-tar xzf mono-${VERSION}.tar.gz
+VERSION=5.20.1.19
+wget https://download.mono-project.com/sources/mono/mono-${VERSION}.tar.bz2
+tar xjf mono-${VERSION}.tar.bz2
 cd mono-${VERSION}
-patch -p 1 < ../patches/mono_mem.patch
+#patch -p 1 < ../patches/mono_mem.patch
 export CFLAGS="-g"
 export CXXFLAGS="-g"
-./configure --prefix=/vol/mgx-sw/lib/mono-5.18 \
-    --sysconfdir=/vol/mgx-sw/lib/mono-5.18/etc \
+./configure --prefix=${PREFIX} \
     --with-xen_opt=no \
     --with-large-heap=yes \
+    --with-jemalloc=yes --with-jemalloc_always=yes \
     --disable-boehm \
     --disable-nls \
     --with-mcs-docs=no \
     --without-x 
-make && make install
+make ${MAKE_FLAGS} && make install
 cd .. 
 rm -rf mono-${VERSION}
 
