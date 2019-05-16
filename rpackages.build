@@ -20,16 +20,16 @@ else
   echo "install.packages('Rserve')" | ${PREFIX}/bin/Rscript /dev/fd/0
 fi
 
-wget https://cran.r-project.org/src/contrib/rtk_0.2.5.4.tar.gz 
-tar xzf rtk_0.2.5.4.tar.gz && rm rtk_0.2.5.4.tar.gz
+wget https://cran.r-project.org/src/contrib/rtk_0.2.5.7.tar.gz 
+tar xzf rtk_0.2.5.7.tar.gz && rm rtk_0.2.5.7.tar.gz
 patch -p0 < patches/rtk_richness_only.patch
 if [ ${OS} = "Solaris" ]; then
   patch -p0 < patches/rtk_solaris.patch
 fi
-tar czf rtk_0.2.5.4.tar.gz rtk
+tar czf rtk_0.2.5.7.tar.gz rtk
 rm -rf rtk
-${PREFIX}/bin/R CMD INSTALL rtk_0.2.5.4.tar.gz 
-rm rtk_0.2.5.4.tar.gz
+${PREFIX}/bin/R CMD INSTALL rtk_0.2.5.7.tar.gz 
+rm rtk_0.2.5.7.tar.gz
 
 wget https://bioconductor.org/packages/release/bioc/src/contrib/BiocGenerics_0.26.0.tar.gz
 ${PREFIX}/bin/R CMD INSTALL BiocGenerics_0.26.0.tar.gz
@@ -45,7 +45,20 @@ rm ctc_1.54.0.tar.gz
 
 
 echo "install.packages('vegan')" | ${PREFIX}/bin/Rscript /dev/fd/0
+
+echo "install.packages('Rcpp')" | ${PREFIX}/bin/Rscript /dev/fd/0
+echo "install.packages('tensorA')" | ${PREFIX}/bin/Rscript /dev/fd/0
+echo "install.packages('robustbase')" | ${PREFIX}/bin/Rscript /dev/fd/0
+echo "install.packages('energy')" | ${PREFIX}/bin/Rscript /dev/fd/0
+echo "install.packages('bayesm')" | ${PREFIX}/bin/Rscript /dev/fd/0
 echo "install.packages('compositions')" | ${PREFIX}/bin/Rscript /dev/fd/0
+
+echo "install.packages('coda.base')" | ${PREFIX}/bin/Rscript /dev/fd/0
 
 echo "install.packages('devtools')" | ${PREFIX}/bin/Rscript /dev/fd/0
 echo "library(devtools); install_github('zdk123/SpiecEasi')" | ${PREFIX}/bin/Rscript /dev/fd/0
+
+
+echo "install.packages('BiocManager')" | ${PREFIX}/bin/Rscript /dev/fd/0
+echo "BiocManager::install('philr')" | ${PREFIX}/bin/Rscript /dev/fd/0
+
