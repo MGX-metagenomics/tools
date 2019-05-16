@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-wget http://metabin.riken.jp/archive/linux/x86_64/metabinv1.0.linux.x86_64.tar.gz
+wget -q http://metabin.riken.jp/archive/linux/x86_64/metabinv1.0.linux.x86_64.tar.gz
 tar xzf metabinv1.0.linux.x86_64.tar.gz \
     metabinv1.0.linux.x86_64/metabin metabinv1.0.linux.x86_64/prepareinput
 rm metabinv1.0.linux.x86_64.tar.gz

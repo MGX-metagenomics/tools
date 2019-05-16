@@ -5,7 +5,7 @@ set -e
 
 VERSION=2.3.5
 
-wget --no-check-certificate -O bowtie2-${VERSION}-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/${VERSION}/bowtie2-${VERSION}-source.zip/download
+wget -q --no-check-certificate -O bowtie2-${VERSION}-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/${VERSION}/bowtie2-${VERSION}-source.zip/download
 unzip bowtie2-${VERSION}-source.zip 
 cd bowtie2-${VERSION}/
 patch -p 1 < ../patches/bowtie2-solaris.patch

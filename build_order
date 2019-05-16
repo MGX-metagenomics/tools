@@ -1,1 +1,1 @@
-base minimap2 mothur jdk frhit bwa samtools bcftools bowtie2 kraken kraken2 ghostz fraggenescanplus rdpclassifier uproc hmmer3 blast magicblast
+base minimap2 fastp mothur frhit bwa samtools bcftools bowtie2 metaphlan2 kaiju kraken kraken2 ghostz fraggenescanplus rdpclassifier uproc hmmer3 blast magicblast

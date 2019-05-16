@@ -3,7 +3,7 @@
 
 set -e
 
-wget https://github.com/hyattpd/Prodigal/archive/v2.6.3.tar.gz
+wget -q https://github.com/hyattpd/Prodigal/archive/v2.6.3.tar.gz
 tar xzf v2.6.3.tar.gz
 rm v2.6.3.tar.gz
 cd Prodigal-2.6.3

@@ -3,7 +3,7 @@
 
 VERSION=0.43.1
 
-wget https://github.com/pachterlab/kallisto/archive/v${VERSION}.tar.gz && \
+wget -q https://github.com/pachterlab/kallisto/archive/v${VERSION}.tar.gz && \
 tar xzf v${VERSION}.tar.gz && \
 rm v${VERSION}.tar.gz && \
 cd kallisto-${VERSION} && \

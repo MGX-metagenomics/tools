@@ -3,7 +3,7 @@
 
 VERSION=2.12
 
-wget --no-check-certificate -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_${VERSION}.zip/download
+wget -q --no-check-certificate -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_${VERSION}.zip/download
 unzip rdp_classifier.zip
 rm rdp_classifier.zip
 cd rdp_classifier_${VERSION}
@@ -70,10 +70,11 @@ if [ ! -f \${INFILE} ]; then
     INFILE=\${TMP_IN}
 fi
 
-export JAVA_HOME=${PREFIX}/lib/jdk
+#export JAVA_HOME=${PREFIX}/lib/jdk
 
 err=0
-${PREFIX}/lib/jdk/bin/java -Xmx900m -cp \${CP} -jar \${JAR} -q \${INFILE} -g \${TRAINSET} -o /dev/fd/1 2>/dev/null || err=\$?
+#${PREFIX}/lib/jdk/bin/java -Xmx900m -cp \${CP} -jar \${JAR} -q \${INFILE} -g \${TRAINSET} -o /dev/fd/1 2>/dev/null || err=\$?
+/usr/bin/java -Xmx900m -cp \${CP} -jar \${JAR} -q \${INFILE} -g \${TRAINSET} -o /dev/fd/1 2>/dev/null || err=\$?
 
 exit \${err}
 

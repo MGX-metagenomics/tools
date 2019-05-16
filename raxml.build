@@ -5,7 +5,7 @@ VERSION=8.2.12
 
 set -e
 
-wget https://github.com/stamatak/standard-RAxML/archive/v${VERSION}.tar.gz 
+wget -q https://github.com/stamatak/standard-RAxML/archive/v${VERSION}.tar.gz 
 tar xzf v${VERSION}.tar.gz 
 rm v${VERSION}.tar.gz 
 cd standard-RAxML-${VERSION}

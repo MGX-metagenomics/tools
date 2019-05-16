@@ -19,7 +19,7 @@ else
     ${PREFIX}/bin/mozroots --import --sync
 fi
 
-wget https://dist.nuget.org/win-x86-commandline/v3.5.0/nuget.exe
+wget -q https://dist.nuget.org/win-x86-commandline/v3.5.0/nuget.exe
 ${PREFIX}/bin/mono nuget.exe restore Conveyor.sln
 
 ${PREFIX}/bin/xbuild /t:Clean

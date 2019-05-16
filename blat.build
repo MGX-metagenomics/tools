@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-wget http://genome-test.cse.ucsc.edu/~kent/src/blatSrc36.zip
+wget -q http://genome-test.cse.ucsc.edu/~kent/src/blatSrc36.zip
 
 if [ ${OS} = "Solaris" ]; then
     unzip blatSrc36.zip 

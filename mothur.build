@@ -4,7 +4,7 @@
 set -e
 
 MOTHURVER=1.41.3
-wget --no-check-certificate -O mothur${MOTHURVER}.tar.gz https://github.com/mothur/mothur/archive/v${MOTHURVER}.tar.gz 
+wget -q --no-check-certificate -O mothur${MOTHURVER}.tar.gz https://github.com/mothur/mothur/archive/v${MOTHURVER}.tar.gz 
 tar xzf mothur${MOTHURVER}.tar.gz 
 rm mothur${MOTHURVER}.tar.gz 
 cd mothur-${MOTHURVER} 

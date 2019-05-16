@@ -1,11 +1,11 @@
 
 . ./tools.config
 
-VERSION=1.6.2
+VERSION=1.7.0
 
 set -e
 
-wget https://github.com/bioinformatics-centre/kaiju/archive/v${VERSION}.tar.gz 
+wget -q https://github.com/bioinformatics-centre/kaiju/archive/v${VERSION}.tar.gz 
 tar xzf v${VERSION}.tar.gz 
 rm v${VERSION}.tar.gz 
 cd kaiju-${VERSION}
@@ -13,10 +13,9 @@ cd src
 make ${MAKE_FLAGS}
 cd ../bin 
 
-for f in addTaxonNames convertNR kaiju kaiju2krona kaijuReport kaijup kaijux mergeOutputs mkbwt mkfmi; do
+for f in kaiju-addTaxonNames kaiju-convertNR kaiju kaiju2krona kaiju2table kaijup kaijux kaiju-mergeOutputs kaiju-mkbwt kaiju-mkfmi; do
     strip ${f}
 done
-rm -f taxonlist.tsv
 for f in * ; do
     install -g ${GROUP} --mode=755 ${f} ${PREFIX}/bin/
 done

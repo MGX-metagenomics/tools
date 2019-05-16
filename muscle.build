@@ -3,7 +3,7 @@
 
 set -e 
 
-wget http://www.drive5.com/muscle/muscle_src_3.8.1551.tar.gz 
+wget -q http://www.drive5.com/muscle/muscle_src_3.8.1551.tar.gz 
 mkdir muscle && tar xzf muscle_src_3.8.1551.tar.gz -C muscle 
 rm muscle_src_3.8.1551.tar.gz 
 cd muscle 
