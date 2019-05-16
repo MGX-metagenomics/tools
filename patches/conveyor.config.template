@@ -23,7 +23,7 @@ else
 fi
 
 MONO=PREFIX/bin/mono
-MONO_GC_PARAMS=nursery-size=4g
+MONO_GC_PARAMS=nursery-size=8g
 MONO_CFG_DIR=PREFIX/lib/etc
 export MONO MONO_GC_PARAMS MONO_CFG_DIR
 
