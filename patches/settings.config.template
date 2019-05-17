@@ -51,7 +51,7 @@ Conveyor.ComputeCluster.ClusterExecution.defaultJobSize=3000
 Conveyor.Database.UniProt.Configuration.uniProtDatabases=SwissProt=SwissProt part of UniProt database,/ceph/biodb/local_databases/MGX/uniprot_swissprot/uniprot_sprot.dat,/ceph/biodb/local_databases/MGX/uniprot_swissprot/uniprot_sprot.fasta|TrEMBL=Translated EMBL part of Uniprot database,/ceph/biodb/uniprot/uniprot_trembl.dat,/ceph/biodb/uniprot/uniprot_trembl.fasta
 Conveyor.Definition.Plugin.extraTypeProvider=(Conveyor.AutomaticNodes)Conveyor.AutomaticNodes.InterfaceScanner
 Conveyor.EggNOG.V3.Configuration.eggNOGDirectory=/ceph/biodb/eggNOG/3.0
-Conveyor.EnzymeClassification.Configuration.dataDirectory=/vol/biodb/enzyme
+Conveyor.EnzymeClassification.Configuration.dataDirectory=/vol/biodb/local_databases/MGX/enzyme
 Conveyor.Geneprediction.Configuration.criticaExecutable=/bin/false
 Conveyor.Geneprediction.Configuration.glimmerExecutable=/bin/false
 Conveyor.Geneprediction.Configuration.prodigalExecutable=PREFIX/bin/prodigal
