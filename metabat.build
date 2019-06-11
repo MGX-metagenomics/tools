@@ -1,0 +1,17 @@
+
+. ./tools.config
+
+set -e
+
+wget -q https://bitbucket.org/berkeleylab/metabat/get/master.tar.gz
+tar xzf master.tar.gz
+rm master.tar.gz
+cd berkeleylab-metabat-*
+mkdir build 
+cd build 
+cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} .. 
+make 
+make install
+cd ../..
+rm -rf berkeleylab-metabat-*
+
