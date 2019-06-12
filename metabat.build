@@ -12,6 +12,13 @@ cd build
 cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} .. 
 make 
 make install
+
+# docker build somehow misses this one..
+if [ ! -f ${PREFIX}/bin/metabat2 ]; then
+    install --mode=755 src/metabat2 ${PREFIX}/bin
+fi
+
+rm -f ${PREFIX}/bin/metabat1
 cd ../..
 rm -rf berkeleylab-metabat-*
 
