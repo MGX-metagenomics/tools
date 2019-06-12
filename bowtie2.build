@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=2.3.5
+VERSION=2.3.5.1
 
 wget -q --no-check-certificate -O bowtie2-${VERSION}-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/${VERSION}/bowtie2-${VERSION}-source.zip/download
 unzip bowtie2-${VERSION}-source.zip 
