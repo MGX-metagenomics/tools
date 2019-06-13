@@ -1,0 +1,14 @@
+
+. ./tools.config
+
+set -e
+
+wget -q -O subread-1.6.4.tar.gz https://sourceforge.net/projects/subread/files/subread-1.6.4/subread-1.6.4-source.tar.gz/download
+tar xzf subread-1.6.4.tar.gz
+rm subread-1.6.4.tar.gz
+cd subread-1.6.4-source/src
+make ${MAKE_FLAGS} -f Makefile.Linux featureCounts
+install -g ${GROUP} --mode=755 featureCounts ${PREFIX}/bin
+cd ../..
+rm -rf subread-1.6.4-source
+
