@@ -1,0 +1,18 @@
+
+# pplacer is required by checkm
+
+. ./tools.config
+
+set -e
+
+wget -q https://github.com/Ecogenomics/CheckM/archive/v1.0.13.tar.gz
+tar xzf v1.0.13.tar.gz
+rm v1.0.13.tar.gz
+cd CheckM-1.0.13
+patch -p 1 < ../patches/checkm_prefix.patch
+sed -i "s,PREFIX,${PREFIX}," bin/checkm
+python setup.py build
+python setup.py install --prefix ${PREFIX}
+cd ..
+rm -rf CheckM-1.0.13
+
