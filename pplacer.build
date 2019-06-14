@@ -1,0 +1,27 @@
+
+# pplacer is required by checkm
+
+. ./tools.config
+
+set -e
+
+wget -q https://github.com/matsen/pplacer/releases/download/v1.1.alpha19/pplacer-linux-v1.1.alpha19.zip
+unzip pplacer-linux-v1.1.alpha19.zip
+rm pplacer-linux-v1.1.alpha19.zip
+cd pplacer-Linux-v1.1.alpha19
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/pplacer
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/pplacer/scripts
+
+for f in guppy pplacer rppr; do
+  install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/pplacer
+  ln -sf ${PREFIX}/lib/pplacer/${f} ${PREFIX}/bin
+done
+
+cd scripts
+for f in *py; do
+  install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/pplacer/scripts/
+done
+
+cd ../..
+rm -rf pplacer-Linux-v1.1.alpha19
+
