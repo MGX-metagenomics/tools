@@ -1,0 +1,21 @@
+diff -Nur berkeleylab-metabat-2e72973705c6.orig/runMetaBat.sh berkeleylab-metabat-2e72973705c6/runMetaBat.sh
+--- berkeleylab-metabat-2e72973705c6.orig/runMetaBat.sh	2019-06-13 00:45:40.000000000 +0200
++++ berkeleylab-metabat-2e72973705c6/runMetaBat.sh	2019-06-14 14:02:44.127857686 +0200
+@@ -36,7 +36,7 @@
+   then
+     break
+   fi
+-  outname="${arg}"
++#  outname="${arg}"
+   metabatopts="$metabatopts $arg"
+   shift
+ done
+@@ -113,7 +113,7 @@
+   echo "Skipping $SUM as $depth already exists"
+ fi
+ 
+-outname=${assembly##*/}.metabat-bins${outname}/bin
++outname=${assembly##*/}.metabat-bins/bin
+ echo "Executing: '$MB $metabatopts --inFile $assembly --outFile $outname --abdFile ${depth}' at `date`"
+ $MB $metabatopts --inFile $assembly --outFile $outname --abdFile ${depth}
+ echo "Finished $MB at `date`"

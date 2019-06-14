@@ -7,6 +7,7 @@ wget -q https://bitbucket.org/berkeleylab/metabat/get/master.tar.gz
 tar xzf master.tar.gz
 rm master.tar.gz
 cd berkeleylab-metabat-*
+patch -p 1 < ../patches/metabat_outname.patch
 mkdir build 
 cd build 
 cmake -DCMAKE_INSTALL_PREFIX=${PREFIX} .. 
