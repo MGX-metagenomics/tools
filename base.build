@@ -6,3 +6,10 @@ set -e
 install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share
+
+if [ -d /etc/profile.d ]; then
+  if [ -w /etc/profile.d ]; then
+    echo "PATH=$PATH:${PREFIX}/bin" > /etc/profile.d/mgx-sw.sh
+    echo "export PATH" >> /etc/profile.d/mgx-sw.sh
+  fi
+fi
