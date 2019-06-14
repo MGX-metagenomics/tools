@@ -18,6 +18,7 @@ RUN apt-get -y update && apt-get -y upgrade && apt-get -y install \
 # python: bowtie2
 # metaphlan2: python, python-numpy
 # metabat: boost
+# checkm: python-numpy python-pysam python-dendropy python-matplotlib
 RUN apt-get -y install libgomp1 libxml2 libperl5.26 openjdk-8-jre-headless python python-numpy \
     libboost-program-options1.65.1 libboost-iostreams1.65.1 \
     libboost-graph1.65.1 libboost-system1.65.1 libboost-filesystem1.65.1 libboost-serialization1.65.1
@@ -42,8 +43,10 @@ FROM ubuntu:18.04
 # runtime dependencies
 RUN apt-get -y update && apt-get -y install libgomp1 libxml2 libperl5.26 openjdk-8-jre-headless python python-numpy \
     libboost-program-options1.65.1 libboost-iostreams1.65.1 \
-    libboost-graph1.65.1 libboost-system1.65.1 libboost-filesystem1.65.1 libboost-serialization1.65.1
+    libboost-graph1.65.1 libboost-system1.65.1 libboost-filesystem1.65.1 libboost-serialization1.65.1 \
+    python-numpy python-pysam python-dendropy python-matplotlib
 
 COPY --from=builder /vol/mgx-sw/ /vol/mgx-sw
+COPY --from=builder /etc/profile.d/mgx-sw.sh /etc/profile.d/
 
 #USER mgxserv
