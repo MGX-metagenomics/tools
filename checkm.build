@@ -1,9 +1,22 @@
 
-# pplacer is required by checkm
 
 . ./tools.config
 
 set -e
+
+# pplacer is required by checkm
+if [ -f ${PREFIX}/bin/pplacer ]; then
+    bash pplacer.build
+fi
+
+if [ -f ${PREFIX}/bin/prodigal ]; then
+    bash prodigal.build
+fi
+
+if [ -f ${PREFIX}/bin/hmmscan ]; then
+    bash hmmscan.build
+fi
+
 
 wget -q https://github.com/Ecogenomics/CheckM/archive/v1.0.13.tar.gz
 tar xzf v1.0.13.tar.gz
