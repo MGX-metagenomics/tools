@@ -1,12 +1,12 @@
 
 . ./tools.config
 
+set -e
+
 if [ ! -f ${PREFIX}/bin/R ]; then
-    echo "Install R before installing R packages"
-    exit 1
+    bash r.build
 fi
 
-set -e
 
 if [ ${OS} = "Solaris" ]; then
   wget https://cran.r-project.org/src/contrib/Rserve_1.7-3.tar.gz 
