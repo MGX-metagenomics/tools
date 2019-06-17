@@ -5,16 +5,16 @@
 set -e
 
 # pplacer is required by checkm
-if [ -f ${PREFIX}/bin/pplacer ]; then
+if [ ! -f ${PREFIX}/bin/pplacer ]; then
     bash pplacer.build
 fi
 
-if [ -f ${PREFIX}/bin/prodigal ]; then
+if [ ! -f ${PREFIX}/bin/prodigal ]; then
     bash prodigal.build
 fi
 
-if [ -f ${PREFIX}/bin/hmmscan ]; then
-    bash hmmscan.build
+if [ ! -f ${PREFIX}/bin/hmmscan ]; then
+    bash hmmer3.build
 fi
 
 
