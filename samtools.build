@@ -23,6 +23,7 @@ if [ ${OS} = "Solaris" ]; then
        --enable-plugins --with-plugin-path=$PWD/htslib-${VERSION} \
        --disable-libcurl 
 else
+    export CFLAGS="-fPIC"
     ./configure --prefix=${PREFIX} \
        --libexecdir=${PREFIX}/share/libexec \
        --enable-plugins --with-plugin-path=$PWD/htslib-${VERSION} \
