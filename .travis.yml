@@ -15,7 +15,7 @@ before_install:
   - sudo apt-get update -qq
   - sudo groupadd mgxserv
   - sudo usermod -a -G mgxserv $USER
-  - sudo install -d -m 02755 -g mgxserv /vol/mgx-sw
+  - sudo install -d -m 02775 -g mgxserv /vol/mgx-sw
   - source tools.config
 
 script:
