@@ -3,6 +3,7 @@
 
 set -e 
 
+install -g ${GROUP} --mode=755 -d ${PREFIX}
 install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share
