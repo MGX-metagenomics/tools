@@ -22,8 +22,7 @@ cd ..
 ./configure --prefix=${PREFIX} \
     --enable-portable-binary \
     --with-gcc-arch=i686 \
-    --enable-mmap \
-    --disable-threads
+    --enable-mmap 
 make ${MAKE_FLAGS}
 make install-strip 
 rmdir ${PREFIX}/share/doc/hmmer 
