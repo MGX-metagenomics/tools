@@ -1,6 +1,9 @@
 
 . ./tools.config
 
+set -e 
+
+
 VERSION=2.12
 
 wget -q --no-check-certificate -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_${VERSION}.zip/download

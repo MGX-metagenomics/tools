@@ -49,4 +49,6 @@ RUN apt-get -y update && apt-get -y install libgomp1 libxml2 libperl5.26 openjdk
 COPY --from=builder /vol/mgx-sw/ /vol/mgx-sw
 COPY --from=builder /etc/profile.d/mgx-sw.sh /etc/profile.d/
 
+ENV PATH="/vol/mgx-sw/bin:${PATH}"
+
 #USER mgxserv

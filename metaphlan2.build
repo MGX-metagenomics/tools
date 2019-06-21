@@ -3,6 +3,10 @@
 
 set -e
 
+if [ -f ${PREFIX}/bin/bowtie2 ]; then
+    bash -x bowtie2.build
+fi
+
 VERSION=2.7.8
 
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/metaphlan2
