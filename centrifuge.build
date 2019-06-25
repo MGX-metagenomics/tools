@@ -3,7 +3,7 @@
 
 set -e 
 
-git clone https://github.com/infphilo/centrifuge 
+git clone https://github.com/DaehwanKimLab/centrifuge 
 cd centrifuge 
 chmod 755 doc 
 make 
