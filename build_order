@@ -1,1 +1,1 @@
-base minimap2 fastp mothur frhit bwa samtools megahit metabat bcftools bowtie2 metaphlan2 kaiju kraken kraken2 ghostz fraggenescanplus rdpclassifier uproc hmmer3 blast magicblast checkm featurecounts centrifuge diamond
+base prodigal minimap2 fastp mothur frhit bwa samtools megahit metabat bcftools bowtie2 metaphlan2 kaiju kraken kraken2 ghostz fraggenescanplus rdpclassifier uproc hmmer3 blast magicblast checkm featurecounts centrifuge diamond
