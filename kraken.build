@@ -1,6 +1,8 @@
 
 . ./tools.config
 
+set -e
+
 git clone https://github.com/DerrickWood/kraken.git
 cd kraken
 #patch -p 1 < ../patches/kraken_flock.patch
