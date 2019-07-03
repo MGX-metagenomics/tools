@@ -23,6 +23,7 @@ tar xzf v1.0.13.tar.gz
 rm v1.0.13.tar.gz
 cd CheckM-1.0.13
 patch -p 1 < ../patches/checkm_prefix.patch
+patch -p 1 < ../patches/checkm_datadir.patch
 sed -i "s,PREFIX,${PREFIX}," bin/checkm
 python setup.py build
 python setup.py install --prefix ${PREFIX}

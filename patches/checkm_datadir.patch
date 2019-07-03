@@ -1,0 +1,15 @@
+diff -Nur CheckM-1.0.13.orig/checkm/checkmData.py CheckM-1.0.13/checkm/checkmData.py
+--- CheckM-1.0.13.orig/checkm/checkmData.py	2019-01-07 21:04:48.000000000 +0100
++++ CheckM-1.0.13/checkm/checkmData.py	2019-07-03 10:25:57.340368221 +0200
+@@ -48,7 +48,10 @@
+             with open(self.configFile, 'r') as local_config:
+                 # config is a one line file
+                 for line in local_config:
+-                    return json.loads(line)
++                    ret = json.loads(line)
++                    if not os.path.exists(ret["dataRoot"]) and os.path.exists(os.environ['HOME']+ "/checkm"):
++                        ret["dataRoot"] = os.environ['HOME']+ "/checkm"
++                    return ret
+ 
+         except Exception:
+             self.logger.error("There seems to be a problem with loading the CheckM config file")
