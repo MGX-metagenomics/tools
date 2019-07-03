@@ -1,0 +1,17 @@
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/samtools ]; then
+    bash samtools.build
+fi
+
+
+git clone https://github.com/sjaenick/bamstats.git
+cd bamstats
+make
+install --mode=755 bamstats ${PREFIX}/bin
+cd ..
+rm -rf bamstats
+
