@@ -1,0 +1,11 @@
+
+. ./tools.config
+
+set -e
+
+git clone https://github.com/sjaenick/assignBin.git
+cd assignBin
+install --mode=755 assignBin.pl ${PREFIX}/bin
+cd ..
+rm -rf assignBin
+
