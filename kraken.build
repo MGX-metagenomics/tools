@@ -6,13 +6,13 @@ set -e
 git clone https://github.com/DerrickWood/kraken.git
 cd kraken
 #patch -p 1 < ../patches/kraken_flock.patch
-mkdir -p ${PREFIX}/lib/kraken-0.10.6/
-./install_kraken.sh ${PREFIX}/lib/kraken-0.10.6/
+mkdir -p ${PREFIX}/lib/kraken/
+./install_kraken.sh ${PREFIX}/lib/kraken/
 for f in make_seqid_to_taxid_map db_shrink db_sort classify set_lcas; do
-    strip ${PREFIX}/lib/kraken-0.10.6/${f}
+    strip ${PREFIX}/lib/kraken/${f}
 done
-ln -sf ${PREFIX}/lib/kraken-0.10.6/kraken ${PREFIX}/bin/kraken
-ln -sf ${PREFIX}/lib/kraken-0.10.6/kraken-build ${PREFIX}/bin/kraken-build
+ln -sf ${PREFIX}/lib/kraken/kraken ${PREFIX}/bin/kraken
+ln -sf ${PREFIX}/lib/kraken/kraken-build ${PREFIX}/bin/kraken-build
 cd ..
 rm -rf kraken
 
