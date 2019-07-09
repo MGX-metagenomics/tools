@@ -91,7 +91,7 @@ if [ ${OS} = "Solaris" ]; then
 
 fi # solaris
 
-VERSION=3.5.3
+VERSION=3.6.1
 
 
 wget -q --no-check-certificate https://cran.r-project.org/src/base/R-3/R-${VERSION}.tar.gz 
@@ -108,11 +108,13 @@ fi
   --with-tcltk=no \
   --without-libintl-prefix \
   --enable-java=no \
+  --with-readline=no \
   --with-libpng=no \
   --with-jpeglib=no \
   --with-libtiff=no \
   --with-x=no \
-  --with-ICU=no 
+  --with-ICU=no \
+  --disable-nls
 make 
 make install 
 
