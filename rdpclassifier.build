@@ -20,9 +20,9 @@ cat << EOS > ${PREFIX}/bin/rdp-classifier-${VERSION}
 #    or: rdp-classifier -s < input-file
 
 # configuration settings
-VERSION=${VERSION}
-CP=${PREFIX}/lib/rdp_classifier_\${VERSION}/lib
-JAR=${PREFIX}/lib/rdp_classifier_\${VERSION}/classifier.jar
+RDPVERSION=${VERSION}
+CP=${PREFIX}/lib/rdp_classifier_\${RDPVERSION}/lib
+JAR=${PREFIX}/lib/rdp_classifier_\${RDPVERSION}/classifier.jar
 # end of config
 
 usage() {
