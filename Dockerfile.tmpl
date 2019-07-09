@@ -6,7 +6,7 @@ LABEL maintainer="sebastian@jaenicke.org"
 
 # build dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && apt-get -y install \
-    git wget make gcc g++ zlib1g-dev unzip autoconf file cpio \
+    git wget make gcc g++ gfortran zlib1g-dev unzip autoconf file cpio \
     cmake \
     libboost-program-options-dev libboost-iostreams-dev \
     libboost-graph-dev libboost-system-dev libboost-filesystem-dev libboost-serialization-dev \
