@@ -13,10 +13,13 @@ fi
 
 if [ ! -f ${PREFIX}/bin/R ]; then
     bash r.build
+
+    # fails when installed as a ggplot2 dependency
+    echo "install.packages('withr')" | ${PREFIX}/bin/Rscript /dev/fd/0
+
     echo "install.packages('data.table')" | ${PREFIX}/bin/Rscript /dev/fd/0
     echo "install.packages('doMC')" | ${PREFIX}/bin/Rscript /dev/fd/0
     echo "install.packages('ggplot2')" | ${PREFIX}/bin/Rscript /dev/fd/0
-
 fi
 
 # pullseq
