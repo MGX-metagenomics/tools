@@ -2,7 +2,7 @@
 
 CONTIGS=$1
 shift
-THREADS=$2
+THREADS=$1
 shift
 
 set -e
@@ -11,5 +11,5 @@ cut_up_fasta.py ${CONTIGS} -c 10000 -o 0 --merge_last -b bed.tsv > contigs_10K.f
 concoct_coverage_table.py bed.tsv "$@" > coverage_table.tsv
 concoct -t ${THREADS} --composition_file contigs_10K.fa --coverage_file coverage_table.tsv -b concoct_output/
 merge_cutup_clustering.py concoct_output/clustering_gt1000.csv > concoct_output/clustering_merged.csv
-
+perl -pe "s/,/\tconcoct./g;" concoct_output/concoct_clustering_gt1000.csv > concoct.scaffolds2bin.tsv
 
