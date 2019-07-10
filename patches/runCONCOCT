@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+CONTIGS=$1
+shift
+
+set -e
+
+cut_up_fasta.py ${CONTIGS} -c 10000 -o 0 --merge_last -b bed.tsv > contigs_10K.fa
+concoct_coverage_table.py bed.tsv "$@" > coverage_table.tsv
+concoct --composition_file contigs_10K.fa --coverage_file coverage_table.tsv -b concoct_output/
+merge_cutup_clustering.py concoct_output/clustering_gt1000.csv > concoct_output/clustering_merged.csv
+
+
