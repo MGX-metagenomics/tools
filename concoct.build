@@ -19,6 +19,8 @@ for f in concoct concoct_coverage_table.py concoct_refine cut_up_fasta.py easy_i
   sed -i "/EASY-INSTALL-SCRIPT/a import sys\nsys.path.append(\"$PREFIX/lib/python3.6/site-packages\")" ${PREFIX}/bin/${f}
 done
 
+install --mode=755 ../patches/runCONCOCT ${PREFIX}/bin
+
 cd .. 
 rm -rf CONCOCT-${VERSION}
 
