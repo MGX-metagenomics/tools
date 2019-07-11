@@ -7,6 +7,12 @@ shift
 
 set -e
 
+for f in "$@"; do
+  if [ ! -f ${f}.bai ]; then
+    samtools -@ ${THREADS} -b ${f}
+  fi
+done
+
 cut_up_fasta.py ${CONTIGS} -c 10000 -o 0 --merge_last -b bed.tsv > contigs_10K.fa
 concoct_coverage_table.py bed.tsv "$@" > coverage_table.tsv
 concoct -t ${THREADS} --composition_file contigs_10K.fa --coverage_file coverage_table.tsv -b concoct_output/

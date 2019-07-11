@@ -3,6 +3,11 @@
 
 set -e
 
+if [ ! -f ${PREFIX}/bin/samtools ]; then
+  bash -x samtools.build
+fi
+
+
 VERSION=1.0.0
 wget -q https://github.com/BinPro/CONCOCT/archive/${VERSION}.tar.gz
 tar xzf ${VERSION}.tar.gz
