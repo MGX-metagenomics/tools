@@ -2,5 +2,5 @@
 set -e
 
 # assume docker build
-apt-get -y install ruby libgomp1 gfortran libcurl4 libicu60
+apt-get -y install ruby libgomp1 gfortran libcurl4 libicu60 ruby
 
