@@ -56,10 +56,10 @@ _read_fasta_file(\*FASTA, sub {
     my $binname = $assignments->{$desc};
     if (defined($binname)) {
         if (exists($binnumber->{$binname})) {
-            $binname = "Bin " . $binnumber->{$binname};
+            $binname = "Bin." . $binnumber->{$binname};
         } else {
             $binnumber->{$binname} = $bincnt;
-	    $binname = "Bin " . $binnumber->{$binname};
+	    $binname = "Bin." . $binnumber->{$binname};
             $bincnt++;
         }
     } else {
