@@ -18,6 +18,7 @@ export PYTHONPATH=${PREFIX}/lib/python3.6/site-packages/
 pip3 install -I --prefix ${PREFIX} --system setuptools
 pip3 install -I --prefix ${PREFIX} --system six
 pip3 install --prefix ${PREFIX} --system numpy
+pip3 install --prefix ${PREFIX} --system cython
 python3 setup.py install --prefix ${PREFIX}
 
 for f in concoct concoct_coverage_table.py concoct_refine cut_up_fasta.py easy_install easy_install-3.6 extract_fasta_bins.py f2py f2py3 f2py3.6 merge_cutup_clustering.py; do
