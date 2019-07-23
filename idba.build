@@ -11,6 +11,7 @@ cd idba-${VERSION}
 ./configure --prefix=${PREFIX}
 make ${MAKE_FLAGS}
 make install
+install --mode=755 bin/idba_ud ${PREFIX}/bin
 cd ..
 rm -rf idba-${VERSION}
 
