@@ -4,15 +4,15 @@
 set -e
 
 if [ ! -f ${PREFIX}/bin/prodigal ]; then
-    bash prodigal.build
+    bash -x prodigal.build
 fi
 
 if [ ! -f ${PREFIX}/bin/diamond ]; then
-    bash diamond.build
+    bash -x diamond.build
 fi
 
 if [ ! -f ${PREFIX}/bin/R ]; then
-    bash r.build
+    bash -x r.build
 
     # fails when installed as a ggplot2 dependency
     echo "install.packages('withr')" | ${PREFIX}/bin/Rscript /dev/fd/0
