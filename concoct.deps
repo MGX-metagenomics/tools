@@ -2,5 +2,5 @@
 set -e
 
 # assume docker build
-apt-get -y install python3 libgomp1 
+apt-get -y install python3 libgomp1 cython3
 
