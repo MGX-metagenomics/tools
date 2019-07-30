@@ -1,0 +1,34 @@
+
+. ./tools.config
+
+rm -rf X && mkdir X && cd X 
+cp ../patches/cwlsite.config cwlsite.config
+cp ../patches/CWLRun.template CWLRun
+
+#
+# check for presence of 'large' queue
+#
+HAS_LARGE=`qconf -sql | grep large | wc -l`
+if [ ${HAS_LARGE} -eq 0 ]; then
+    # no large complex, fallback to virtual_free request
+    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=40g',g" CWLRun
+else
+    sed -i "s,QREQ,-l 'large=1',g" CWLRun
+fi
+
+#
+# install
+#
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/config
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/exec
+
+sed -i "s,PREFIX,${PREFIX},g" cwlsite.config
+install -g ${GROUP} --mode=644 cwlsite.config ${PREFIX}/share/config/
+
+sed -i "s,PREFIX,${PREFIX},g" CWLRun
+install -g ${GROUP} --mode=755 CWLRun ${PREFIX}/share/exec/
+ln -sf ${PREFIX}/share/exec/CWLRun ${PREFIX}/bin/CWLRun
+
+cd .. && \
+rm -rf X
+
