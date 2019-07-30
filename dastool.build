@@ -4,15 +4,15 @@
 set -e
 
 if [ ! -f ${PREFIX}/bin/prodigal ]; then
-    bash prodigal.build
+    bash -x prodigal.build
 fi
 
 if [ ! -f ${PREFIX}/bin/diamond ]; then
-    bash diamond.build
+    bash -x diamond.build
 fi
 
 if [ ! -f ${PREFIX}/bin/R ]; then
-    bash r.build
+    bash -x r.build
 
     # fails when installed as a ggplot2 dependency
     echo "install.packages('withr')" | ${PREFIX}/bin/Rscript /dev/fd/0
@@ -41,7 +41,7 @@ tar xzf ${VERSION}.tar.gz
 rm ${VERSION}.tar.gz
 cd DAS_Tool-${VERSION}
 ${PREFIX}/bin/R CMD INSTALL ./package/DASTool_${VERSION}.tar.gz
-sed -i "s,src,lib/dastool-${VERSION},g" DAS_Tool
+sed -i "s,src,../lib/dastool-${VERSION},g" DAS_Tool
 install --mode=755 DAS_Tool ${PREFIX}/bin
 install --mode=755 -d ${PREFIX}/lib/dastool-${VERSION}
 for f in src/*; do

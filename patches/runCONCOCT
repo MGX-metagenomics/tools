@@ -9,7 +9,7 @@ set -e
 
 for f in "$@"; do
   if [ ! -f ${f}.bai ]; then
-    samtools -@ ${THREADS} -b ${f}
+    samtools index -@ ${THREADS} -b ${f}
   fi
 done
 
