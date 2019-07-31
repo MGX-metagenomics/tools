@@ -11,9 +11,9 @@ cp ../patches/CWLRun.template CWLRun
 HAS_LARGE=`qconf -sql | grep large | wc -l`
 if [ ${HAS_LARGE} -eq 0 ]; then
     # no large complex, fallback to virtual_free request
-    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=40g',g" CWLRun
+    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=4g' -pe multislot 40,g" CWLRun
 else
-    sed -i "s,QREQ,-l 'large=1',g" CWLRun
+    sed -i "s,QREQ,-l 'vf=4g' -pe multislot 40,g" CWLRun
 fi
 
 #
