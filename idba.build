@@ -12,6 +12,7 @@ cd idba-${VERSION}
 make ${MAKE_FLAGS}
 make install
 install --mode=755 bin/idba_ud ${PREFIX}/bin
+rm -f ${PREFIX}/bin/run-unittest.py ${PREFIX}/bin/scan.py
 cd ..
 rm -rf idba-${VERSION}
 
