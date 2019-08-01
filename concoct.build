@@ -46,6 +46,7 @@ done
 install --mode=755 ../patches/runCONCOCT ${PREFIX}/bin
 
 rm -f ${PREFIX}/bin/nosetests*
+rm -f ${PREFIX}/bin/gsl-{config,histogram,randist}
 
 cd .. 
 rm -rf CONCOCT-${VERSION}
