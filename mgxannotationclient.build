@@ -11,7 +11,7 @@ mkdir -p ${PREFIX}/lib/annotationclient
 cp -va target/*jar ${PREFIX}/lib/annotationclient 
 
 install --mode=755 AnnotationClient ${PREFIX}/bin
-ln -s ${PREFIX}/bin/AnnotationClient ${PREFIX}/bin/SeqRunFetcher
+ln -sf ${PREFIX}/bin/AnnotationClient ${PREFIX}/bin/SeqRunFetcher
 cd ..
 rm -rf MGX-AnnotationClient
 
