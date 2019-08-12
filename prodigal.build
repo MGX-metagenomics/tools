@@ -15,3 +15,6 @@ make INSTALLDIR=${PREFIX}/bin install
 cd .. 
 rm -rf Prodigal-2.6.3
 
+# add wrapper for parallel processing
+wget -q -O ${PREFIX}/bin/pprodigal https://raw.githubusercontent.com/sjaenick/pprodigal/master/pprodigal.py
+chmod 755 ${PREFIX}/bin/pprodigal
