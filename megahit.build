@@ -3,11 +3,11 @@
 
 set -e
 
-wget -q https://github.com/voutcn/megahit/releases/download/v1.2.7/MEGAHIT-1.2.7-Linux-x86_64-static.tar.gz
-tar xzf MEGAHIT-1.2.7-Linux-x86_64-static.tar.gz
-cd MEGAHIT-1.2.7-Linux-x86_64-static/bin
+wget -q https://github.com/voutcn/megahit/releases/download/v1.2.8/MEGAHIT-1.2.8-Linux-x86_64-static.tar.gz
+tar xzf MEGAHIT-1.2.8-Linux-x86_64-static.tar.gz
+cd MEGAHIT-1.2.8-Linux-x86_64-static/bin
 for f in *; do 
     install -g ${GROUP} --mode=755 ${f} ${PREFIX}/bin
 done
 cd ../..
-rm -rf MEGAHIT-1.2.7-Linux-x86_64-static.tar.gz MEGAHIT-1.2.7-Linux-x86_64-static
+rm -rf MEGAHIT-1.2.8-Linux-x86_64-static.tar.gz MEGAHIT-1.2.8-Linux-x86_64-static
