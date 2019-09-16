@@ -1,0 +1,50 @@
+diff -Nur ghostz-1.0.2.orig/src/aligner.cpp ghostz-1.0.2/src/aligner.cpp
+--- ghostz-1.0.2.orig/src/aligner.cpp	2018-07-11 20:10:42.000000000 +0200
++++ ghostz-1.0.2/src/aligner.cpp	2019-09-16 10:19:11.494563000 +0200
+@@ -47,10 +47,10 @@
+ 		logger->ErrorLog("invalid input file or parameters");
+ 	} else {
+ 		database.Save(database_filename);
+-		cout << "number chunks:" << database.GetNumberChunks() << endl;
+-		cout << "number of sequences:" << database.GetNumberTotalSequences()
++		cerr << "number chunks:" << database.GetNumberChunks() << endl;
++		cerr << "number of sequences:" << database.GetNumberTotalSequences()
+ 				<< endl;
+-		cout << "total size:" << database.GetDatabaseTotalLenght() << endl;
++		cerr << "total size:" << database.GetDatabaseTotalLenght() << endl;
+ 	}
+ 	is.close();
+ }
+@@ -66,24 +66,24 @@
+ 	Queries queries(queries_is, queries_parameters);
+ 	for (;queries.GetNumberSequences() != 0; queries.Next()) {
+ 	  query_zero=false;
+-		cout << "number of queries above threshold length:" << queries.GetNumberSequences() << endl;
+-		cout << "number of skipped queries due to query length:" << queries.GetNumberSkippedSequences() << endl;	
++		cerr << "number of queries above threshold length:" << queries.GetNumberSequences() << endl;
++		cerr << "number of skipped queries due to query length:" << queries.GetNumberSkippedSequences() << endl;	
+ 		vector<vector<Aligner::PresearchedResult> > presearch_results_list(
+ 				queries.GetNumberSequences());
+ 		vector<vector<Aligner::Result> > results_list(
+ 				queries.GetNumberSequences());
+-		cout << "starts presearch " << endl;
++		cerr << "starts presearch " << endl;
+ 		Presearch(queries, database, parameters, presearch_results_list);
+-		cout << "starts build results" << endl;
++		cerr << "starts build results" << endl;
+ 		BuildResults(queries, database, parameters, presearch_results_list,
+ 				results_list);
+-		cout << "writes results" << endl;
++		cerr << "writes results" << endl;
+ 		WriteOutput(os, queries, database, parameters, results_list);
+ 	}
+ 	if(query_zero){
+-	cout << "number of queries above threshold length:" << queries.GetNumberSequences() << endl;
+-	  cout << "number of skipped queries due to query length:" << queries.GetNumberSkippedSequences() << endl;	
+-	  cout << "There is no queries in file or all queries skipped due to query length " << endl;
++	cerr << "number of queries above threshold length:" << queries.GetNumberSequences() << endl;
++	  cerr << "number of skipped queries due to query length:" << queries.GetNumberSkippedSequences() << endl;	
++	  cerr << "There is no queries in file or all queries skipped due to query length " << endl;
+ 	  }
+ 	queries_is.close();
+ 	os.close();
