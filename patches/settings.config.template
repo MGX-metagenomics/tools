@@ -60,6 +60,7 @@ Conveyor.HMMER3.Configuration.databaseList=Pfam-A=/vol/biodb/local_databases/MGX
 Conveyor.HMMER3.Configuration.hmmfetch=PREFIX/bin/hmmfetch
 Conveyor.HMMER3.Configuration.hmmpress=PREFIX/bin/hmmpress
 Conveyor.HMMER3.Configuration.hmmscan=PREFIX/bin/hmmscan
+Conveyor.HMMER3.Configuration.hmmsearch=PREFIX/bin/hmmsearch
 Conveyor.Database.FunGene.Configuration.FunGeneDB=/vol/biodb/local_databases/MGX/FunGene/funGene.hmm
 Conveyor.Database.FunGene.Configuration.FunGeneSummary=/vol/biodb/local_databases/MGX/FunGene/funGenesummary.tsv
 Conveyor.Centrifuge.Configuration.centrifuge=PREFIX/bin/centrifuge
