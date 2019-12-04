@@ -1,0 +1,16 @@
+
+. ./tools.config
+
+set -e
+
+VERSION=3.2.3
+
+wget -q https://github.com/ncbi/amr/archive/amrfinder_v${VERSION}.tar.gz
+tar xzf amrfinder_v${VERSION}.tar.gz
+rm amrfinder_v${VERSION}.tar.gz
+cd amr-amrfinder_v${VERSION}
+make
+make PREFIX=${PREFIX} install
+cd .. 
+rm -rf amr-amrfinder_v${VERSION}
+
