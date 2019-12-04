@@ -17,17 +17,29 @@ if [ ! -f ${PREFIX}/bin/hmmscan ]; then
     bash hmmer3.build
 fi
 
-pip install --prefix ${PREFIX} --system pysam
+export PYTHONPATH=`ls -d ${PREFIX}/lib/python3.?/site-packages/`
 
-wget -q https://github.com/Ecogenomics/CheckM/archive/v1.0.13.tar.gz
-tar xzf v1.0.13.tar.gz
-rm v1.0.13.tar.gz
-cd CheckM-1.0.13
+pip3 install --prefix ${PREFIX} --system pysam
+pip3 install --prefix ${PREFIX} --system matplotlib
+
+VERSION=1.1.0
+wget -q https://github.com/Ecogenomics/CheckM/archive/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
+rm v${VERSION}.tar.gz
+cd CheckM-${VERSION}
+patch -p 1 < ../patches/checkm_python3.patch
 patch -p 1 < ../patches/checkm_prefix.patch
 patch -p 1 < ../patches/checkm_datadir.patch
 sed -i "s,PREFIX,${PREFIX}," bin/checkm
-python setup.py build
-python setup.py install --prefix ${PREFIX}
+python3 setup.py build
+python3 setup.py install --prefix ${PREFIX}
 cd ..
-rm -rf CheckM-1.0.13
+rm -rf CheckM-${VERSION}
+
+for f in checkm; do
+  if [ -f ${PREFIX}/bin/${f} ] ; then
+    sed -i "s,python3,python3 -S,g" ${PREFIX}/bin/${f}
+    sed -i "/EASY-INSTALL-SCRIPT/a import sys\nsys.path.append(\"$PYTHONPATH\")" ${PREFIX}/bin/${f}
+  fi
+done
 

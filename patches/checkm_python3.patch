@@ -1,0 +1,62 @@
+diff --git a/bin/checkm b/bin/checkm
+index a305499..ef2d7f6 100755
+--- a/bin/checkm
++++ b/bin/checkm
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ 
+ ###############################################################################
+ #
+diff --git a/checkm/uniqueMarkers.py b/checkm/uniqueMarkers.py
+index b6143be..051bfeb 100644
+--- a/checkm/uniqueMarkers.py
++++ b/checkm/uniqueMarkers.py
+@@ -51,7 +51,7 @@ def getOppositeRankSpecificTaxonId(cursor, *args):
+     query.append(' %s != \'%s\' ' % (ranks[len(args) - 1], args[-1]))
+     query.append(' %s IS NULL' % ranks[len(args)])
+     query_string = 'AND'.join(query)
+-    print query_string
++    print (query_string)
+     result = cursor.execute('SELECT Id, "Count" FROM taxons WHERE %s' % query_string)
+     return result.fetchall()
+ 
+@@ -135,7 +135,7 @@ def doWork(args):
+             des_markers.append(getDescriptiveMarkers(cur, i))
+ 
+         for des_acc, des_name in des_markers:
+-            print des_acc, des_name
++            print (des_acc, des_name)
+ 
+ if __name__ == '__main__':
+ 
+diff --git a/checkm/util/img.py b/checkm/util/img.py
+index 6aa9cff..cdda10b 100644
+--- a/checkm/util/img.py
++++ b/checkm/util/img.py
+@@ -362,9 +362,9 @@ class IMG(object):
+                 if scaffold:
+                     familyIdToScaffoldIds[tigrId] = scaffolds
+         except:
+-            print '[BUG]: __genomeIdToClusterScaffold'
+-            print sys.exc_info()[0]
+-            print genomeId, geneId, tigrId, pfamId
++            print ('[BUG]: __genomeIdToClusterScaffold')
++            print (sys.exc_info()[0])
++            print (genomeId, geneId, tigrId, pfamId)
+             sys.exit(1)
+ 
+         return familyIdToScaffoldIds
+@@ -482,9 +482,9 @@ class IMG(object):
+                 if positions:
+                     familyIdToGenomePositions[tigrId] = positions
+         except:
+-            print '[BUG]: __genomeFamilyPositions'
+-            print sys.exc_info()[0]
+-            print genomeId, geneId, tigrId, pfamId
++            print ('[BUG]: __genomeFamilyPositions')
++            print (sys.exc_info()[0])
++            print (genomeId, geneId, tigrId, pfamId)
+             sys.exit(1)
+ 
+         return familyIdToGenomePositions
