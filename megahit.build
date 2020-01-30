@@ -3,11 +3,16 @@
 
 set -e
 
-wget -q https://github.com/voutcn/megahit/releases/download/v1.2.8/MEGAHIT-1.2.8-Linux-x86_64-static.tar.gz
-tar xzf MEGAHIT-1.2.8-Linux-x86_64-static.tar.gz
-cd MEGAHIT-1.2.8-Linux-x86_64-static/bin
-for f in *; do 
-    install -g ${GROUP} --mode=755 ${f} ${PREFIX}/bin
-done
+VERSION=1.2.9
+wget -q https://github.com/voutcn/megahit/archive/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
+rm v${VERSION}.tar.gz
+cd megahit-${VERSION}
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} ..
+make
+make install
+
 cd ../..
-rm -rf MEGAHIT-1.2.8-Linux-x86_64-static.tar.gz MEGAHIT-1.2.8-Linux-x86_64-static
+rm -rf megahit-${VERSION}
