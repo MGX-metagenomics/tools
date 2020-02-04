@@ -35,7 +35,7 @@ cd ..
 rm -rf pullseq-1.0.2
 
 
-VERSION=1.1.1
+VERSION=1.1.2
 wget -q https://github.com/cmks/DAS_Tool/archive/${VERSION}.tar.gz
 tar xzf ${VERSION}.tar.gz
 rm ${VERSION}.tar.gz
