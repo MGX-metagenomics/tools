@@ -1,0 +1,131 @@
+diff -Nur trinityrnaseq-v2.9.1.orig/Trinity trinityrnaseq-v2.9.1/Trinity
+--- trinityrnaseq-v2.9.1.orig/Trinity	2020-01-23 17:08:11.000000000 +0100
++++ trinityrnaseq-v2.9.1/Trinity	2020-02-05 15:43:31.211683821 +0100
+@@ -6,7 +6,7 @@
+ no strict qw(subs refs);
+ 
+ use FindBin;
+-use lib ("$FindBin::RealBin/PerlLib");
++use lib ("$FindBin::RealBin/../share/perl/");
+ use File::Basename;
+ use Time::localtime;
+ use Cwd;
+@@ -34,13 +34,13 @@
+ 
+ #directory defnintions
+ my $ROOTDIR = "$FindBin::RealBin";
+-my $UTILDIR = "$ROOTDIR/util";
++my $UTILDIR = "$ROOTDIR/../share/util";
+ my $MISCDIR = "$UTILDIR/misc";
+-my $INCHWORM_DIR = "$ROOTDIR/Inchworm/bin/";
+-my $CHRYSALIS_DIR = "$ROOTDIR/Chrysalis";
++my $INCHWORM_DIR = "$ROOTDIR";
++my $CHRYSALIS_DIR = "$ROOTDIR";
+ my $BUTTERFLY_DIR = "$ROOTDIR/Butterfly";
+ my $COLLECTL_DIR = "$ROOTDIR/trinity-plugins/COLLECTL/collectl";
+-my $PARAFLY = "$ROOTDIR/trinity-plugins/BIN/ParaFly";
++my $PARAFLY = "$ROOTDIR/ParaFly";
+ 
+ if ($ENV{TRINITY_NO_RETRIES}) {
+     $PARAFLY .= " -max_retry 1 ";
+@@ -49,7 +49,7 @@
+ my $TRIMMOMATIC = "$ROOTDIR/trinity-plugins/Trimmomatic/trimmomatic.jar";
+ my $TRIMMOMATIC_DIR = "$ROOTDIR/trinity-plugins/Trimmomatic";
+ 
+-$ENV{PATH} = "$ROOTDIR/trinity-plugins/BIN:$ENV{PATH}";
++$ENV{PATH} = "$ROOTDIR:PREFIX/bin:$ENV{PATH}";
+ 
+ my $JAVA_VERSION_REQUIRED = 8;
+ 
+@@ -2058,7 +2058,7 @@
+         
+         my $welds_to_cluster_file = "$chrysalis_output_dir/iworm_cluster_welds_graph.txt";
+         
+-        my $graphFromFasta_cmd = "$CHRYSALIS_DIR/bin/GraphFromFasta -i $inchworm_file -r $inchworm_target_fa -min_contig_length $min_contig_length -min_glue $min_glue -glue_factor $glue_factor -min_iso_ratio $min_iso_ratio -t $CPU -k " . ($KMER_SIZE-1) . " -kk $GRAPH_FROM_FASTA_KK $GRAPH_FROM_FASTA_CUSTOM_PARAMS";
++        my $graphFromFasta_cmd = "$CHRYSALIS_DIR/GraphFromFasta -i $inchworm_file -r $inchworm_target_fa -min_contig_length $min_contig_length -min_glue $min_glue -glue_factor $glue_factor -min_iso_ratio $min_iso_ratio -t $CPU -k " . ($KMER_SIZE-1) . " -kk $GRAPH_FROM_FASTA_KK $GRAPH_FROM_FASTA_CUSTOM_PARAMS";
+        
+         if ($SS_lib_type) {
+             $graphFromFasta_cmd .= " -strand ";
+@@ -2087,7 +2087,7 @@
+         
+         ## now cluster into chrysalis components:
+         
+-        my $bubble_cluster_cmd = "$CHRYSALIS_DIR/bin/BubbleUpClustering -i $inchworm_file  -weld_graph $welds_to_cluster_file_sorted -min_contig_length $min_contig_length -max_cluster_size $MAX_CHRYSALIS_CLUSTER_SIZE ";
++        my $bubble_cluster_cmd = "$CHRYSALIS_DIR/BubbleUpClustering -i $inchworm_file  -weld_graph $welds_to_cluster_file_sorted -min_contig_length $min_contig_length -max_cluster_size $MAX_CHRYSALIS_CLUSTER_SIZE ";
+ 
+         if ($CHRYSALIS_DEBUG_WELD_ALL) {
+             $bubble_cluster_cmd .= " -debug_weld_all ";
+@@ -2107,7 +2107,7 @@
+         ## create iworm bundles
+         
+         
+-        my $cmd = "$CHRYSALIS_DIR/bin/CreateIwormFastaBundle -i $graphFromFasta_outfile -o $iworm_bundles_fasta_file -min $min_contig_length";
++        my $cmd = "$CHRYSALIS_DIR/CreateIwormFastaBundle -i $graphFromFasta_outfile -o $iworm_bundles_fasta_file -min $min_contig_length";
+         
+         
+         $chrysalis_pipeliner->add_commands( new Command($cmd, "$iworm_bundles_fasta_file.ok"));
+@@ -2119,7 +2119,7 @@
+     { 
+         ## map reads to chrysalis components:
+                         
+-        my $cmd .= "$CHRYSALIS_DIR/bin/ReadsToTranscripts -i $chrysalis_reads_fa -f $iworm_bundles_fasta_file -o $reads_to_components_output_file -t $CPU -max_mem_reads $max_reads_per_loop ";
++        my $cmd .= "$CHRYSALIS_DIR/ReadsToTranscripts -i $chrysalis_reads_fa -f $iworm_bundles_fasta_file -o $reads_to_components_output_file -t $CPU -max_mem_reads $max_reads_per_loop ";
+         if ($SS_lib_type) {
+             $cmd .= " -strand ";
+         }
+@@ -2230,7 +2230,7 @@
+ 
+             { # quantify graph command
+                 
+-                my $quantify_graph_cmd = "$CHRYSALIS_DIR/bin/QuantifyGraph -g $base_filename.graph.tmp "
++                my $quantify_graph_cmd = "$CHRYSALIS_DIR/QuantifyGraph -g $base_filename.graph.tmp "
+                     . " -i $base_filename.reads.tmp "
+                     . " -o $base_filename.graph.out "
+                     . " -max_reads $max_reads_per_graph "
+@@ -2486,7 +2486,7 @@
+ 
+         my $jelly_db = "mer_counts.$kmer_size.$SR_flag.jf";        
+         
+-        my $cmd = "jellyfish count -t $CPU -m $kmer_size -s $jelly_hash_size -o $jelly_db";
++        my $cmd = "jellyfish-2 count -t $CPU -m $kmer_size -s $jelly_hash_size -o $jelly_db";
+         
+         unless ($SS_lib_type) {
+             ## count both strands
+@@ -2500,12 +2500,12 @@
+         
+ 
+         
+-        $cmd = "jellyfish dump -L $min_kmer_cov $jelly_db > $jelly_kmer_fa_file";
++        $cmd = "jellyfish-2 dump -L $min_kmer_cov $jelly_db > $jelly_kmer_fa_file";
+         
+         $pipeliner->add_commands(new Command($cmd, ".jellyfish_dump.$kmer_size.$SR_flag.ok") );        
+         
+         ## write a histogram of the kmer counts.
+-        $cmd = "jellyfish histo -t $CPU -o $jelly_kmer_fa_file.histo $jelly_db";
++        $cmd = "jellyfish-2 histo -t $CPU -o $jelly_kmer_fa_file.histo $jelly_db";
+         
+         $pipeliner->add_commands( new Command($cmd, ".jellyfish_histo.$kmer_size.$SR_flag.ok") );
+                         
+@@ -3107,7 +3107,7 @@
+         #my $cmd = "cd $collectl_output_directory && exec ${COLLECTL_DIR}/collectl $collectl_param --procfilt u$collectl_userid -f $collectl_output_directory/y";
+         
+         
+-        my $cmd = "bash -c \"set -eou pipefail && cd $collectl_output_directory && exec nohup ${COLLECTL_DIR}/collectl --procopts w  --procfilt u$collectl_userid --interval :$COLLECTL_INTERVAL_SECONDS -sZ -oD | egrep 'Trinity|trinityrnaseq|Inchworm|Chrysalis|Butterfly|jellyfish|samtools|sort|bowtie' | egrep -v 'egrep' > $collectl_output_directory/collectl.dat \" ";
++        my $cmd = "bash -c \"set -eou pipefail && cd $collectl_output_directory && exec nohup ${COLLECTL_DIR}/collectl --procopts w  --procfilt u$collectl_userid --interval :$COLLECTL_INTERVAL_SECONDS -sZ -oD | egrep 'Trinity|trinityrnaseq|Inchworm|Chrysalis|Butterfly|jellyfish-2|samtools|sort|bowtie' | egrep -v 'egrep' > $collectl_output_directory/collectl.dat \" ";
+                 
+         
+         ## fork a child to run collectl
+@@ -3871,11 +3871,11 @@
+     }
+ 
+     # jellyfish
+-    my $jellyfish_path = `which jellyfish`;
++    my $jellyfish_path = `which jellyfish-2`;
+     if ($jellyfish_path =~ /\w/) {
+         print "Found jellyfish at: $jellyfish_path\n" if $VERBOSE;
+ 
+-        my $version_info = `jellyfish --version`;
++        my $version_info = `jellyfish-2 --version`;
+         my ($name, $version) = split(/\s+/, $version_info);
+         unless ($version =~ /^2\./) {
+             die "Error, need jellyfish v2, instead found $version_info ; Get it here: http://www.genome.umd.edu/jellyfish.html";

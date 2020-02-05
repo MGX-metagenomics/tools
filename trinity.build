@@ -1,0 +1,36 @@
+
+. ./tools.config
+
+set -e
+
+VERSION=2.9.1
+wget -q https://github.com/trinityrnaseq/trinityrnaseq/releases/download/v${VERSION}/trinityrnaseq-v${VERSION}.FULL.tar.gz
+tar xzf trinityrnaseq-v${VERSION}.FULL.tar.gz
+rm trinityrnaseq-v${VERSION}.FULL.tar.gz
+cd trinityrnaseq-v${VERSION}
+
+patch -p1 < ../patches/trinity_paths.patch
+sed -i "s,PREFIX,$PREFIX,g" Trinity
+
+make ${MAKE_FLAGS}
+
+mkdir -p ${PREFIX}/lib/trinity-${VERSION}/bin
+mkdir -p ${PREFIX}/lib/trinity-${VERSION}/share/perl
+mkdir -p ${PREFIX}/lib/trinity-${VERSION}/share/util
+
+for f in Inchworm/bin/* Chrysalis/bin/* trinity-plugins/BIN/ParaFly trinity-plugins/BIN/seqtk-trinity Trinity; do
+  install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/trinity-${VERSION}/bin
+done
+
+install -g ${GROUP} --mode=755 Butterfly/Butterfly.jar ${PREFIX}/lib/trinity-${VERSION}/share/
+cp -a PerlLib/* ${PREFIX}/lib/trinity-${VERSION}/share/perl
+cp -a util/* ${PREFIX}/lib/trinity-${VERSION}/share/util/
+
+cd ..
+rm -rf trinityrnaseq-v${VERSION}
+
+# trinity needs jellyfish 2.x
+if [ ! -f ${PREFIX}/bin/jellyfish-2 ]; then
+    bash -x jellyfish.build
+fi
+
