@@ -3,15 +3,24 @@
 
 set -e 
 
+wget -q https://github.com/gmarcais/yaggo/archive/v1.5.10.tar.gz
+tar xzf v1.5.10.tar.gz
+rm v1.5.10.tar.gz
+cd yaggo-1.5.10
+make
+export PATH=${PATH}:`pwd`
+cd ..
+
 VERSION=2.3.0
-wget -q https://github.com/gmarcais/Jellyfish/archive/v${VERSION}.tar.gz
-tar xzf v${VERSION}.tar.gz
-cd Jellyfish-${VERSION}
-autoreconf -vif
+wget -q https://github.com/gmarcais/Jellyfish/releases/download/v${VERSION}/jellyfish-${VERSION}.tar.gz
+tar xzf jellyfish-${VERSION}.tar.gz
+cd jellyfish-${VERSION}
 ./configure --prefix=${PREFIX}
 make ${MAKE_FLAGS}
 make install
-ln -s ${PREFIX}/bin/jellyfish ${PREFIX}/bin/jellyfish-2
+ln ${PREFIX}/bin/jellyfish ${PREFIX}/bin/jellyfish-2
 cd ..
-rm -rf v${VERSION}.tar.gz Jellyfish-${VERSION}
+rm -rf jellyfish-${VERSION}.tar.gz jellyfish-${VERSION}
+
+rm -rf yaggo-1.5.10
 
