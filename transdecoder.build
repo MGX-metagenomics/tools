@@ -1,0 +1,32 @@
+
+. ./tools.config
+
+set -e
+
+VERSION=5.5.0
+wget -q https://github.com/TransDecoder/TransDecoder/archive/TransDecoder-v${VERSION}.tar.gz
+tar xzf TransDecoder-v${VERSION}.tar.gz
+rm TransDecoder-v${VERSION}.tar.gz
+cd TransDecoder-TransDecoder-v${VERSION}
+
+mkdir -p ${PREFIX}/lib/transdecoder-${VERSION}/bin
+mkdir -p ${PREFIX}/lib/transdecoder-${VERSION}/share/perl
+mkdir -p ${PREFIX}/lib/transdecoder-${VERSION}/share/util
+
+cp -a PerlLib/* ${PREFIX}/lib/transdecoder-${VERSION}/share/perl
+rm -rf util/bin
+cp -a util/* ${PREFIX}/lib/transdecoder-${VERSION}/share/util
+
+
+for f in TransDecoder.LongOrfs TransDecoder.Predict; do
+  sed -i "s,PerlLib,../share/perl,g" ${f}
+  sed -i "s,util,../share/util,g" ${f}
+  install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/transdecoder-${VERSION}/bin
+  ln -sf ${PREFIX}/lib/transdecoder-${VERSION}/bin/${f} ${PREFIX}/bin/
+done
+
+cd ..
+rm -rf TransDecoder-TransDecoder-v${VERSION}
+
+
+
