@@ -3,14 +3,14 @@
 
 set -e
 
-VERSION=2.3.5.1
+VERSION=2.4.0
 
 wget -q --no-check-certificate -O bowtie2-${VERSION}-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/${VERSION}/bowtie2-${VERSION}-source.zip/download
 unzip bowtie2-${VERSION}-source.zip 
 cd bowtie2-${VERSION}/
 patch -p 1 < ../patches/bowtie2-solaris.patch
 make ${MAKE_FLAGS} prefix=${PREFIX} NO_TBB=1
-make prefix=${PREFIX} install
+make PREFIX=${PREFIX} install
 cd ..
 rm -rf bowtie2-${VERSION}
 rm bowtie2-${VERSION}-source.zip
