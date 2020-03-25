@@ -3,12 +3,11 @@
 
 set -e
 
-VERSION=0.9.30
+VERSION=0.9.31
 
 wget -q -O diamond.tar.gz https://github.com/bbuchfink/diamond/releases/download/v${VERSION}/diamond-linux64.tar.gz 
 tar xzf diamond.tar.gz 
 strip diamond 
-rm diamond.tar.gz
 install --mode=755 -g ${GROUP} diamond ${PREFIX}/bin 
-rm -f diamond diamond_manual.pdf
+rm -f diamond diamond.tar.gz
 
