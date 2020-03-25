@@ -1,0 +1,7 @@
+diff -Nur trinityrnaseq-v2.10.0.orig/trinity-plugins/bamsifter/Makefile trinityrnaseq-v2.10.0/trinity-plugins/bamsifter/Makefile
+--- trinityrnaseq-v2.10.0.orig/trinity-plugins/bamsifter/Makefile	2020-03-20 15:23:32.000000000 +0100
++++ trinityrnaseq-v2.10.0/trinity-plugins/bamsifter/Makefile	2020-03-25 11:45:42.000000000 +0100
+@@ -1,2 +1,2 @@
+ sift_bam_max_cov: sift_bam_max_cov.cpp
+-	g++ sift_bam_max_cov.cpp -Wall -lhts -O2 -I../htslib -L../htslib -o bamsifter
++	g++ -std=c++11 sift_bam_max_cov.cpp -Wall -lhts -O2 -I../htslib -L../htslib -o bamsifter

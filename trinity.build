@@ -8,13 +8,16 @@ if [ ! -f ${PREFIX}/bin/jellyfish-2 ]; then
     bash -x jellyfish.build
 fi
 
-VERSION=2.9.1
+VERSION=2.10.0
 wget -q https://github.com/trinityrnaseq/trinityrnaseq/releases/download/v${VERSION}/trinityrnaseq-v${VERSION}.FULL.tar.gz
 tar xzf trinityrnaseq-v${VERSION}.FULL.tar.gz
 rm trinityrnaseq-v${VERSION}.FULL.tar.gz
 cd trinityrnaseq-v${VERSION}
 
 patch -p1 < ../patches/trinity_paths.patch
+
+patch -p1 < ../patches/trinity_cppstd.patch
+
 sed -i "s,PREFIX,$PREFIX,g" Trinity
 
 make ${MAKE_FLAGS}
