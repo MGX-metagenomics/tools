@@ -1,0 +1,33 @@
+diff --git a/scripts/build_kraken_db.sh b/scripts/build_kraken_db.sh
+index 18b7a98..e459b7c 100755
+--- a/scripts/build_kraken_db.sh
++++ b/scripts/build_kraken_db.sh
+@@ -78,13 +78,13 @@ else
+ 
+   find library/ -name '*.fna' -print0 | \
+     xargs -0 cat | \
+-    jellyfish count -m $KRAKEN_KMER_LEN -s $KRAKEN_HASH_SIZE -C -t $KRAKEN_THREAD_CT \
++    jellyfish-1 count -m $KRAKEN_KMER_LEN -s $KRAKEN_HASH_SIZE -C -t $KRAKEN_THREAD_CT \
+       -o database /dev/fd/0
+ 
+   # Merge only if necessary
+   if [ -e "database_1" ]
+   then
+-    jellyfish merge -o database.jdb.tmp database_*
++    jellyfish-1 merge -o database.jdb.tmp database_*
+   else
+     mv database_0 database.jdb.tmp
+   fi
+diff --git a/scripts/check_for_jellyfish.sh b/scripts/check_for_jellyfish.sh
+index fac4d91..d720e6e 100755
+--- a/scripts/check_for_jellyfish.sh
++++ b/scripts/check_for_jellyfish.sh
+@@ -24,7 +24,7 @@ set -u  # Protect against uninitialized vars.
+ set -e  # Stop on error
+ set -o pipefail  # Stop on failures in non-final pipeline commands
+ 
+-JELLYFISH_VERSION=$(jellyfish --version | awk '{print $2}')
++JELLYFISH_VERSION=$(jellyfish-1 --version | awk '{print $2}')
+ if [[ $JELLYFISH_VERSION =~ ^1\. ]]
+ then
+   echo "Found jellyfish v$JELLYFISH_VERSION"
