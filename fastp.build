@@ -3,13 +3,14 @@
 
 set -e
 
-wget -q https://github.com/OpenGene/fastp/archive/v0.20.0.tar.gz
+VERSION=0.20.1
+wget -q https://github.com/OpenGene/fastp/archive/v${VERSION}.tar.gz
 
-tar xzf v0.20.0.tar.gz
-cd fastp-0.20.0/
+tar xzf v${VERSION}.tar.gz
+cd fastp-${VERSION}
 make ${MAKE_FLAGS}
 strip fastp
 install --mode=755 fastp ${PREFIX}/bin/
 cd ..
-rm -rf fastp-0.20.0/ v0.20.0.tar.gz
+rm -rf fastp-${VERSION}/ v${VERSION}.tar.gz
 
