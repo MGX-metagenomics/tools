@@ -1,0 +1,11 @@
+
+. tools.config
+
+set -e
+
+wget -q http://www.microbesonline.org/fasttree/FastTree.c
+
+gcc -DUSE_DOUBLE -DOPENMP -fopenmp -O3 -finline-functions -funroll-loops -Wall -o ${PREFIX}/bin/FastTree FastTree.c -lm
+
+rm FastTree.c
+
