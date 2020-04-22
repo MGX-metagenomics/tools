@@ -1,0 +1,21 @@
+
+. ./tools.config
+
+set -e
+
+wget -q http://eddylab.org/software/hmmer/hmmer-2.3.2.tar.gz
+tar xzf hmmer-2.3.2.tar.gz
+cd hmmer-2.3.2
+
+./configure --prefix=${PREFIX} \
+  --enable-lfs \
+  --enable-threads
+
+make ${MAKE_FLAGS}
+for file in hmmalign hmmbuild hmmcalibrate hmmconvert hmmemit hmmfetch hmmindex hmmpfam hmmsearch ; do\
+   cp src/$file ${PREFIX}/bin/${file}2;\
+done
+
+cd .. 
+rm -rf hmmer-2.3.2.tar.gz hmmer-2.3.2
+

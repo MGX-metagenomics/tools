@@ -1,0 +1,65 @@
+
+. tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/diamond ]; then
+  bash -x diamond.build
+fi
+
+if [ ! -f ${PREFIX}/bin/prodigal ]; then
+  bash -x prodigal.build
+fi
+
+if [ ! -f ${PREFIX}/bin/blastp ]; then
+  bash -x blast.build
+fi
+
+if [ ! -f ${PREFIX}/bin/hmmpfam2 ]; then
+  bash -x hmmer2.build
+fi
+
+if [ ! -f ${PREFIX}/bin/hmmscan ]; then
+  bash -x hmmer3.build
+fi
+
+if [ ! -f ${PREFIX}/bin/muscle ]; then
+  bash -x muscle.build
+fi
+
+if [ ! -f ${PREFIX}/bin/FastTree ]; then
+  bash -x fasttree.build
+fi
+
+if [ ! -f ${PREFIX}/bin/glimmerhmm ]; then
+  bash -x glimmerhmm.build
+fi
+
+#if [ ! -f ${PREFIX}/bin/meme ]; then
+#  bash -x meme.build
+#fi
+
+
+
+VERSION=5.1.2
+
+wget -q https://github.com/antismash/antismash/archive/5-1-2.tar.gz
+tar xzf 5-1-2.tar.gz
+cd antismash-5-1-2
+
+export PYTHONPATH=`ls -d ${PREFIX}/lib/python3.?/site-packages/`
+
+pip3 install --prefix ${PREFIX} helperlibs
+pip3 install --prefix ${PREFIX} numpy
+pip3 install --prefix ${PREFIX} matplotlib
+pip3 install --prefix ${PREFIX} jinja2
+pip3 install --prefix ${PREFIX} bcbio-gff
+pip3 install --prefix ${PREFIX} pyScss
+pip3 install --prefix ${PREFIX} pysvg-py3
+
+python3 setup.py install --prefix ${PREFIX}
+
+cd ..
+rm -rf 5-1-2.tar.gz antismash-5-1-2
+
+rm -f ${PREFIX}/bin/easy_install*

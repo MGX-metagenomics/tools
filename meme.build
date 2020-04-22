@@ -1,0 +1,17 @@
+
+. tools.config
+
+set -e
+
+# meme is required by antiSMASH; do not update to recent
+# releases without checking compatibility first
+
+wget -q http://meme-suite.org/meme-software/4.11.3/meme_4.11.3_1.tar.gz
+tar xzf meme_4.11.3_1.tar.gz
+cd meme_4.11.3
+./configure --prefix=${PREFIX}
+make
+make install
+cd ..
+rm -rf meme_4.11.3_1.tar.gz meme_4.11.3
+
