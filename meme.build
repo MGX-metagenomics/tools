@@ -9,9 +9,19 @@ set -e
 wget -q http://meme-suite.org/meme-software/4.11.3/meme_4.11.3_1.tar.gz
 tar xzf meme_4.11.3_1.tar.gz
 cd meme_4.11.3
-./configure --prefix=${PREFIX}
+./configure --prefix=${PREFIX} --enable-build-libxml2
 make
-make install
+install -g ${GROUP} --mode=755 src/fimo ${PREFIX}/bin
+
+if [ -f src/meme ]; then
+    install -g ${GROUP} --mode=755 src/meme ${PREFIX}/bin
+elif [ -f src/parallel/meme ]; then
+    install -g ${GROUP} --mode=755 src/parallel/meme ${PREFIX}/bin
+else
+    echo "no meme executable could be detected"
+    false
+fi
+
 cd ..
 rm -rf meme_4.11.3_1.tar.gz meme_4.11.3
 
