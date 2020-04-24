@@ -10,7 +10,6 @@ tar xzf jellyfish-${VERSION}.tar.gz
 cd jellyfish-${VERSION} 
 ./configure --prefix=${PREFIX} 
 make 
-make check 
 make install-strip 
 mv ${PREFIX}/bin/jellyfish ${PREFIX}/bin/jellyfish-1
 cd .. 
