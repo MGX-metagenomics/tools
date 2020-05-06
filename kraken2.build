@@ -5,7 +5,7 @@ set -e
 
 git clone https://github.com/DerrickWood/kraken2.git
 cd kraken2
-wget -q -O - https://patch-diff.githubusercontent.com/raw/DerrickWood/kraken2/pull/99.diff | patch -p 1 
+wget -q -O - https://patch-diff.githubusercontent.com/raw/DerrickWood/kraken2/pull/235.diff | patch -p 1 
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/kraken2/
 ./install_kraken2.sh ${PREFIX}/lib/kraken2/
 
