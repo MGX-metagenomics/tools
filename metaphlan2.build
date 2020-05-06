@@ -3,7 +3,7 @@
 
 set -e
 
-if [ -f ${PREFIX}/bin/bowtie2 ]; then
+if [ ! -f ${PREFIX}/bin/bowtie2 ]; then
     bash -x bowtie2.build
 fi
 
