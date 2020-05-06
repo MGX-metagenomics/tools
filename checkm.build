@@ -28,7 +28,6 @@ wget -q https://github.com/Ecogenomics/CheckM/archive/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
 rm v${VERSION}.tar.gz
 cd CheckM-${VERSION}
-patch -p 1 < ../patches/checkm_prefix.patch
 patch -p 1 < ../patches/checkm_datadir.patch
 sed -i "s,PREFIX,${PREFIX}," bin/checkm
 python3 setup.py build
@@ -43,3 +42,4 @@ for f in checkm; do
   fi
 done
 
+rm -f ${PREFIX}/bin/{f2py,f2py3*,easy_install*}
