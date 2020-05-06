@@ -11,7 +11,7 @@ cd megahit-${VERSION}
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} ..
-make
+make ${MAKE_FLAGS}
 make install
 
 cd ../..
