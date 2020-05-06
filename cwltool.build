@@ -27,4 +27,4 @@ for f in pasteurize easy_install easy_install-3.* doesitcache chardetect csv2rdf
   rm -f ${PREFIX}/bin/${f}
 done
 
-rmdir  ${PREFIX}/bin/__pycache__
+rm -rf  ${PREFIX}/bin/__pycache__
