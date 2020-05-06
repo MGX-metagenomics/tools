@@ -17,17 +17,17 @@ if [ ! -f ${PREFIX}/bin/hmmscan ]; then
     bash hmmer3.build
 fi
 
-export PYTHONPATH=`ls -d ${PREFIX}/lib/python3.?/site-packages/`
+PYTHONVER=`python3 -V | cut -d' ' -f 2 | cut -d'.' -f1,2`
+export PYTHONPATH=${PREFIX}/lib/python${PYTHONVER}/site-packages/
 
-pip3 install --prefix ${PREFIX} --system pysam
-pip3 install --prefix ${PREFIX} --system matplotlib
+pip3 install --prefix ${PREFIX} pysam
+pip3 install --prefix ${PREFIX} matplotlib
 
-VERSION=1.1.0
+VERSION=1.1.2
 wget -q https://github.com/Ecogenomics/CheckM/archive/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
 rm v${VERSION}.tar.gz
 cd CheckM-${VERSION}
-patch -p 1 < ../patches/checkm_python3.patch
 patch -p 1 < ../patches/checkm_prefix.patch
 patch -p 1 < ../patches/checkm_datadir.patch
 sed -i "s,PREFIX,${PREFIX}," bin/checkm
