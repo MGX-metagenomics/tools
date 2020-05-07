@@ -35,7 +35,3 @@ install -p plugins/*.so ${PREFIX}/share/libexec/bcftools
 cd .. 
 rm -rf bcftools-${VERSION}
 
-# rm samtools headers
-rm -rf ${PREFIX}/include/htslib ${PREFIX}/lib/pkgconfig/htslib.pc
-
-
