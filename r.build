@@ -91,7 +91,7 @@ if [ ${OS} = "Solaris" ]; then
 
 fi # solaris
 
-VERSION=3.6.1
+VERSION=3.6.3
 
 
 wget -q --no-check-certificate https://cran.r-project.org/src/base/R-3/R-${VERSION}.tar.gz 
@@ -115,7 +115,7 @@ fi
   --with-x=no \
   --with-ICU=no \
   --disable-nls
-make 
+make ${MAKE_FLAGS}
 make install 
 
 echo "options(repos = c(CRAN=\"http://ftp.gwdg.de/pub/misc/cran/\"))" >> ${PREFIX}/lib/R/library/base/R/Rprofile

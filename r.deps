@@ -2,5 +2,5 @@
 set -e
 
 # assume docker build
-apt-get -y install libgomp1 gfortran libcurl4 
+apt-get -y install libgomp1 gfortran libcurl4 libpcre3-dev
 
