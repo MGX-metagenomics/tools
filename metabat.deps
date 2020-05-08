@@ -2,6 +2,19 @@
 set -e
 
 # assume docker build
-apt-get -y install libgomp1 libboost-program-options1.65.1 libboost-iostreams1.65.1 \
-  libboost-graph1.65.1 libboost-system1.65.1 libboost-filesystem1.65.1 libboost-serialization1.65.1
+
+UBUNTUREL=`lsb_release -cs`
+
+case ${UBUNTUREL} in
+  xenial)
+    apt-get -y install libgomp1 libboost-program-options1.65.1 libboost-iostreams1.65.1 \
+      libboost-graph1.65.1 libboost-system1.65.1 libboost-filesystem1.65.1 libboost-serialization1.65.1
+    ;;
+  focal)
+    apt-get -y install libgomp1 libboost-program-options1.71.0 libboost-iostreams1.71.0 \
+      libboost-graph1.71.0 libboost-system1.71.0 libboost-filesystem1.71.0 libboost-serialization1.71.0 \
+      libboost-program-options-dev libboost-filesystem-dev libboost-serialization-dev \
+      libboost-graph-dev libboost-iostreams-dev
+    ;;
+esac
 
