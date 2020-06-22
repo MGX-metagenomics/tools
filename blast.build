@@ -4,7 +4,7 @@
 set -e
 
 
-VERSION=2.10.0
+VERSION=2.10.1
 LMDBVER=0.9.24
 
 wget -q https://github.com/LMDB/lmdb/archive/LMDB_${LMDBVER}.tar.gz
