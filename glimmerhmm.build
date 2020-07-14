@@ -3,7 +3,7 @@
 
 set -e
 
-wget -q https://ccb.jhu.edu/software/glimmerhmm/dl/GlimmerHMM-3.0.4.tar.gz
+wget -q http://ccb.jhu.edu/software/glimmerhmm/dl/GlimmerHMM-3.0.4.tar.gz
 tar xzf GlimmerHMM-3.0.4.tar.gz
 cd GlimmerHMM/sources
 make ${MAKE_FLAGS}

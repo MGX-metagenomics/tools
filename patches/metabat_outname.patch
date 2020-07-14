@@ -1,7 +1,7 @@
-diff -Nur berkeleylab-metabat-2e72973705c6.orig/runMetaBat.sh berkeleylab-metabat-2e72973705c6/runMetaBat.sh
---- berkeleylab-metabat-2e72973705c6.orig/runMetaBat.sh	2019-06-13 00:45:40.000000000 +0200
-+++ berkeleylab-metabat-2e72973705c6/runMetaBat.sh	2019-06-14 14:02:44.127857686 +0200
-@@ -36,7 +36,7 @@
+diff -Nur berkeleylab-metabat-a101cde67177.orig/runMetaBat.sh berkeleylab-metabat-a101cde67177/runMetaBat.sh
+--- berkeleylab-metabat-a101cde67177.orig/runMetaBat.sh	2020-04-11 22:48:49.000000000 +0200
++++ berkeleylab-metabat-a101cde67177/runMetaBat.sh	2020-05-08 12:06:17.876888316 +0200
+@@ -44,7 +44,7 @@
    then
      break
    fi
@@ -10,11 +10,11 @@ diff -Nur berkeleylab-metabat-2e72973705c6.orig/runMetaBat.sh berkeleylab-metaba
    metabatopts="$metabatopts $arg"
    shift
  done
-@@ -113,7 +113,7 @@
+@@ -120,7 +120,7 @@
    echo "Skipping $SUM as $depth already exists"
  fi
  
--outname=${assembly##*/}.metabat-bins${outname}/bin
+-outname=${assembly##*/}.metabat-bins${outname}-$(date '+%Y%m%d_%H%M%S')/bin
 +outname=${assembly##*/}.metabat-bins/bin
  echo "Executing: '$MB $metabatopts --inFile $assembly --outFile $outname --abdFile ${depth}' at `date`"
  $MB $metabatopts --inFile $assembly --outFile $outname --abdFile ${depth}
