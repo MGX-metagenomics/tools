@@ -26,7 +26,9 @@ tar xzf ${VERSION}.tar.gz
 rm ${VERSION}.tar.gz
 cd CONCOCT-${VERSION}
 
-export PYTHONPATH=`ls -d ${PREFIX}/lib/python3.?/site-packages/`
+PYTHONVER=`python3 -V | cut -d' ' -f 2 | cut -d'.' -f1,2`
+export PYTHONPATH=${PREFIX}/lib/python${PYTHONVER}/site-packages/
+
 pip3 install -I --prefix ${PREFIX} --system setuptools
 pip3 install -I --prefix ${PREFIX} --system six
 
