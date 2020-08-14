@@ -1,0 +1,20 @@
+
+
+. ./tools.config
+
+set -e
+
+PYTHONVER=`python3 -V | cut -d' ' -f 2 | cut -d'.' -f1,2`
+export PYTHONPATH=${PREFIX}/lib/python${PYTHONVER}/site-packages/
+
+
+VERSION=2.8
+wget -q https://github.com/fenderglass/Flye/archive/${VERSION}-1.tar.gz
+tar xzf ${VERSION}-1.tar.gz
+rm ${VERSION}-1.tar.gz
+cd Flye-${VERSION}-1
+sed -i "s,PREFIX,${PREFIX}," bin/checkm
+python3 setup.py build
+python3 setup.py install --prefix ${PREFIX}
+cd ..
+rm -rf Flye-${VERSION}-1
