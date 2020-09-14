@@ -4,7 +4,7 @@
 set -e 
 
 
-VERSION=2.12
+VERSION=2.13
 
 wget -q --no-check-certificate -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_${VERSION}.zip/download
 unzip rdp_classifier.zip
@@ -85,6 +85,7 @@ EOS
 
 chmod 755 ${PREFIX}/bin/rdp-classifier-${VERSION}
 chgrp ${GROUP} ${PREFIX}/bin/rdp-classifier-${VERSION}
+ln -sf ${PREFIX}/bin/rdp-classifier-${VERSION} ${PREFIX}/bin/rdp-classifier
 
 cd ..
 rm -rf rdp_classifier_${VERSION}
