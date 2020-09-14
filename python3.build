@@ -1,0 +1,28 @@
+
+. ./tools.config
+
+set -e 
+
+VERSION=3.8.5
+
+wget -q https://www.python.org/ftp/python/3.8.5/Python-${VERSION}.tgz
+tar xzf Python-${VERSION}.tgz
+rm Python-${VERSION}.tgz
+cd Python-${VERSION}
+
+LDFLAGS="-Wl,-rpath -Wl,${PREFIX}/lib" ./configure \
+  --prefix=${PREFIX} \
+  --enable-optimizations \
+  --enable-shared \
+  --disable-ipv6
+
+make ${MAKE_FLAGS}
+make install
+ln ${PREFIX}/bin/python3 ${PREFIX}/bin/python
+
+pip3 install --upgrade pip
+
+cd ..
+rm -rf Python-${VERSION}
+
+
