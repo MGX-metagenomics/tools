@@ -23,4 +23,4 @@ done
 cd ../.. 
 rm -rf kaiju-${VERSION}
 
-rm -f ${PREFIX}/bin/{kaiju-excluded-accessions.txt,kaiju-taxonlistEuk.tsv}
+#rm -f ${PREFIX}/bin/{kaiju-excluded-accessions.txt,kaiju-taxonlistEuk.tsv}
