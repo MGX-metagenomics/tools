@@ -7,6 +7,10 @@ if [ ! -f ${PREFIX}/bin/samtools ]; then
   bash -x samtools.build
 fi
 
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash python3.build
+fi
+
 #libgsl
 if [ ! -f ${PREFIX}/lib/libgsl.so ]; then
   wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.5.tar.gz
@@ -26,33 +30,19 @@ tar xzf ${VERSION}.tar.gz
 rm ${VERSION}.tar.gz
 cd CONCOCT-${VERSION}
 
-PYTHONVER=`python3 -V | cut -d' ' -f 2 | cut -d'.' -f1,2`
-export PYTHONPATH=${PREFIX}/lib/python${PYTHONVER}/site-packages/
-
-pip3 install -I --prefix ${PREFIX} --system setuptools
-pip3 install -I --prefix ${PREFIX} --system six
+pip3 install setuptools six
 
 # newer pandas version fails on ubuntu xenial
-pip3 install --prefix ${PREFIX} --system pandas==0.24.0
-pip3 install --prefix ${PREFIX} --system nose
-pip3 install --prefix ${PREFIX} --system numpy
-pip3 install --prefix ${PREFIX} --system cython
+#pip3 install pandas==0.24.0
+pip3 install pandas nose numpy cython
 
 export CFLAGS=`pkg-config --cflags gsl`
 export LDFLAGS=`pkg-config --libs gsl`
 export LDFLAGS="${LDFLAGS} -Wl,-rpath=${PREFIX}/lib"
-python3 setup.py install --prefix ${PREFIX}
-
-for f in concoct concoct_coverage_table.py concoct_refine cut_up_fasta.py easy_install easy_install-3.5 easy_install-3.6 extract_fasta_bins.py f2py f2py3 f2py3.6 merge_cutup_clustering.py; do
-  if [ -f ${PREFIX}/bin/${f} ] ; then
-    sed -i "s,python3,python3 -S,g" ${PREFIX}/bin/${f}
-    sed -i "/EASY-INSTALL-SCRIPT/a import sys\nsys.path.append(\"$PYTHONPATH\")" ${PREFIX}/bin/${f}
-  fi
-done
+python3 setup.py install
 
 install --mode=755 ../patches/runCONCOCT ${PREFIX}/bin
 
-rm -f ${PREFIX}/bin/nosetests*
 rm -f ${PREFIX}/bin/gsl-{config,histogram,randist}
 
 cd .. 

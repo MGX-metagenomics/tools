@@ -16,16 +16,11 @@ if [ ! -f ${PREFIX}/bin/node ]; then
   rm -rf node-v12.7.0 node-v12.7.0.tar.gz
 fi
 
-PYTHONVER=`python3 -V | cut -d' ' -f 2 | cut -d'.' -f1,2`
-export PYTHONPATH=${PREFIX}/lib/python${PYTHONVER}/site-packages/
-
-pip3 install --prefix ${PREFIX} --system cachecontrol==0.11.7
-pip3 install --prefix ${PREFIX} --system cwltool
-sed -i "s,python3,python3 -S,g" ${PREFIX}/bin/cwltool
-sed -i "/import sys/a sys.path.append(\"$PYTHONPATH\")" ${PREFIX}/bin/cwltool
+pip3 install cachecontrol==0.11.7
+pip3 install cwltool
 
 for f in pasteurize easy_install easy_install-3.* doesitcache chardetect csv2rdf rdfgraphisomorphism rdfs2dot rdfpipe rdf2dot prov-compare prov-convert bagit.py __pycache__/bagit.cpython-35.pyc futurize humanfriendly coloredlogs schema-salad-doc schema-salad-tool; do
   rm -f ${PREFIX}/bin/${f}
 done
 
-rm -rf  ${PREFIX}/bin/__pycache__
+rm -rf ${PREFIX}/bin/__pycache__

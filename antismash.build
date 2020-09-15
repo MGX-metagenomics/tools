@@ -39,6 +39,10 @@ if [ ! -f ${PREFIX}/bin/meme ]; then
   bash -x meme.build
 fi
 
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+  bash -x python3.build
+fi
+
 
 
 VERSION=5.1.2
@@ -68,31 +72,16 @@ wget -q -O - https://github.com/antismash/antismash/commit/aa8968e6d7bc8c220af1e
   | patch -p1
 
 
-PYTHONVER=`python3 -V | cut -d' ' -f 2 | cut -d'.' -f1,2`
-export PYTHONPATH=${PREFIX}/lib/python${PYTHONVER}/site-packages/
+pip3 install helperlibs
+pip3 install numpy
+pip3 install matplotlib
+pip3 install jinja2
+pip3 install bcbio-gff
+pip3 install pyScss
+pip3 install pysvg-py3
 
-pip3 install --prefix ${PREFIX} --upgrade pip
-
-pip3 install --prefix ${PREFIX} helperlibs
-pip3 install --prefix ${PREFIX} numpy
-pip3 install --prefix ${PREFIX} matplotlib
-pip3 install --prefix ${PREFIX} jinja2
-pip3 install --prefix ${PREFIX} bcbio-gff
-pip3 install --prefix ${PREFIX} pyScss
-pip3 install --prefix ${PREFIX} pysvg-py3
-
-python3 setup.py install --prefix ${PREFIX}
+python3 setup.py install 
 
 cd ..
 rm -rf 5-1-2.tar.gz antismash-5-1-2
 
-rm -f ${PREFIX}/bin/easy_install*
-rm -f ${PREFIX}/bin/{py,less2}scss*
-rm -f ${PREFIX}/bin/f2py*
-
-for f in antismash download-antismash-databases; do
-  if [ -f ${PREFIX}/bin/${f} ] ; then
-    sed -i "s,python3,python3 -S,g" ${PREFIX}/bin/${f}
-    sed -i "/EASY-INSTALL-ENTRY-SCRIPT/a import sys\nsys.path.append(\"$PYTHONPATH\")" ${PREFIX}/bin/${f}
-  fi
-done
