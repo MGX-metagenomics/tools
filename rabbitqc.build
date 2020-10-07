@@ -1,0 +1,14 @@
+
+. ./tools.config
+
+set -e
+
+git clone https://github.com/ZekunYin/RabbitQC.git
+cd RabbitQC
+sed -i 's,-static ,,g' Makefile
+make ${MAKE_FLAGS}
+strip rabbit_qc
+install --mode=755 rabbit_qc ${PREFIX}/bin/
+cd ..
+rm -rf RabbitQC
+
