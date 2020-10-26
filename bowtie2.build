@@ -8,7 +8,6 @@ VERSION=2.4.2
 wget -q https://github.com/BenLangmead/bowtie2/archive/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
 cd bowtie2-${VERSION}/
-patch -p 1 < ../patches/bowtie2-solaris.patch
 make ${MAKE_FLAGS} prefix=${PREFIX} NO_TBB=1
 make PREFIX=${PREFIX} install
 cd ..
