@@ -3,17 +3,17 @@
 
 set -e
 
-VERSION=2.4.1
+VERSION=2.4.2
 
-wget -q --no-check-certificate -O bowtie2-${VERSION}-source.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie2/${VERSION}/bowtie2-${VERSION}-source.zip/download
-unzip bowtie2-${VERSION}-source.zip 
+wget -q https://github.com/BenLangmead/bowtie2/archive/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
 cd bowtie2-${VERSION}/
 patch -p 1 < ../patches/bowtie2-solaris.patch
 make ${MAKE_FLAGS} prefix=${PREFIX} NO_TBB=1
 make PREFIX=${PREFIX} install
 cd ..
 rm -rf bowtie2-${VERSION}
-rm bowtie2-${VERSION}-source.zip
+rm v${VERSION}.tar.gz
 
 for f in bowtie2-align-l bowtie2-align-s bowtie2-build-l bowtie2-build-s bowtie2-inspect-l bowtie2-inspect-s; do
     strip ${PREFIX}/bin/${f}
