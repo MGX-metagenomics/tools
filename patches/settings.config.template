@@ -64,10 +64,10 @@ Conveyor.Database.FunGene.Configuration.FunGeneSummary=/vol/biodb/local_database
 Conveyor.Centrifuge.Configuration.centrifuge=PREFIX/bin/centrifuge
 Conveyor.Centrifuge.Configuration.centrifugeDB=/vol/biodb/local_databases/MGX/centrifuge/current
 Conveyor.Kraken.Configuration.krakenBinary=PREFIX/bin/kraken
+Conveyor.Kraken.Configuration.krakenDatabaseList=RefSeq-Microbial=/vol/biodb/local_databases/MGX/kraken/current|OM-RGC=/vol/biodb/local_databases/MGX/kraken/OM-RGC
 Conveyor.Kraken.Configuration.kraken2Binary=PREFIX/bin/kraken2
-Conveyor.Kraken.Configuration.krakenDB=/vol/biodb/local_databases/MGX/kraken/current
-Conveyor.Kraken.Configuration.kraken2DB=/vol/biodb/local_databases/MGX/kraken2/kraken2-20191003/
-Conveyor.Kraken.Configuration.kraken2aaDB=/vol/biodb/local_databases/MGX/kraken2/kraken2-aa-20191003/
+Conveyor.Kraken.Configuration.kraken2DatabaseList=RefSeq-Microbial=/vol/biodb/local_databases/MGX/kraken2/current
+Conveyor.Kraken.Configuration.kraken2aaDatabaseList=RefSeq-Microbial-AA=/vol/biodb/local_databases/MGX/kraken2/kraken2-aa-20200407
 Conveyor.MetaPhlAn.Configuration.blastn=PREFIX/bin/blastn
 Conveyor.MetaPhlAn.Configuration.bowtie2=PREFIX/bin/bowtie2
 Conveyor.MetaPhlAn.Configuration.metaphlan=/vol/biotools/lib/MetaPhlAn/metaphlan.py
