@@ -3,35 +3,27 @@
 
 set -e
 
-wget -q http://eddylab.org/software/hmmer3/3.1b2/hmmer-3.1b2.tar.gz 
-tar xzf hmmer-3.1b2.tar.gz 
-rm hmmer-3.1b2.tar.gz 
-cd hmmer-3.1b2 
-patch -p1 < ../patches/hmmer3-check-instdir.patch 
-patch -p1 < ../patches/hmmer-3.1b2-manperms.patch
-patch -p1 < ../patches/hmmer-3.1b2-strip.patch
-patch -p1 < ../patches/hmmer-3.1b2-hmmbuild-segfault.patch
-patch -p2 < ../patches/hmmer_seek_instead_reopen.patch 
-patch -p1 < ../patches/hmmer-3.1b2-mmap.patch
+VERSION=3.3.2
+wget -q http://eddylab.org/software/hmmer/hmmer-${VERSION}.tar.gz 
+tar xzf hmmer-${VERSION}.tar.gz 
+rm hmmer-${VERSION}.tar.gz 
+cd hmmer-${VERSION} 
+#patch -p1 < ../patches/hmmer3-check-instdir.patch 
+#patch -p1 < ../patches/hmmer-3.1b2-manperms.patch
+#patch -p1 < ../patches/hmmer-3.1b2-hmmbuild-segfault.patch
+patch -p1 < ../patches/hmmer_seek_instead_reopen.patch 
+#patch -p1 < ../patches/hmmer-3.1b2-mmap.patch
 
-autoconf
-cd easel
-autoconf
-cd ..
+#autoconf
+#cd easel
+#autoconf
+#cd ..
 
 ./configure --prefix=${PREFIX} \
-    --enable-portable-binary \
-    --with-gcc-arch=i686 \
+    --enable-pic \
     --enable-mmap 
 make ${MAKE_FLAGS}
-make install-strip 
-rmdir ${PREFIX}/share/doc/hmmer 
+make install-strip
 cd .. 
-rm -rf hmmer-3.1b2
+rm -rf hmmer-${VERSION}
 
-rm -rf ${PREFIX}/include/hmmer.h
-rm -rf ${PREFIX}/include/impl_sse.h
-rm -rf ${PREFIX}/include/p7_*.h
-rm -f ${PREFIX}/include/cachedb.h
-rm -f ${PREFIX}/lib/libhmmer.a
-rm -f ${PREFIX}/share/man/man1/*hmm*
