@@ -4,7 +4,7 @@
 set -e
 
 
-VERSION=2.10.1
+VERSION=2.11.0
 LMDBVER=0.9.24
 
 wget -q https://github.com/LMDB/lmdb/archive/LMDB_${LMDBVER}.tar.gz
@@ -22,6 +22,7 @@ tar xzf ncbi-blast-${VERSION}+-src.tar.gz
 rm ncbi-blast-${VERSION}+-src.tar.gz 
 cd ncbi-blast-${VERSION}+-src/c++ 
 
+patch -p 2 < ../../patches/blast_disable_reporting.patch
 patch -p 2 < ../../patches/blast-check-instdir.patch 
 #patch -p 2 < ../../patches/blast-fix-header-install.patch
 

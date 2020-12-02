@@ -1,0 +1,14 @@
+diff -Nur ncbi-blast-2.11.0+-src.orig/c++/src/algo/blast/api/blast_usage_report.cpp ncbi-blast-2.11.0+-src/c++/src/algo/blast/api/blast_usage_report.cpp
+--- ncbi-blast-2.11.0+-src.orig/c++/src/algo/blast/api/blast_usage_report.cpp	2020-09-28 20:27:17.000000000 +0200
++++ ncbi-blast-2.11.0+-src/c++/src/algo/blast/api/blast_usage_report.cpp	2020-12-02 14:43:02.483670000 +0100
+@@ -204,8 +204,8 @@
+ 			return ;
+ 		}
+ 	}
+-	CUsageReportAPI::SetEnabled(true);
+-	SetEnabled(true);
++	CUsageReportAPI::SetEnabled(false);
++	SetEnabled(false);
+ 	LOG_POST(Info <<"Phone home enabled");
+ }
+ 
