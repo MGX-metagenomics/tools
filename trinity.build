@@ -17,9 +17,12 @@ cd trinityrnaseq-v${VERSION}
 patch -p1 < ../patches/trinity_paths.patch
 
 patch -p1 < ../patches/trinity_cppstd.patch
+patch -p1 < ../patches/trinity_htslib.patch
 
 sed -i "s,PREFIX,$PREFIX,g" Trinity
 
+# PREFIX needs to be exported here, picked up by bamsifter Makefile
+export PREFIX
 make ${MAKE_FLAGS}
 
 mkdir -p ${PREFIX}/lib/trinity-${VERSION}/bin
@@ -27,7 +30,7 @@ mkdir -p ${PREFIX}/lib/trinity-${VERSION}/share/perl
 mkdir -p ${PREFIX}/lib/trinity-${VERSION}/share/util
 mkdir -p ${PREFIX}/lib/trinity-${VERSION}/share/Analysis
 
-for f in Inchworm/bin/* Chrysalis/bin/* trinity-plugins/BIN/ParaFly trinity-plugins/BIN/seqtk-trinity Trinity; do
+for f in Inchworm/bin/* Chrysalis/bin/* trinity-plugins/BIN/ParaFly trinity-plugins/BIN/seqtk-trinity trinity-plugins/BIN/bamsifter Trinity; do
   install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/trinity-${VERSION}/bin
 done
 
