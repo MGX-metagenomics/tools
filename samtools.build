@@ -3,6 +3,10 @@
 
 set -e
 
+if [ ! -f ${PREFIX}/include/lzma.h ]; then
+    bash -x lzma.build
+fi
+
 VERSION=1.11
 
 wget -q --no-check-certificate -O samtools-${VERSION}.tar.bz2 https://github.com/samtools/samtools/releases/download/${VERSION}/samtools-${VERSION}.tar.bz2 
@@ -28,7 +32,7 @@ else
        --libexecdir=${PREFIX}/share/libexec \
        --enable-plugins --with-plugin-path=$PWD/htslib-${VERSION} \
        --disable-libcurl --disable-bz2 \
-       --without-curses --disable-lzma
+       --without-curses 
 fi
 make ${MAKE_FLAGS} all all-htslib
 #make check 
