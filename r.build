@@ -91,10 +91,10 @@ if [ ${OS} = "Solaris" ]; then
 
 fi # solaris
 
-VERSION=3.6.3
 
 
-wget -q --no-check-certificate https://cran.r-project.org/src/base/R-3/R-${VERSION}.tar.gz 
+VERSION=4.0.3
+wget -q --no-check-certificate https://cran.r-project.org/src/base/R-4/R-${VERSION}.tar.gz 
 tar xzf R-${VERSION}.tar.gz 
 cd R-${VERSION} 
 
