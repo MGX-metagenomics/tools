@@ -18,7 +18,7 @@ cd jellyfish-${VERSION}
 ./configure --prefix=${PREFIX}
 make ${MAKE_FLAGS}
 make install
-ln ${PREFIX}/bin/jellyfish ${PREFIX}/bin/jellyfish-2
+ln -sf ${PREFIX}/bin/jellyfish ${PREFIX}/bin/jellyfish-2
 cd ..
 rm -rf jellyfish-${VERSION}.tar.gz jellyfish-${VERSION}
 
