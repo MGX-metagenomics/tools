@@ -18,11 +18,11 @@ LDFLAGS="-Wl,-rpath -Wl,${PREFIX}/lib" ./configure \
 
 make ${MAKE_FLAGS}
 make install
-ln ${PREFIX}/bin/python3 ${PREFIX}/bin/python
+ln -sf ${PREFIX}/bin/python3 ${PREFIX}/bin/python
 
 pip3 install --upgrade pip
 
 cd ..
-rm -rf Python-${VERSION}
+rm -rf Python-${VERSION} ${PREFIX}/bin/idle3*
 
 
