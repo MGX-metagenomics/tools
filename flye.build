@@ -8,6 +8,7 @@ if [ ! -f ${PREFIX}/bin/python3 ]; then
     bash -x python3.build
 fi
 
+pip3 install setuptools
 
 VERSION=2.8.1
 wget -q https://github.com/fenderglass/Flye/archive/${VERSION}.tar.gz
