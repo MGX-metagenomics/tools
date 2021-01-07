@@ -13,15 +13,15 @@ fi
 
 #libgsl
 if [ ! -f ${PREFIX}/lib/libgsl.so ]; then
-  wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.5.tar.gz
-  tar xzf gsl-2.5.tar.gz
-  rm gsl-2.5.tar.gz
-  cd gsl-2.5
+  wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.6.tar.gz
+  tar xzf gsl-2.6.tar.gz
+  rm gsl-2.6.tar.gz
+  cd gsl-2.6
   ./configure --prefix=${PREFIX}
   make ${MAKE_FLAGS}
   make install
   cd ..
-  rm -rf gsl-2.5
+  rm -rf gsl-2.6
 fi
 
 VERSION=1.1.0
