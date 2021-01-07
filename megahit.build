@@ -16,3 +16,4 @@ make install
 
 cd ../..
 rm -rf megahit-${VERSION}
+rm -rf ${PREFIX}/share/megahit
