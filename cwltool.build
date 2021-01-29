@@ -4,20 +4,20 @@
 set -e
 
 if [ ! -f ${PREFIX}/bin/node ]; then
-  wget -q https://nodejs.org/dist/v12.7.0/node-v12.7.0.tar.gz
-  tar xzf node-v12.7.0.tar.gz
-  cd node-v12.7.0
+  wget -q https://nodejs.org/dist/v14.15.4/node-v14.15.4.tar.xz
+  tar xJf node-v14.15.4.tar.xz
+  cd node-v14.15.4
   ./configure --prefix=${PREFIX} \
     --without-npm \
     --without-ssl
   make ${MAKE_FLAGS}
   make install
   cd ..
-  rm -rf node-v12.7.0 node-v12.7.0.tar.gz
+  rm -rf node-*
 fi
 
 pip3 install cachecontrol==0.11.7
-pip3 install cwltool
+pip3 install --force-reinstall cwltool
 
 for f in pasteurize easy_install easy_install-3.* doesitcache chardetect csv2rdf rdfgraphisomorphism rdfs2dot rdfpipe rdf2dot prov-compare prov-convert bagit.py __pycache__/bagit.cpython-35.pyc futurize humanfriendly coloredlogs schema-salad-doc schema-salad-tool; do
   rm -f ${PREFIX}/bin/${f}
