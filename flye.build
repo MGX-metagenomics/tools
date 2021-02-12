@@ -10,7 +10,7 @@ fi
 
 pip3 install setuptools
 
-VERSION=2.8.1
+VERSION=2.8.3
 wget -q https://github.com/fenderglass/Flye/archive/${VERSION}.tar.gz
 tar xzf ${VERSION}.tar.gz
 rm ${VERSION}.tar.gz
