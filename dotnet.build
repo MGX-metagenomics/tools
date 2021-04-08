@@ -3,8 +3,10 @@
 
 set -e
 
-wget -q https://download.visualstudio.microsoft.com/download/pr/820db713-c9a5-466e-b72a-16f2f5ed00e2/628aa2a75f6aa270e77f4a83b3742fb8/dotnet-sdk-5.0.100-linux-x64.tar.gz
+wget -q https://download.visualstudio.microsoft.com/download/pr/73a9cb2a-1acd-4d20-b864-d12797ca3d40/075dbe1dc3bba4aa85ca420167b861b6/dotnet-sdk-5.0.201-linux-x64.tar.gz
+
+rm -rf ${PREFIX}/lib/dotnet
 mkdir -p ${PREFIX}/lib/dotnet
-tar xzf dotnet-sdk-5.0.100-linux-x64.tar.gz -C ${PREFIX}/lib/dotnet
+tar xzf dotnet-sdk-5.0.201-linux-x64.tar.gz -C ${PREFIX}/lib/dotnet
 ln -sf ${PREFIX}/lib/dotnet/dotnet ${PREFIX}/bin/
-rm dotnet-sdk-5.0.100-linux-x64.tar.gz
+rm dotnet-sdk-5.0.201-linux-x64.tar.gz
