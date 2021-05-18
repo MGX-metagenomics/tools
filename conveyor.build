@@ -3,47 +3,23 @@
 
 set -e
 
-if [ ! -f ${PREFIX}/bin/mono ]; then
-    echo "Mono installation missing."
+if [ ! -f ${PREFIX}/bin/dotnet ]; then
+    echo ".NET 5 installation missing."
     exit 1
 fi
 
-install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/Conveyor
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/Conveyor.NET5
 
-git clone -b development https://git.computational.bio.uni-giessen.de/burkhard.linke/conveyor.git
+git clone -b development https://git.computational.bio.uni-giessen.de/sjaenick/conveyor.git
 cd conveyor
 
-if [ -f /etc/ssl/certs/ca-certificates.crt ]; then
-    ${PREFIX}/bin/cert-sync /etc/ssl/certs/ca-certificates.crt
-else 
-    ${PREFIX}/bin/mozroots --import --sync
-fi
-
-wget -q https://dist.nuget.org/win-x86-commandline/v3.5.0/nuget.exe
-${PREFIX}/bin/mono nuget.exe restore Conveyor.sln
-
-${PREFIX}/bin/xbuild /t:Clean
-${PREFIX}/bin/xbuild /p:Configuration=Debug 
-
-shopt -s nullglob
-
-find . -type d -name bin | while read bindir; do
-    if [ -d ${bindir}/Debug ]; then
-        install -g ${GROUP} --mode=755 ${bindir}/Debug/*.{dll,mdb,pdb,exe,config} ${PREFIX}/lib/Conveyor/
-    fi
-done
-
-shopt -u nullglob
+dotnet build
+dotnet publish -o ${PREFIX}/lib/Conveyor.NET5
 
 # remove unit tests
-rm -f ${PREFIX}/lib/Conveyor/*Test*.{dll,mdb}
-rm -f ${PREFIX}/lib/Conveyor/{MVirScanner.exe,GBKChecker.exe,AnnotationPipeline.exe}*
-rm -f ${PREFIX}/lib/Conveyor/{SFF2FastQ.exe,PairedReadInterleaver.exe,IterateTB.exe}*
-rm -f ${PREFIX}/lib/Conveyor/{EMBL2FAS.exe,EggNOG3Table.exe,CoreGenomePhylogeny.exe}*
-rm -f ${PREFIX}/lib/Conveyor/{SingleEndQualityFilter.exe,PairedEndQualityFilter.exe,IterateFasta.exe}*
-rm -f ${PREFIX}/lib/Conveyor/{PairedEndOverlap.exe,MatePairSplitting.exe,Conveyor.Configurator.exe}*
-rm -f ${PREFIX}/lib/Conveyor/{PairedEndFrontIndexSplitter.exe,EggNOGTable.exe,SingleEndReferenceFilter.exe}*
-rm -f ${PREFIX}/lib/Conveyor/{SingleEndFrontIndexSplitter.exe,PairedEndReferenceFilter.exe,MatePairProcessing.exe}*
+rm -f ${PREFIX}/lib/Conveyor.NET5/*Test*.{dll,dll.config,pdb,deps.json} ${PREFIX}/lib/Conveyor.NET5/nunit*
+
+chmod 644 ${PREFIX}/lib/Conveyor.NET5/*dll
 
 cd .. && rm -rf conveyor
 
