@@ -1,0 +1,14 @@
+
+. ./tools.config
+
+set -e
+
+VERSION=1.4.0
+wget -q https://github.com/COMBINE-lab/salmon/releases/download/v${VERSION}/salmon-${VERSION}_linux_x86_64.tar.gz
+tar xzf salmon-${VERSION}_linux_x86_64.tar.gz
+cd salmon-latest_linux_x86_64/
+install --mode=755 bin/salmon ${PREFIX}/bin
+rm lib/lib{gcc_s,gomp,m}.so.?
+install --mode=755 lib/* ${PREFIX}/lib
+cd ..
+rm -rf salmon-${VERSION}_linux_x86_64.tar.gz salmon-latest_linux_x86_64/
