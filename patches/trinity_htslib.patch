@@ -1,19 +1,11 @@
-diff -Nur trinityrnaseq-v2.10.0.orig/trinity-plugins/bamsifter/Makefile trinityrnaseq-v2.10.0/trinity-plugins/bamsifter/Makefile
---- trinityrnaseq-v2.10.0.orig/trinity-plugins/bamsifter/Makefile	2021-01-07 16:33:20.581193936 +0100
-+++ trinityrnaseq-v2.10.0/trinity-plugins/bamsifter/Makefile	2021-01-07 16:34:47.262496968 +0100
-@@ -1,2 +1,2 @@
- sift_bam_max_cov: sift_bam_max_cov.cpp
--	g++ -std=c++11 sift_bam_max_cov.cpp -Wall -lhts -O2 -I../htslib -L../htslib -o bamsifter
+diff -Nur trinityrnaseq-v2.12.0.orig/trinity-plugins/bamsifter/Makefile trinityrnaseq-v2.12.0/trinity-plugins/bamsifter/Makefile
+--- trinityrnaseq-v2.12.0.orig/trinity-plugins/bamsifter/Makefile	2021-03-05 02:22:55.000000000 +0100
++++ trinityrnaseq-v2.12.0/trinity-plugins/bamsifter/Makefile	2021-05-26 11:35:02.099651698 +0200
+@@ -4,6 +4,7 @@
+ 
+ sift_bam_max_cov: sift_bam_max_cov.cpp htslib/version.h
+ 	g++ -std=c++11 -o _sift_bam_max_cov sift_bam_max_cov.cpp -Wall -O2 -L./htslib/build/lib/ -I./htslib/build/include -lhts
 +	g++ -std=c++11 sift_bam_max_cov.cpp -Wall -O2 -o bamsifter `pkg-config --cflags --libs htslib` -Wl,-rpath=${PREFIX}/lib
-diff -Nur trinityrnaseq-v2.10.0.orig/trinity-plugins/Makefile trinityrnaseq-v2.10.0/trinity-plugins/Makefile
---- trinityrnaseq-v2.10.0.orig/trinity-plugins/Makefile	2020-03-20 15:23:04.000000000 +0100
-+++ trinityrnaseq-v2.10.0/trinity-plugins/Makefile	2021-01-07 16:34:05.409867747 +0100
-@@ -29,7 +29,7 @@
- 	cd htslib && autoreconf && ./configure --prefix=`pwd` && make && make install
- 	@touch htslib.ok
  
--bamsifter_target: htslib.ok
-+bamsifter_target:
- 	cd bamsifter && make && cp bamsifter ../BIN/
  
- ##################################
+ htslib/version.h :

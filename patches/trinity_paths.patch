@@ -1,6 +1,6 @@
-diff -Nur trinityrnaseq-v2.10.0.orig/Chrysalis/analysis/Chrysalis.cc trinityrnaseq-v2.10.0/Chrysalis/analysis/Chrysalis.cc
---- trinityrnaseq-v2.10.0.orig/Chrysalis/analysis/Chrysalis.cc	2020-03-20 15:23:30.000000000 +0100
-+++ trinityrnaseq-v2.10.0/Chrysalis/analysis/Chrysalis.cc	2020-03-25 11:00:40.000000000 +0100
+diff -Nur trinityrnaseq-v2.12.0.orig/Chrysalis/analysis/Chrysalis.cc trinityrnaseq-v2.12.0/Chrysalis/analysis/Chrysalis.cc
+--- trinityrnaseq-v2.12.0.orig/Chrysalis/analysis/Chrysalis.cc	2021-03-05 02:22:54.000000000 +0100
++++ trinityrnaseq-v2.12.0/Chrysalis/analysis/Chrysalis.cc	2021-05-26 11:38:23.790439642 +0200
 @@ -258,7 +258,7 @@
      commandArg<string> iwormStringCmmd("-iworm","inchworm file", "");
      commandArg<string> oStringCmmd("-o","output directory");
@@ -10,9 +10,9 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Chrysalis/analysis/Chrysalis.cc trinityrnas
      commandArg<bool> skipCmmd("-skip","skip initial 2 steps", false);
      commandArg<bool> strandCmmd("-strand","strand-specific data", false);
      commandArg<bool> nobreakCmmd("-nobreak","skip breaking", false);
-diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
---- trinityrnaseq-v2.10.0.orig/Trinity	2020-03-20 15:23:03.000000000 +0100
-+++ trinityrnaseq-v2.10.0/Trinity	2020-03-25 11:03:01.000000000 +0100
+diff -Nur trinityrnaseq-v2.12.0.orig/Trinity trinityrnaseq-v2.12.0/Trinity
+--- trinityrnaseq-v2.12.0.orig/Trinity	2021-03-05 02:21:01.000000000 +0100
++++ trinityrnaseq-v2.12.0/Trinity	2021-05-26 11:38:23.794439618 +0200
 @@ -6,7 +6,7 @@
  no strict qw(subs refs);
  
@@ -22,7 +22,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
  use File::Basename;
  use Time::localtime;
  use Cwd;
-@@ -36,14 +36,14 @@
+@@ -36,15 +36,15 @@
  
  #directory defnintions
  my $ROOTDIR = "$FindBin::RealBin";
@@ -36,13 +36,14 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
 +my $CHRYSALIS_DIR = "$ROOTDIR";
 +my $BUTTERFLY_DIR = "$ROOTDIR";
  my $COLLECTL_DIR = "$ROOTDIR/trinity-plugins/COLLECTL/collectl";
- my $TRINITY_BIN_DIR = "$ROOTDIR/trinity-plugins/BIN";
+ my $TRINITY_PLUGINS_DIR = "$ROOTDIR/trinity-plugins";
+ my $TRINITY_BIN_DIR = "$TRINITY_PLUGINS_DIR/BIN";
 -my $PARAFLY = "$TRINITY_BIN_DIR/ParaFly";
 +my $PARAFLY = "$ROOTDIR/ParaFly";
  my $HTSLIB_DIR = "$ROOTDIR/trinity-plugins/htslib";
  
  $ENV{LD_LIBRARY_PATH} .= ":${HTSLIB_DIR}";
-@@ -55,7 +55,7 @@
+@@ -56,7 +56,7 @@
  my $TRIMMOMATIC = "$ROOTDIR/trinity-plugins/Trimmomatic/trimmomatic.jar";
  my $TRIMMOMATIC_DIR = "$ROOTDIR/trinity-plugins/Trimmomatic";
  
@@ -51,7 +52,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
  
  my $JAVA_VERSION_REQUIRED = 8;
  
-@@ -1003,7 +1003,7 @@
+@@ -1022,7 +1022,7 @@
  }
  
  unless ($BFLY_JAR) {
@@ -60,7 +61,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
  }
  
  
-@@ -1879,7 +1879,7 @@
+@@ -1933,7 +1933,7 @@
          
          my $pipeliner = new Pipeliner(-verbose => ($TRINITY_COMPLETE_FLAG) ? $VERBOSE : max(1, $VERBOSE));
                  
@@ -69,7 +70,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
          $pipeliner->add_commands( new Command($cmd, "$polish_checkpoints_dir/trinity_st.ok"));
          
          $pipeliner->run();
-@@ -1999,7 +1999,7 @@
+@@ -2066,7 +2066,7 @@
              ## generate the scaffold info
                          
              if ($USE_PERL_SCAFFOLDER) {
@@ -78,7 +79,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
              }
              else {
                  # this c++ code needs to be updated to reflect the new clustering criteria
-@@ -2066,7 +2066,7 @@
+@@ -2131,7 +2131,7 @@
          
          my $welds_to_cluster_file = "$chrysalis_output_dir/iworm_cluster_welds_graph.txt";
          
@@ -87,7 +88,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
         
          if ($SS_lib_type) {
              $graphFromFasta_cmd .= " -strand ";
-@@ -2095,7 +2095,7 @@
+@@ -2160,7 +2160,7 @@
          
          ## now cluster into chrysalis components:
          
@@ -96,7 +97,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
  
          if ($CHRYSALIS_DEBUG_WELD_ALL) {
              $bubble_cluster_cmd .= " -debug_weld_all ";
-@@ -2115,7 +2115,7 @@
+@@ -2180,7 +2180,7 @@
          ## create iworm bundles
          
          
@@ -105,7 +106,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
          
          
          $chrysalis_pipeliner->add_commands( new Command($cmd, "$iworm_bundles_fasta_file.ok"));
-@@ -2127,7 +2127,7 @@
+@@ -2192,7 +2192,7 @@
      { 
          ## map reads to chrysalis components:
                          
@@ -114,7 +115,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
          if ($SS_lib_type) {
              $cmd .= " -strand ";
          }
-@@ -2238,7 +2238,7 @@
+@@ -2303,7 +2303,7 @@
  
              { # quantify graph command
                  
@@ -123,7 +124,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
                      . " -i $base_filename.reads.tmp "
                      . " -o $base_filename.graph.out "
                      . " -max_reads $max_reads_per_graph "
-@@ -2494,7 +2494,7 @@
+@@ -2559,7 +2559,7 @@
  
          my $jelly_db = "mer_counts.$kmer_size.$SR_flag.jf";        
          
@@ -132,22 +133,22 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
          
          unless ($SS_lib_type) {
              ## count both strands
-@@ -2508,12 +2508,12 @@
-         
+@@ -2572,12 +2572,12 @@
+                 
  
          
 -        $cmd = "jellyfish dump -L $min_kmer_cov $jelly_db > $jelly_kmer_fa_file";
 +        $cmd = "jellyfish-2 dump -L $min_kmer_cov $jelly_db > $jelly_kmer_fa_file";
          
-         $pipeliner->add_commands(new Command($cmd, ".jellyfish_dump.$kmer_size.$SR_flag.ok") );        
+         $pipeliner->add_commands(new Command($cmd, ".jellyfish_dump.$kmer_size.mincov$min_kmer_cov.$SR_flag.ok") );        
          
          ## write a histogram of the kmer counts.
 -        $cmd = "jellyfish histo -t $CPU -o $jelly_kmer_fa_file.histo $jelly_db";
 +        $cmd = "jellyfish-2 histo -t $CPU -o $jelly_kmer_fa_file.histo $jelly_db";
          
-         $pipeliner->add_commands( new Command($cmd, ".jellyfish_histo.$kmer_size.$SR_flag.ok") );
-                         
-@@ -3114,7 +3114,7 @@
+         $pipeliner->add_commands( new Command($cmd, ".jellyfish_histo.$kmer_size.mincov$min_kmer_cov.$SR_flag.ok") );
+         
+@@ -3178,7 +3178,7 @@
          #my $cmd = "cd $collectl_output_directory && exec ${COLLECTL_DIR}/collectl $collectl_param --procfilt u$collectl_userid -f $collectl_output_directory/y";
          
          
@@ -156,7 +157,7 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
                  
          
          ## fork a child to run collectl
-@@ -3897,11 +3897,11 @@
+@@ -4003,11 +4003,11 @@
      }
  
      # jellyfish
@@ -170,9 +171,9 @@ diff -Nur trinityrnaseq-v2.10.0.orig/Trinity trinityrnaseq-v2.10.0/Trinity
          my ($name, $version) = split(/\s+/, $version_info);
          unless ($version =~ /^2\./) {
              die "Error, need jellyfish v2, instead found $version_info ; Get it here: http://www.genome.umd.edu/jellyfish.html";
-diff -Nur trinityrnaseq-v2.10.0.orig/util/insilico_read_normalization.pl trinityrnaseq-v2.10.0/util/insilico_read_normalization.pl
---- trinityrnaseq-v2.10.0.orig/util/insilico_read_normalization.pl	2020-03-20 15:23:04.000000000 +0100
-+++ trinityrnaseq-v2.10.0/util/insilico_read_normalization.pl	2020-03-25 11:00:41.000000000 +0100
+diff -Nur trinityrnaseq-v2.12.0.orig/util/insilico_read_normalization.pl trinityrnaseq-v2.12.0/util/insilico_read_normalization.pl
+--- trinityrnaseq-v2.12.0.orig/util/insilico_read_normalization.pl	2021-03-05 02:21:02.000000000 +0100
++++ trinityrnaseq-v2.12.0/util/insilico_read_normalization.pl	2021-05-26 11:38:23.802439570 +0200
 @@ -18,7 +18,7 @@
  use COMMON;
  
@@ -193,9 +194,9 @@ diff -Nur trinityrnaseq-v2.10.0.orig/util/insilico_read_normalization.pl trinity
  
  unless (@ARGV) {
      die "$usage\n";
-diff -Nur trinityrnaseq-v2.10.0.orig/util/misc/compare_bflies.pl trinityrnaseq-v2.10.0/util/misc/compare_bflies.pl
---- trinityrnaseq-v2.10.0.orig/util/misc/compare_bflies.pl	2020-03-20 15:23:05.000000000 +0100
-+++ trinityrnaseq-v2.10.0/util/misc/compare_bflies.pl	2020-03-25 11:00:41.000000000 +0100
+diff -Nur trinityrnaseq-v2.12.0.orig/util/misc/compare_bflies.pl trinityrnaseq-v2.12.0/util/misc/compare_bflies.pl
+--- trinityrnaseq-v2.12.0.orig/util/misc/compare_bflies.pl	2021-03-05 02:21:02.000000000 +0100
++++ trinityrnaseq-v2.12.0/util/misc/compare_bflies.pl	2021-05-26 11:38:23.806439546 +0200
 @@ -37,7 +37,7 @@
          my $cmd = "ln -s $comp.reads .;  ln -s $comp.out .";
          &process_cmd($cmd);
@@ -214,9 +215,9 @@ diff -Nur trinityrnaseq-v2.10.0.orig/util/misc/compare_bflies.pl trinityrnaseq-v
  
          open (my $ofh, ">bfly.cmd") or die $!;
          print $ofh $cmd;
-diff -Nur trinityrnaseq-v2.10.0.orig/util/misc/sim_test_framework/run_Trinity_eval.pl trinityrnaseq-v2.10.0/util/misc/sim_test_framework/run_Trinity_eval.pl
---- trinityrnaseq-v2.10.0.orig/util/misc/sim_test_framework/run_Trinity_eval.pl	2020-03-20 15:23:05.000000000 +0100
-+++ trinityrnaseq-v2.10.0/util/misc/sim_test_framework/run_Trinity_eval.pl	2020-03-25 11:00:41.000000000 +0100
+diff -Nur trinityrnaseq-v2.12.0.orig/util/misc/sim_test_framework/run_Trinity_eval.pl trinityrnaseq-v2.12.0/util/misc/sim_test_framework/run_Trinity_eval.pl
+--- trinityrnaseq-v2.12.0.orig/util/misc/sim_test_framework/run_Trinity_eval.pl	2021-03-05 02:21:05.000000000 +0100
++++ trinityrnaseq-v2.12.0/util/misc/sim_test_framework/run_Trinity_eval.pl	2021-05-26 11:38:23.810439522 +0200
 @@ -17,7 +17,7 @@
  
  my $help_flag;
@@ -226,9 +227,9 @@ diff -Nur trinityrnaseq-v2.10.0.orig/util/misc/sim_test_framework/run_Trinity_ev
  my $INCLUDE_REF_TRANS = 0;
  my $OUT_DIR = "testing_dir";
  my $MIN_CONTIG_LENGTH = 200;
-diff -Nur trinityrnaseq-v2.10.0.orig/util/support_scripts/write_partitioned_trinity_cmds.pl trinityrnaseq-v2.10.0/util/support_scripts/write_partitioned_trinity_cmds.pl
---- trinityrnaseq-v2.10.0.orig/util/support_scripts/write_partitioned_trinity_cmds.pl	2020-03-20 15:23:05.000000000 +0100
-+++ trinityrnaseq-v2.10.0/util/support_scripts/write_partitioned_trinity_cmds.pl	2020-03-25 11:00:41.000000000 +0100
+diff -Nur trinityrnaseq-v2.12.0.orig/util/support_scripts/write_partitioned_trinity_cmds.pl trinityrnaseq-v2.12.0/util/support_scripts/write_partitioned_trinity_cmds.pl
+--- trinityrnaseq-v2.12.0.orig/util/support_scripts/write_partitioned_trinity_cmds.pl	2021-03-05 02:21:06.000000000 +0100
++++ trinityrnaseq-v2.12.0/util/support_scripts/write_partitioned_trinity_cmds.pl	2021-05-26 11:38:23.810439522 +0200
 @@ -75,7 +75,7 @@
      
      my $file = pop @x;
