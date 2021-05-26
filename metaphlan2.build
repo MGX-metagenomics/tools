@@ -7,32 +7,17 @@ if [ ! -f ${PREFIX}/bin/bowtie2 ]; then
     bash -x bowtie2.build
 fi
 
-VERSION=2.7.8
-
 install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/metaphlan2
-install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/metaphlan2/utils
 
-wget -q https://bitbucket.org/biobakery/metaphlan2/get/${VERSION}.zip
-unzip ${VERSION}.zip
-rm ${VERSION}.zip
-cd biobakery-metaphlan2-*
+git clone https://github.com/biobakery/MetaPhlAn2
+cd MetaPhlAn2
 
-patch -p 0 < ../patches/metaphlan2_symlink.patch
+sed -i "s,/usr/bin/env python,${PREFIX}/bin/python3,g" metaphlan2.py
 
 install -g ${GROUP} --mode=755 metaphlan2.py ${PREFIX}/lib/metaphlan2/
-install -g ${GROUP} --mode=755 strainphlan.py ${PREFIX}/lib/metaphlan2/
 
 ln -sf ${PREFIX}/lib/metaphlan2/metaphlan2.py ${PREFIX}/bin/
-ln -sf ${PREFIX}/lib/metaphlan2/strainphlan.py ${PREFIX}/bin/
-
-for f in strainphlan_src/* ; do
-  install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/metaphlan2
-done
-
-for f in utils/* ; do
-  install -g ${GROUP} --mode=755 ${f} ${PREFIX}/lib/metaphlan2/utils
-done
 
 cd ..
-rm -rf biobakery-metaphlan2-*
+rm -rf MetaPhlAn2
 
