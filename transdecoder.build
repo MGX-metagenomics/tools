@@ -9,12 +9,25 @@ tar xzf TransDecoder-v${VERSION}.tar.gz
 rm TransDecoder-v${VERSION}.tar.gz
 cd TransDecoder-TransDecoder-v${VERSION}
 
+patch -p1 < ../patches/transdecoder_remove_r.patch
+
 mkdir -p ${PREFIX}/lib/transdecoder-${VERSION}/bin
 mkdir -p ${PREFIX}/lib/transdecoder-${VERSION}/share/perl
 mkdir -p ${PREFIX}/lib/transdecoder-${VERSION}/share/util
 
 cp -a PerlLib/* ${PREFIX}/lib/transdecoder-${VERSION}/share/perl
 rm -rf util/bin
+
+for f in util/*.pl; do
+  sed -i "s,PerlLib,../share/perl," ${f}
+  sed -i "s,util\",../share/util\"," ${f}
+done
+
+for f in util/PWM/*.pl; do
+  sed -i "s,PerlLib,../share/perl," ${f}
+  sed -i "s,util\",../share/util\"," ${f}
+done
+
 cp -a util/* ${PREFIX}/lib/transdecoder-${VERSION}/share/util
 
 

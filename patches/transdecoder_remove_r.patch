@@ -1,0 +1,74 @@
+diff -Nur TransDecoder-TransDecoder-v5.5.0.orig/util/PWM/compute_AUC.pl TransDecoder-TransDecoder-v5.5.0/util/PWM/compute_AUC.pl
+--- TransDecoder-TransDecoder-v5.5.0.orig/util/PWM/compute_AUC.pl	2018-10-22 14:45:08.000000000 +0200
++++ TransDecoder-TransDecoder-v5.5.0/util/PWM/compute_AUC.pl	2021-05-28 13:15:09.134321463 +0200
+@@ -60,30 +60,6 @@
+ 
+     close $ofh;
+ 
+-
+-    my $Rscript_file = "$auc_outfile.plot.Rscript";
+-    {
+-        open (my $ofh, ">$Rscript_file");
+-        print $ofh "data = read.table(\"$auc_outfile\", header=F)\n"
+-            . "colnames(data) = c('cat', 'auc')\n"
+-            . "pdf(\"$auc_outfile.plot.pdf\")\n"
+-            . "barplot(data[,2], las=2, names=data[,1], cex.names=0.4, ylim=c(0,1))\n"
+-            . "data = data[rev(order(data[,2])),]\n"
+-            . "barplot(data[,2], las=2, names=data[,1], cex.names=0.4, ylim=c(0,1))\n"
+-            . "library(ggplot2)\n"
+-            . "before_after_df = data.frame(t(simplify2array(strsplit(as.character(data\$cat), ','))))\n"
+-            . "before_after_df = apply(before_after_df, 1:2, as.numeric)\n"
+-            . "colnames(before_after_df) = c('before', 'after')\n"
+-            . "data = cbind(before_after_df, data)\n"
+-            . "ggplot(data, aes(x=before, y=after)) +  geom_point(aes(size=auc, color=auc))\n"
+-            . "dev.off()\n";
+-        close $ofh;
+-        
+-        system("Rscript $Rscript_file");
+-
+-    }
+-
+-    
+     exit(0);
+ }
+ 
+diff -Nur TransDecoder-TransDecoder-v5.5.0.orig/util/train_start_PWM.pl TransDecoder-TransDecoder-v5.5.0/util/train_start_PWM.pl
+--- TransDecoder-TransDecoder-v5.5.0.orig/util/train_start_PWM.pl	2018-10-22 14:45:08.000000000 +0200
++++ TransDecoder-TransDecoder-v5.5.0/util/train_start_PWM.pl	2021-05-28 13:14:26.650599097 +0200
+@@ -91,19 +91,9 @@
+     $cmd = "$utildir/feature_scores_to_ROC.pl $out_prefix.feature.scores > $out_prefix.feature.scores.roc";
+     $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/roc_features.ok"));
+ 
+-    $cmd = "$utildir/plot_ROC.Rscript $out_prefix.feature.scores.roc || :";
+-    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/rocplot.ok"));
+-    
+     $cmd = "$utildir/compute_AUC.pl $out_prefix.feature.scores.roc";
+     $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/aucplot.ok"));
+ 
+-    $cmd = "$utildir/make_seqLogo.Rscript $out_prefix.+.pwm || :";
+-    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/seqlogo.+.ok"));
+-
+-    $cmd = "$utildir/make_seqLogo.Rscript $out_prefix.-.pwm || :";
+-    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/seqlogo.-.ok"));
+-
+-        
+     #################
+     ## motif enhancer
+ 
+@@ -128,16 +118,9 @@
+     $cmd = "$utildir/feature_scores_to_ROC.pl $out_prefix.enhanced.feature.scores > $out_prefix.enhanced.feature.scores.roc";
+     $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/enhanced_roc_features.ok"));
+ 
+-    $cmd = "$utildir/plot_ROC.Rscript $out_prefix.enhanced.feature.scores.roc || :";
+-    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/enhanced_rocplot.ok"));
+-    
+     $cmd = "$utildir/compute_AUC.pl $out_prefix.enhanced.feature.scores.roc";
+     $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/enhanced_aucplot.ok"));
+     
+-    $cmd = "$utildir/make_seqLogo.Rscript $out_prefix.enhanced.+.pwm || :";
+-    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/seqlogo.enhanced.+.ok"));
+-        
+-    
+     $pipeliner->run();
+ 
+     exit(0);
