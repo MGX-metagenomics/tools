@@ -1,0 +1,15 @@
+
+. ./tools.config
+
+set -e
+
+git clone https://github.com/soedinglab/plass.git
+cd plass
+git submodule update --init
+mkdir build 
+cd build
+cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=${PREFIX} ..
+make ${MAKE_FLAGS}
+make install
+cd ../..
+rm -rf plass
