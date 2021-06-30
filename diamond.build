@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=2.0.9
+VERSION=2.0.10
 
 wget -q -O diamond.tar.gz https://github.com/bbuchfink/diamond/releases/download/v${VERSION}/diamond-linux64.tar.gz 
 tar xzf diamond.tar.gz 
