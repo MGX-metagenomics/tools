@@ -1,7 +1,7 @@
 
 . ./tools.config
 
-VERSION=1.7.4
+VERSION=1.8.0
 
 set -e
 
@@ -13,7 +13,7 @@ cd src
 make ${MAKE_FLAGS}
 cd ../bin 
 
-for f in kaiju-addTaxonNames kaiju-convertNR kaiju kaiju2krona kaiju2table kaijup kaijux kaiju-mergeOutputs kaiju-mkbwt kaiju-mkfmi; do
+for f in kaiju-addTaxonNames kaiju-convertNR kaiju kaiju2krona kaiju2table kaijup kaijux kaiju-mergeOutputs kaiju-mkbwt kaiju-mkfmi kaiju-multi; do
     strip ${f}
 done
 for f in * ; do
