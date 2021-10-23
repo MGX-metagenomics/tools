@@ -9,6 +9,10 @@ rm v2.6.3.tar.gz
 cd Prodigal-2.6.3
 patch -p 1 < ../patches/prodigal-check-instdir.patch 
 sed -i 's/MAX_GENES 30000/MAX_GENES 100000/g' gene.h 
+
+wget -q -O typofix.patch https://github.com/hyattpd/Prodigal/commit/b34b63b17f712aedb371a70eccf6660c3e524808.patch
+patch -p1 < typofix.patch
+
 make ${MAKE_FLAGS} CFLAGS="-m64" 
 strip prodigal 
 make INSTALLDIR=${PREFIX}/bin install 
