@@ -1,0 +1,12 @@
+diff -Nur ape.orig/R/read.tree.R ape/R/read.tree.R
+--- ape.orig/R/read.tree.R	2021-01-04 03:19:06.000000000 +0100
++++ ape/R/read.tree.R	2021-11-10 13:19:18.518984201 +0100
+@@ -25,7 +25,7 @@
+         return(NULL)
+     }
+ 
+-    tree <- gsub("[ \t]", "", tree)
++    tree <- gsub("[\t]", " ", tree)
+     tree <- gsub("'", "", tree) # fixed by GuangchuangYu (2021-01-04)
+ 
+     single_quotes <- function(x, start = 1L) {
