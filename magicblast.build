@@ -1,15 +1,13 @@
 
 . ./tools.config
 
-VERSION=1.5.0
+VERSION=1.6.0
 
-if [ ${OS} = "Solaris" ]; then
-    echo "MagicBlast is not available for Solaris."
-else
-    wget -q ftp://ftp.ncbi.nih.gov/blast/executables/magicblast/${VERSION}/ncbi-magicblast-${VERSION}-x64-linux.tar.gz && \
-    tar xzf ncbi-magicblast-${VERSION}-x64-linux.tar.gz && \
-    rm ncbi-magicblast-${VERSION}-x64-linux.tar.gz && \
-    install -g ${GROUP} --mode=755 ncbi-magicblast-${VERSION}/bin/magicblast ${PREFIX}/bin/ && \
-    rm -rf ncbi-magicblast-${VERSION}
-fi
+set -e
+
+wget -q ftp://ftp.ncbi.nih.gov/blast/executables/magicblast/${VERSION}/ncbi-magicblast-${VERSION}-x64-linux.tar.gz 
+tar xzf ncbi-magicblast-${VERSION}-x64-linux.tar.gz 
+rm ncbi-magicblast-${VERSION}-x64-linux.tar.gz 
+install -g ${GROUP} --mode=755 ncbi-magicblast-${VERSION}/bin/magicblast ${PREFIX}/bin/ 
+rm -rf ncbi-magicblast-${VERSION}
 
