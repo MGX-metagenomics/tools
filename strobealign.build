@@ -1,0 +1,19 @@
+
+. ./tools.config
+
+set -e
+
+VERSION=0.6.1
+
+wget -q https://github.com/ksahlin/StrobeAlign/archive/refs/tags/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
+rm v${VERSION}.tar.gz
+cd StrobeAlign-${VERSION}
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} ..
+make ${MAKE_FLAGS}
+make install
+
+cd ../..
+rm -rf StrobeAlign-${VERSION}
