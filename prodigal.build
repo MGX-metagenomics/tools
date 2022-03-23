@@ -3,6 +3,10 @@
 
 set -e
 
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash python3.build
+fi
+
 wget -q https://github.com/hyattpd/Prodigal/archive/v2.6.3.tar.gz
 tar xzf v2.6.3.tar.gz
 rm v2.6.3.tar.gz
@@ -20,5 +24,4 @@ cd ..
 rm -rf Prodigal-2.6.3
 
 # add wrapper for parallel processing
-wget -q -O ${PREFIX}/bin/pprodigal https://raw.githubusercontent.com/sjaenick/pprodigal/master/pprodigal.py
-chmod 755 ${PREFIX}/bin/pprodigal
+pip3 install pprodigal
