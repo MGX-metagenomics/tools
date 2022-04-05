@@ -3,9 +3,9 @@
 
 set -e
 
-VERSION=5.20.1.34
-wget -q https://download.mono-project.com/sources/mono/mono-${VERSION}.tar.bz2
-tar xjf mono-${VERSION}.tar.bz2
+VERSION=6.12.0.90
+wget -q https://download.mono-project.com/sources/mono//mono-${VERSION}.tar.xz
+tar xJf mono-${VERSION}.tar.xz
 cd mono-${VERSION}
 #patch -p 1 < ../patches/mono_mem.patch
 export CFLAGS="-g"
@@ -13,15 +13,14 @@ export CXXFLAGS="-g"
 ./configure --prefix=${PREFIX} \
     --with-xen_opt=no \
     --with-large-heap=yes \
-    --with-jemalloc=yes --with-jemalloc_always=yes \
     --disable-boehm \
     --disable-nls \
     --with-mcs-docs=no \
-    --without-x 
-make ${MAKE_FLAGS}
-make install
+    --without-x \
+    --with-jemalloc=yes --with-jemalloc_always=yes
+make ${MAKE_FLAGS} && make install
 cd .. 
-rm -rf mono-${VERSION} mono-${VERSION}.tar.bz2
+rm -rf mono-${VERSION} mono-${VERSION}.tar.gz
 
 # configure drmaa library location for UGE
 if [ -f /vol/codine-8.3/lib/lx-amd64/libdrmaa.so ]; then
