@@ -24,4 +24,4 @@ cd ..
 rm -rf Prodigal-2.6.3
 
 # add wrapper for parallel processing
-pip3 install pprodigal
+pip3 install --force-reinstall pprodigal==1.0.1
