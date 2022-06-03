@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=0.6.1
+VERSION=0.7.1
 
 wget -q https://github.com/ksahlin/StrobeAlign/archive/refs/tags/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
