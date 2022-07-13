@@ -1,0 +1,30 @@
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/diamond ]; then
+    bash diamond.build
+fi
+
+if [ ! -f ${PREFIX}/bin/prodigal ]; then
+    bash prodigal.build
+fi
+
+pip3 install --upgrade pip
+pip3 install torch pandas numpy 
+
+git clone https://github.com/KennthShang/PhaMer.git
+cd PhaMer
+
+chmod 755 preprocessing.py PhaMer.py
+
+sed -i "s,/usr/bin/env python3,${PREFIX}/bin/python3,g" preprocessing.py
+sed -i "s,/usr/bin/env python3,${PREFIX}/bin/python3,g" PhaMer.py
+
+mkdir -p ${PREFIX}/lib/phamer/
+install -g ${GROUP} *.py ${PREFIX}/lib/phamer/
+
+cd ..
+rm -rf PhaMer
+
