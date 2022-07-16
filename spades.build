@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=3.15.4
+VERSION=3.15.5
 wget -q http://cab.spbu.ru/files/release${VERSION}/SPAdes-${VERSION}.tar.gz
 tar xzf SPAdes-${VERSION}.tar.gz
 rm SPAdes-${VERSION}.tar.gz
