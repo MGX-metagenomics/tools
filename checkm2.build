@@ -1,0 +1,25 @@
+
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/prodigal ]; then
+    bash prodigal.build
+fi
+
+if [ ! -f ${PREFIX}/bin/diamond ]; then
+    bash diamond.build
+fi
+
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash python3.build
+fi
+
+git clone https://github.com/chklovski/CheckM2.git
+cd CheckM2
+python3 setup.py build
+python3 setup.py install 
+cd ..
+rm -rf CheckM2
+
