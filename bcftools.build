@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=1.15.1
+VERSION=1.16
 
 if [ ! -f ${PREFIX}/bin/samtools ]; then
   bash -x samtools.build
