@@ -3,12 +3,14 @@
 
 set -e
 
-wget -q -O subread-1.6.4.tar.gz https://sourceforge.net/projects/subread/files/subread-1.6.4/subread-1.6.4-source.tar.gz/download
-tar xzf subread-1.6.4.tar.gz
-rm subread-1.6.4.tar.gz
-cd subread-1.6.4-source/src
+VERSION=2.0.3
+
+wget -q -O subread-${VERSION}.tar.gz https://sourceforge.net/projects/subread/files/subread-${VERSION}/subread-${VERSION}-source.tar.gz/download
+tar xzf subread-${VERSION}.tar.gz
+rm subread-${VERSION}.tar.gz
+cd subread-${VERSION}-source/src
 make ${MAKE_FLAGS} -f Makefile.Linux featureCounts
 install -g ${GROUP} --mode=755 featureCounts ${PREFIX}/bin
 cd ../..
-rm -rf subread-1.6.4-source
+rm -rf subread-${VERSION}-source
 
