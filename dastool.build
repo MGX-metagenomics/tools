@@ -13,34 +13,38 @@ fi
 
 if [ ! -f ${PREFIX}/bin/R ]; then
     bash -x r.build
-
-    # fails when installed as a ggplot2 dependency
-    echo "install.packages('withr')" | ${PREFIX}/bin/Rscript /dev/fd/0
-
-    echo "install.packages('data.table')" | ${PREFIX}/bin/Rscript /dev/fd/0
-    echo "install.packages('doMC')" | ${PREFIX}/bin/Rscript /dev/fd/0
-    echo "install.packages('ggplot2')" | ${PREFIX}/bin/Rscript /dev/fd/0
 fi
 
+echo "install.packages('data.table')" | ${PREFIX}/bin/Rscript /dev/fd/0
+echo "install.packages('docopt')" | ${PREFIX}/bin/Rscript /dev/fd/0
+echo "install.packages('magrittr')" | ${PREFIX}/bin/Rscript /dev/fd/0
+
+    # fails when installed as a ggplot2 dependency
+    #echo "install.packages('withr')" | ${PREFIX}/bin/Rscript /dev/fd/0
+    #echo "install.packages('ggplot2')" | ${PREFIX}/bin/Rscript /dev/fd/0
+
 # pullseq
-wget -q https://github.com/bcthomas/pullseq/archive/1.0.2.tar.gz
-tar xzf 1.0.2.tar.gz
-rm 1.0.2.tar.gz
-cd pullseq-1.0.2
-./bootstrap
-./configure --prefix=${PREFIX}
-make
-make install
-cd ..
-rm -rf pullseq-1.0.2
+if [ ! -f ${PREFIX}/bin/pullseq ]; then
+    wget -q https://github.com/bcthomas/pullseq/archive/1.0.2.tar.gz
+    tar xzf 1.0.2.tar.gz
+    rm 1.0.2.tar.gz
+    cd pullseq-1.0.2
+    ./bootstrap
+    ./configure --prefix=${PREFIX}
+    make
+    make install
+    cd ..
+    rm -rf pullseq-1.0.2
+fi
 
 
-VERSION=1.1.2
+VERSION=1.1.5
 wget -q https://github.com/cmks/DAS_Tool/archive/${VERSION}.tar.gz
 tar xzf ${VERSION}.tar.gz
 rm ${VERSION}.tar.gz
 cd DAS_Tool-${VERSION}
-${PREFIX}/bin/R CMD INSTALL ./package/DASTool_${VERSION}.tar.gz
+#${PREFIX}/bin/R CMD INSTALL ./package/DASTool_${VERSION}.tar.gz
+sed -i "s,Rscript,${PREFIX}/bin/Rscript,g" DAS_Tool
 sed -i "s,src,../lib/dastool-${VERSION},g" DAS_Tool
 install --mode=755 DAS_Tool ${PREFIX}/bin
 install --mode=755 -d ${PREFIX}/lib/dastool-${VERSION}
