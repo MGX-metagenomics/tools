@@ -3,11 +3,11 @@
 
 set -e 
 
-VERSION=3.8.5
+VERSION=3.11.0
 
-wget -q https://www.python.org/ftp/python/3.8.5/Python-${VERSION}.tgz
-tar xzf Python-${VERSION}.tgz
-rm Python-${VERSION}.tgz
+wget -q https://www.python.org/ftp/python/3.11.0/Python-${VERSION}.tar.xz
+tar xf Python-${VERSION}.tar.xz
+rm Python-${VERSION}.tar.xz
 cd Python-${VERSION}
 
 LDFLAGS="-Wl,-rpath -Wl,${PREFIX}/lib" ./configure \
