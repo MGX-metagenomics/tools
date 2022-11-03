@@ -11,17 +11,8 @@ if [ ! -f ${PREFIX}/bin/python3 ]; then
     bash python3.build
 fi
 
-#libgsl
 if [ ! -f ${PREFIX}/lib/libgsl.so ]; then
-  wget -q ftp://ftp.gnu.org/gnu/gsl/gsl-2.6.tar.gz
-  tar xzf gsl-2.6.tar.gz
-  rm gsl-2.6.tar.gz
-  cd gsl-2.6
-  ./configure --prefix=${PREFIX}
-  make ${MAKE_FLAGS}
-  make install
-  cd ..
-  rm -rf gsl-2.6
+    bash gsl.build
 fi
 
 VERSION=1.1.0
@@ -34,7 +25,7 @@ pip3 install setuptools six
 
 # newer pandas version fails on ubuntu xenial
 #pip3 install pandas==0.24.0
-pip3 install pandas nose numpy cython
+pip3 install pandas nose numpy cython scipy
 
 export CFLAGS=`pkg-config --cflags gsl`
 export LDFLAGS=`pkg-config --libs gsl`
@@ -43,7 +34,6 @@ python3 setup.py install
 
 install --mode=755 ../patches/runCONCOCT ${PREFIX}/bin
 
-rm -f ${PREFIX}/bin/gsl-{config,histogram,randist}
 
 cd .. 
 rm -rf CONCOCT-${VERSION}
