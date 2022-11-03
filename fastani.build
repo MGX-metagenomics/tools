@@ -1,0 +1,17 @@
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/lib/libgsl.so ]; then
+    bash gsl.build
+fi
+
+git clone https://github.com/ParBLiSS/FastANI.git
+cd FastANI
+./bootstrap.sh
+./configure --prefix=$PREFIX --with-gsl=$PREFIX
+make CPPFLAGS="-Wl,-rpath -Wl,$PREFIX/lib"
+make install
+cd ..
+rm -rf FastANI
