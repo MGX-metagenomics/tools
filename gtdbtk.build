@@ -1,0 +1,39 @@
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash python3.build
+fi
+
+if [ ! -f ${PREFIX}/bin/prodigal ]; then
+    bash prodigal.build
+fi
+
+if [ ! -f ${PREFIX}/bin/pplacer ]; then
+    bash pplacer.build
+fi
+
+if [ ! -f ${PREFIX}/bin/fastANI ]; then
+    bash fastani.build
+fi
+
+if [ ! -f ${PREFIX}/bin/hmmscan ]; then
+    bash hmmer3.build
+fi
+
+if [ ! -f ${PREFIX}/bin/FastTree ]; then
+    bash fasttree.build
+fi
+
+if [ ! -f ${PREFIX}/bin/mash ]; then
+    bash mash.build
+fi
+
+
+pip3 install --force-reinstall gtdbtk==2.1.1
+
+# https://github.com/Ecogenomics/GTDBTk/issues/420#issuecomment-1256022944
+cat patches/gtdbtk_pipefix.patch | \
+    ( cd $PREFIX/lib/python3.*/site-packages/gtdbtk/external/; patch -p0 )
