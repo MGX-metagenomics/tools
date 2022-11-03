@@ -1,5 +1,5 @@
 
-# pplacer is required by checkm
+# pplacer is required by checkm and gtdbtk
 
 . ./tools.config
 
