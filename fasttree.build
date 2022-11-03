@@ -6,6 +6,7 @@ set -e
 wget -q http://www.microbesonline.org/fasttree/FastTree.c
 
 gcc -DUSE_DOUBLE -DOPENMP -fopenmp -O3 -finline-functions -funroll-loops -Wall -o ${PREFIX}/bin/FastTree FastTree.c -lm
+ln -sf ${PREFIX}/bin/FastTree ${PREFIX}/bin/FastTreeMP
 
 rm FastTree.c
 
