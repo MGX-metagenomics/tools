@@ -3,12 +3,40 @@
 
 set -e
 
-VERSION=0.20.1
-wget -q https://github.com/OpenGene/fastp/archive/v${VERSION}.tar.gz
+wget -q https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/nasm-2.15.05.tar.gz
+tar xzf nasm-2.15.05.tar.gz
+rm nasm-2.15.05.tar.gz
+cd nasm-2.15.05
+./configure --prefix=${PREFIX}
+make ${MAKE_FLAGS}
+cd ..
+#rm -rf nasm-2.15.05
 
+export PATH=${PATH}:`pwd`/nasm-2.15.05
+
+git clone https://github.com/intel/isa-l.git
+cd isa-l
+./autogen.sh
+./configure --prefix=${PREFIX}
+make ${MAKE_FLAGS}
+make install
+cd ..
+rm -rf isa-l nasm-2.15.05
+
+wget -q https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.14.tar.gz
+tar xzf v1.14.tar.gz
+rm v1.14.tar.gz
+cd libdeflate-1.14/
+make ${MAKE_FLAGS} PREFIX=${PREFIX} -e libdeflate.so.0
+make PREFIX=${PREFIX} install
+cd ..
+rm -rf cd libdeflate-1.14/
+
+VERSION=0.23.2
+wget -q https://github.com/OpenGene/fastp/archive/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
 cd fastp-${VERSION}
-make ${MAKE_FLAGS}
+make ${MAKE_FLAGS} INCLUDE_DIRS=${PREFIX}/include LIBRARY_DIRS=${PREFIX}/lib LD_FLAGS="-L${PREFIX}/lib -Wl,-rpath,${PREFIX}/lib -lisal -ldeflate -lpthread"
 strip fastp
 install --mode=755 fastp ${PREFIX}/bin/
 cd ..
