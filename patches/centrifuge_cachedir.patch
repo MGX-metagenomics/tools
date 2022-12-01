@@ -1,0 +1,35 @@
+diff -Nur centrifuge.orig/centrifuge-download centrifuge/centrifuge-download
+--- centrifuge.orig/centrifuge-download	2020-11-23 10:38:33.337929000 +0100
++++ centrifuge/centrifuge-download	2020-11-23 10:43:15.432813000 +0100
+@@ -31,15 +31,22 @@
+     [[ "$DO_DUST" == "1" ]] && RES_FILE=$DUSTMASKED_FILE || RES_FILE=$UNZIPPED_FILE
+ 
+     if [[ ! -s "$RES_FILE" ]]; then
+-        if [ $DL_MODE = "rsync" ]; then
+-            FILEPATH=${FILEPATH/ftp/rsync}
+-            $DL_CMD "$FILEPATH" "$LIBDIR/$DOMAIN/$NAME.gz" || \
+-            { printf "\nError downloading $FILEPATH!\n" >&2 && exit 1; }
+-        else
+-            $DL_CMD "$LIBDIR/$DOMAIN/$NAME.gz" "$FILEPATH" || \
+-            $DL_CMD "$LIBDIR/$DOMAIN/$NAME.gz" "$FILEPATH" || \
+-            $DL_CMD "$LIBDIR/$DOMAIN/$NAME.gz" "$FILEPATH" || \
+-	    { printf "\nError downloading $FILEPATH!\n" >&2 && exit 1; }
++        if [ ! -s "$LIBDIR/$DOMAIN/$NAME.gz" ]; then
++            if [ $DL_MODE = "rsync" ]; then
++                FILEPATH=${FILEPATH/ftp/rsync}
++                $DL_CMD "$FILEPATH" "$LIBDIR/$DOMAIN/$NAME.gz" || \
++                { printf "\nError downloading $FILEPATH!\n" >&2 && exit 1; }
++            else
++                cachePath=${FILEPATH/ftp:\/\/ftp.ncbi.nlm.nih.gov\/genomes/\/vol\/biodb\/ncbi_genomes}
++                if [ -f $cachePath ]; then
++                    cp $cachePath "$LIBDIR/$DOMAIN/$NAME.gz"
++                else
++                    $DL_CMD "$LIBDIR/$DOMAIN/$NAME.gz" "$FILEPATH" || \
++                    $DL_CMD "$LIBDIR/$DOMAIN/$NAME.gz" "$FILEPATH" || \
++                    $DL_CMD "$LIBDIR/$DOMAIN/$NAME.gz" "$FILEPATH" || \
++	            { printf "\nError downloading $FILEPATH!\n" >&2 && exit 1; }
++                fi
++            fi
+         fi
+     
+         [[ -s "$LIBDIR/$DOMAIN/$NAME.gz" ]] || return;
