@@ -4,9 +4,9 @@
 set -e
 
 if [ ! -f ${PREFIX}/bin/node ]; then
-  wget -q https://nodejs.org/dist/v17.8.0/node-v17.8.0.tar.xz
-  tar xJf node-v17.8.0.tar.xz
-  cd node-v17.8.0
+  wget -q https://nodejs.org/dist/v19.1.0/node-v19.1.0.tar.xz
+  tar xJf node-v19.1.0.tar.xz
+  cd node-v19.1.0
   ./configure --prefix=${PREFIX} \
     --without-npm \
     --without-ssl
