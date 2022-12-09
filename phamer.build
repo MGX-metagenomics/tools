@@ -11,15 +11,20 @@ if [ ! -f ${PREFIX}/bin/prodigal ]; then
     bash prodigal.build
 fi
 
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash python.build
+fi
+
+
 pip3 install --upgrade pip
 pip3 install torch pandas numpy 
 
 git clone https://github.com/KennthShang/PhaMer.git
 cd PhaMer
 
-chmod 755 preprocessing.py PhaMer.py
+chmod 755 PhaMer_preprocessing.py PhaMer.py
 
-sed -i "s,/usr/bin/env python3,${PREFIX}/bin/python3,g" preprocessing.py
+sed -i "s,/usr/bin/env python3,${PREFIX}/bin/python3,g" PhaMer_preprocessing.py
 sed -i "s,/usr/bin/env python3,${PREFIX}/bin/python3,g" PhaMer.py
 
 mkdir -p ${PREFIX}/lib/phamer/
