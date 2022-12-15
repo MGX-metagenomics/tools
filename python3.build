@@ -3,9 +3,9 @@
 
 set -e 
 
-VERSION=3.11.0
+VERSION=3.11.1
 
-wget -q https://www.python.org/ftp/python/3.11.0/Python-${VERSION}.tar.xz
+wget -q https://www.python.org/ftp/python/${VERSION}/Python-${VERSION}.tar.xz
 tar xf Python-${VERSION}.tar.xz
 rm Python-${VERSION}.tar.xz
 cd Python-${VERSION}
@@ -23,6 +23,6 @@ ln -sf ${PREFIX}/bin/python3 ${PREFIX}/bin/python
 pip3 install --upgrade pip
 
 cd ..
-rm -rf Python-${VERSION} ${PREFIX}/bin/idle3*
+rm -rf Python-${VERSION} ${PREFIX}/bin/idle3* ${PREFIX}/bin/2to3*
 
 
