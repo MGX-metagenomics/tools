@@ -1,0 +1,29 @@
+diff -Nur MetaBinner-1.4.4.orig/run_metabinner.sh MetaBinner-1.4.4/run_metabinner.sh
+--- MetaBinner-1.4.4.orig/run_metabinner.sh	2022-09-15 20:01:31.000000000 +0200
++++ MetaBinner-1.4.4/run_metabinner.sh	2023-01-02 15:48:53.638097666 +0100
+@@ -14,7 +14,6 @@
+ 	echo "  -o STR          output directory"
+ 	echo "  -d STR          coverage_profile.tsv; The coverage profiles, containing a table where each row correspond to a contig, and each column correspond to a sample. All values are separated with tabs."
+ 	echo "  -k STR          kmer_profile.csv; The composition profiles, containing a table where each row correspond to a contig, and each column correspond to the kmer composition of particular kmer. All values are separated with comma."
+-	echo "  -p STR          path to MetaBinner; e.g. /home/wzy/MetaBinner"
+ 	echo "  -t INT          number of threads (default=1)"
+ 	echo "  -s STR          Dataset scale; eg. small,large,huge"
+ 	echo "";}
+@@ -32,8 +31,6 @@
+     ;;
+   k) kmer_profile=${OPTARG}
+     ;;
+-  p) metabinner_path=${OPTARG}
+-    ;;
+   t) num_threads=${OPTARG}
+     ;;
+   s) dataset_scale=${OPTARG}
+@@ -45,6 +42,8 @@
+  esac
+ done
+ 
++metabinner_path=MBLIBDIR
++
+ # check parameter
+ if [ -z "${contig_file}" -o -z "${output_dir}" -o -z "${coverage_profiles}" -o -z "${kmer_profile}" -o -z "${metabinner_path}" ]; then
+   help_message

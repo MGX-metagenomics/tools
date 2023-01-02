@@ -1,0 +1,55 @@
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/samtools ]; then
+  bash -x samtools.build
+fi
+
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash python3.build
+fi
+
+if [ ! -f ${PREFIX}/bin/prodigal ]; then
+    bash prodigal.build
+fi
+
+if [ ! -f ${PREFIX}/bin/hmmscan ]; then
+    bash hmmer3.build
+fi
+
+if [ ! -f ${PREFIX}/bin/pplacer ]; then
+    bash pplacer.build
+fi
+
+if [ ! -f ${PREFIX}/bin/bwa ]; then
+    bash bwa.build
+fi
+
+if [ ! -f ${PREFIX}/bin/checkm ]; then
+    bash checkm.build
+fi
+
+
+VERSION=1.4.4
+wget -q https://github.com/ziyewang/MetaBinner/archive/refs/tags/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
+rm v${VERSION}.tar.gz
+cd MetaBinner-${VERSION}
+patch -p1 < ../patches/metabinner_libdir.patch
+sed -i "s,MBLIBDIR,${PREFIX}/lib/MetaBinner-${VERSION},g" run_metabinner.sh
+
+install --mode=755 run_metabinner.sh ${PREFIX}/bin
+
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/MetaBinner-${VERSION}
+cp -r auxiliary ${PREFIX}/lib/MetaBinner-${VERSION}
+cp -r scripts ${PREFIX}/lib/MetaBinner-${VERSION}
+
+chmod 755 ${PREFIX}/lib/MetaBinner-${VERSION}/auxiliary/*.p{y,l}
+chmod 755 ${PREFIX}/lib/MetaBinner-${VERSION}/scripts/*.p{y,l}
+
+
+cd .. 
+rm -rf MetaBinner-${VERSION}
+
