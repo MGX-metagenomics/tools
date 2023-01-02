@@ -1,7 +1,7 @@
-diff -Nur CheckM-1.0.13.orig/checkm/checkmData.py CheckM-1.0.13/checkm/checkmData.py
---- CheckM-1.0.13.orig/checkm/checkmData.py	2019-01-07 21:04:48.000000000 +0100
-+++ CheckM-1.0.13/checkm/checkmData.py	2019-07-03 10:25:57.340368221 +0200
-@@ -48,7 +48,10 @@
+diff -Nur CheckM-1.2.2.orig/checkm/checkmData.py CheckM-1.2.2/checkm/checkmData.py
+--- CheckM-1.2.2.orig/checkm/checkmData.py	2022-10-31 14:52:47.000000000 +0100
++++ CheckM-1.2.2/checkm/checkmData.py	2023-01-02 15:32:10.946857381 +0100
+@@ -50,7 +50,10 @@
              with open(self.configFile, 'r') as local_config:
                  # config is a one line file
                  for line in local_config:
@@ -12,4 +12,4 @@ diff -Nur CheckM-1.0.13.orig/checkm/checkmData.py CheckM-1.0.13/checkm/checkmDat
 +                    return ret
  
          except Exception:
-             self.logger.error("There seems to be a problem with loading the CheckM config file")
+             print("There seems to be a problem with loading the CheckM config file")
