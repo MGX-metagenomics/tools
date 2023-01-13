@@ -1,0 +1,28 @@
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/bowtie2 ]; then
+    bash -x bowtie2.build
+fi
+
+if [ ! -f ${PREFIX}/bin/samtools ]; then
+    bash -x samtools.build
+fi
+
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash -x python3.build
+fi
+
+VERSION=4.0.3
+
+wget -q https://github.com/biobakery/MetaPhlAn/archive/refs/tags/${VERSION}.tar.gz
+tar xzf ${VERSION}.tar.gz
+rm ${VERSION}.tar.gz
+cd MetaPhlAn-${VERSION}
+python3 setup.py build
+python3 setup.py install
+cd ..
+rm -rf MetaPhlAn-${VERSION}
+
