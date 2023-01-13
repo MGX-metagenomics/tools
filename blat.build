@@ -3,10 +3,10 @@
 
 set -e
 
-wget -q http://genome-test.cse.ucsc.edu/~kent/src/blatSrc36.zip
+wget -q http://genome-test.cse.ucsc.edu/~kent/src/blatSrc37.zip
 
-unzip blatSrc36.zip 
-rm blatSrc36.zip
+unzip blatSrc37.zip 
+rm blatSrc37.zip
 cd blatSrc 
 make ${MAKE_FLAGS} BINDIR=. USE_SSL=0 
 #strip blat/blat
