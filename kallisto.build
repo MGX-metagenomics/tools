@@ -3,14 +3,16 @@
 
 VERSION=0.48.0
 
-wget -q https://github.com/pachterlab/kallisto/archive/v${VERSION}.tar.gz && \
-tar xzf v${VERSION}.tar.gz && \
-rm v${VERSION}.tar.gz && \
-cd kallisto-${VERSION} && \
-mkdir build && cd build && \
-cmake -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} .. && \
-make && \
-make install && \
-cd ../.. && \
+set -e
+
+wget -q https://github.com/pachterlab/kallisto/archive/v${VERSION}.tar.gz 
+tar xzf v${VERSION}.tar.gz 
+rm v${VERSION}.tar.gz 
+cd kallisto-${VERSION}
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} .. 
+make 
+make install
+cd ../.. 
 rm -rf kallisto-${VERSION}
 
