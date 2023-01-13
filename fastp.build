@@ -3,16 +3,17 @@
 
 set -e
 
-wget -q https://www.nasm.us/pub/nasm/releasebuilds/2.15.05/nasm-2.15.05.tar.gz
-tar xzf nasm-2.15.05.tar.gz
-rm nasm-2.15.05.tar.gz
-cd nasm-2.15.05
+VERSION=2.16.01
+wget -q https://www.nasm.us/pub/nasm/releasebuilds/${VERSION}/nasm-${VERSION}.tar.gz
+tar xzf nasm-${VERSION}.tar.gz
+rm nasm-${VERSION}.tar.gz
+cd nasm-${VERSION}
 ./configure --prefix=${PREFIX}
 make ${MAKE_FLAGS}
 cd ..
-#rm -rf nasm-2.15.05
+#rm -rf nasm-${VERSION}
 
-export PATH=${PATH}:`pwd`/nasm-2.15.05
+export PATH=${PATH}:`pwd`/nasm-${VERSION}
 
 git clone https://github.com/intel/isa-l.git
 cd isa-l
@@ -21,16 +22,21 @@ cd isa-l
 make ${MAKE_FLAGS}
 make install
 cd ..
-rm -rf isa-l nasm-2.15.05
+rm -rf isa-l nasm-${VERSION}
 
-wget -q https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.14.tar.gz
-tar xzf v1.14.tar.gz
-rm v1.14.tar.gz
-cd libdeflate-1.14/
-make ${MAKE_FLAGS} PREFIX=${PREFIX} -e libdeflate.so.0
-make PREFIX=${PREFIX} install
-cd ..
-rm -rf cd libdeflate-1.14/
+
+VERSION=1.15
+wget -q https://github.com/ebiggers/libdeflate/archive/refs/tags/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
+rm v${VERSION}.tar.gz
+cd libdeflate-${VERSION}/
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX}
+cd build
+make ${MAKE_FLAGS}
+make install
+cd ../..
+rm -rf cd libdeflate-${VERSION}
+
 
 VERSION=0.23.2
 wget -q https://github.com/OpenGene/fastp/archive/v${VERSION}.tar.gz
