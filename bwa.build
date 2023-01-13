@@ -9,16 +9,10 @@ wget -q -O bwa-${VERSION}.tar.bz2 http://downloads.sourceforge.net/project/bio-b
 tar xjf bwa-${VERSION}.tar.bz2 
 cd bwa-${VERSION} 
 
-if [ ${OS} = "Solaris" ]; then
-    sed -i 's,u_int32_t,uint32_t,g' *.c *.h 
-    patch -p 1 < ../patches/bwa-solaris.patch
-fi
-
 make ${MAKE_FLAGS}
 strip bwa 
 install -g ${GROUP} --mode=755 bwa ${PREFIX}/bin/ 
 cd .. && \
 rm -rf bwa-${VERSION}
 rm bwa-${VERSION}.tar.bz2
-
 
