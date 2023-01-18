@@ -1,0 +1,16 @@
+
+. ./tools.config
+
+set -e 
+
+wget -q https://github.com/unipept/FragGeneScanRs/releases/download/v1.1.0/FragGeneScanRs-v1.1.0-x86_64-unknown-linux-musl.tar.gz
+tar xzf FragGeneScanRs-v1.1.0-x86_64-unknown-linux-musl.tar.gz
+install -g ${GROUP} --mode=755 FragGeneScanRs ${PREFIX}/bin
+rm FragGeneScanRs-v1.1.0-x86_64-unknown-linux-musl.tar.gz FragGeneScanRs
+
+git clone https://github.com/unipept/FragGeneScanRs.git
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanRs
+install -g ${GROUP} --mode=755 -d ${PREFIX}/share/FragGeneScanRs/train 
+install -g ${GROUP} --mode=644 FragGeneScanRs/train/* ${PREFIX}/share/FragGeneScanRs/train/ 
+rm -rf FragGeneScanRs
+
