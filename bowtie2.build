@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=2.5.0
+VERSION=2.5.1
 
 wget -q https://github.com/BenLangmead/bowtie2/archive/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
