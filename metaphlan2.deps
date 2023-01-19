@@ -1,6 +1,0 @@
-
-set -e
-
-# assume docker build
-apt-get -y install python python-numpy
-
