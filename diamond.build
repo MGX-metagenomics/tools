@@ -5,9 +5,13 @@ set -e
 
 VERSION=2.0.15
 
-wget -q -O diamond.tar.gz https://github.com/bbuchfink/diamond/releases/download/v${VERSION}/diamond-linux64.tar.gz 
+wget -q -O diamond.tar.gz https://github.com/bbuchfink/diamond/archive/refs/tags/v${VERSION}.tar.gz
 tar xzf diamond.tar.gz 
-strip diamond 
-install --mode=755 -g ${GROUP} diamond ${PREFIX}/bin 
+mkdir diamond-${VERSION}/build
+cd diamond-${VERSION}/build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} ..
+make ${MAKE_FLAGS} 
+make install
+cd ../..
 rm -f diamond diamond.tar.gz
 
