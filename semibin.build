@@ -1,0 +1,35 @@
+
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/prodigal ]; then
+    bash prodigal.build
+fi
+
+if [ ! -f ${PREFIX}/bin/samtools ]; then
+    bash samtools.build
+fi
+
+if [ ! -f ${PREFIX}/bin/bedtools ]; then
+    bash bedtools.build
+fi
+
+if [ ! -f ${PREFIX}/bin/mmseqs ]; then
+    bash mmseqs2.build
+fi
+
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash python3.build
+fi
+
+
+pip3 install --upgrade pip
+
+git clone https://github.com/BigDataBiology/SemiBin.git
+cd SemiBin
+pip3 install .
+cd ..
+rm -rf SemiBin
+
