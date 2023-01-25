@@ -1,0 +1,21 @@
+
+. tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/include/lzma.h ]; then
+    bash -x lzma.build
+fi
+
+
+VERSION=2.30.0
+
+wget -q https://github.com/arq5x/bedtools2/archive/refs/tags/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
+cd bedtools2-${VERSION}
+make ${MAKE_FLAGS}
+make prefix=${PREFIX} install
+cd ..
+rm -rf v${VERSION}.tar.gz bedtools2-${VERSION}
+
+
