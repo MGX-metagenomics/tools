@@ -8,20 +8,10 @@ if [ ! -f ${PREFIX}/bin/R ]; then
 fi
 
 
-if [ ${OS} = "Solaris" ]; then
-  wget https://cran.r-project.org/src/contrib/Rserve_1.7-3.tar.gz 
-  tar xzf Rserve_1.7-3.tar.gz && rm Rserve_1.7-3.tar.gz
-  patch -p0 < patches/rserve_solaris.patch
-  tar czf Rserve_1.7-3.tar.gz Rserve
-  rm -rf Rserve
-  ${PREFIX}/bin/R CMD INSTALL Rserve_1.7-3.tar.gz 
-  rm Rserve_1.7-3.tar.gz
-else
-  #echo "install.packages('Rserve')" | ${PREFIX}/bin/Rscript /dev/fd/0
-  wget -q https://www.rforge.net/Rserve/snapshot/Rserve_1.8-8.tar.gz
-  ${PREFIX}/bin/R CMD INSTALL Rserve_1.8-8.tar.gz
-  rm Rserve_1.8-8.tar.gz
-fi
+#echo "install.packages('Rserve')" | ${PREFIX}/bin/Rscript /dev/fd/0
+wget -q https://www.rforge.net/Rserve/snapshot/Rserve_1.8-8.tar.gz
+${PREFIX}/bin/R CMD INSTALL Rserve_1.8-8.tar.gz
+rm Rserve_1.8-8.tar.gz
 
 wget https://bioconductor.org/packages/release/bioc/src/contrib/BiocGenerics_0.26.0.tar.gz
 ${PREFIX}/bin/R CMD INSTALL BiocGenerics_0.26.0.tar.gz
