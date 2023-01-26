@@ -3,15 +3,17 @@
 
 set -e
 
+VERSION=5.4.1
+
 # liblzma
-wget -q https://tukaani.org/xz/xz-5.2.5.tar.gz
-tar xzf xz-5.2.5.tar.gz
-cd xz-5.2.5
+wget -q https://tukaani.org/xz/xz-${VERSION}.tar.gz
+tar xzf xz-${VERSION}.tar.gz
+cd xz-${VERSION}
 ./configure --prefix=${PREFIX} --disable-xz --disable-nls --disable-doc \
     --disable-xzdec --disable-lzmadec --disable-lzmainfo --disable-lzma-links
 make ${MAKE_FLAGS}
 make install
 cd ..
-rm -rf xz-5.2.5.tar.gz xz-5.2.5
+rm -rf xz-${VERSION}.tar.gz xz-${VERSION}
 
 rm -f ${PREFIX}/bin/{xzdiff,xzgrep,xzmore,xzless,xzcmp,xzegrep,xzfgrep}
