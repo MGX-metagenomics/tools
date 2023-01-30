@@ -1,6 +1,6 @@
-diff -Nur TransDecoder-TransDecoder-v5.5.0.orig/util/PWM/compute_AUC.pl TransDecoder-TransDecoder-v5.5.0/util/PWM/compute_AUC.pl
---- TransDecoder-TransDecoder-v5.5.0.orig/util/PWM/compute_AUC.pl	2018-10-22 14:45:08.000000000 +0200
-+++ TransDecoder-TransDecoder-v5.5.0/util/PWM/compute_AUC.pl	2021-05-28 13:15:09.134321463 +0200
+diff -Nur TransDecoder-TransDecoder-v5.7.0.orig/util/PWM/compute_AUC.pl TransDecoder-TransDecoder-v5.7.0/util/PWM/compute_AUC.pl
+--- TransDecoder-TransDecoder-v5.7.0.orig/util/PWM/compute_AUC.pl	2023-01-27 20:24:01.000000000 +0100
++++ TransDecoder-TransDecoder-v5.7.0/util/PWM/compute_AUC.pl	2023-01-30 18:18:23.799627599 +0100
 @@ -60,30 +60,6 @@
  
      close $ofh;
@@ -32,24 +32,24 @@ diff -Nur TransDecoder-TransDecoder-v5.5.0.orig/util/PWM/compute_AUC.pl TransDec
      exit(0);
  }
  
-diff -Nur TransDecoder-TransDecoder-v5.5.0.orig/util/train_start_PWM.pl TransDecoder-TransDecoder-v5.5.0/util/train_start_PWM.pl
---- TransDecoder-TransDecoder-v5.5.0.orig/util/train_start_PWM.pl	2018-10-22 14:45:08.000000000 +0200
-+++ TransDecoder-TransDecoder-v5.5.0/util/train_start_PWM.pl	2021-05-28 13:14:26.650599097 +0200
+diff -Nur TransDecoder-TransDecoder-v5.7.0.orig/util/train_start_PWM.pl TransDecoder-TransDecoder-v5.7.0/util/train_start_PWM.pl
+--- TransDecoder-TransDecoder-v5.7.0.orig/util/train_start_PWM.pl	2023-01-27 20:24:01.000000000 +0100
++++ TransDecoder-TransDecoder-v5.7.0/util/train_start_PWM.pl	2023-01-30 18:20:13.647066750 +0100
 @@ -91,19 +91,9 @@
      $cmd = "$utildir/feature_scores_to_ROC.pl $out_prefix.feature.scores > $out_prefix.feature.scores.roc";
-     $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/roc_features.ok"));
+     $pipeliner->add_commands(new Command($cmd, "roc_features.ok"));
  
 -    $cmd = "$utildir/plot_ROC.Rscript $out_prefix.feature.scores.roc || :";
--    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/rocplot.ok"));
+-    $pipeliner->add_commands(new Command($cmd, "rocplot.ok"));
 -    
      $cmd = "$utildir/compute_AUC.pl $out_prefix.feature.scores.roc";
-     $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/aucplot.ok"));
+     $pipeliner->add_commands(new Command($cmd, "aucplot.ok"));
  
 -    $cmd = "$utildir/make_seqLogo.Rscript $out_prefix.+.pwm || :";
--    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/seqlogo.+.ok"));
+-    $pipeliner->add_commands(new Command($cmd, "seqlogo.+.ok"));
 -
 -    $cmd = "$utildir/make_seqLogo.Rscript $out_prefix.-.pwm || :";
--    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/seqlogo.-.ok"));
+-    $pipeliner->add_commands(new Command($cmd, "seqlogo.-.ok"));
 -
 -        
      #################
@@ -57,16 +57,16 @@ diff -Nur TransDecoder-TransDecoder-v5.5.0.orig/util/train_start_PWM.pl TransDec
  
 @@ -128,16 +118,9 @@
      $cmd = "$utildir/feature_scores_to_ROC.pl $out_prefix.enhanced.feature.scores > $out_prefix.enhanced.feature.scores.roc";
-     $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/enhanced_roc_features.ok"));
+     $pipeliner->add_commands(new Command($cmd, "enhanced_roc_features.ok"));
  
 -    $cmd = "$utildir/plot_ROC.Rscript $out_prefix.enhanced.feature.scores.roc || :";
--    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/enhanced_rocplot.ok"));
+-    $pipeliner->add_commands(new Command($cmd, "enhanced_rocplot.ok"));
 -    
      $cmd = "$utildir/compute_AUC.pl $out_prefix.enhanced.feature.scores.roc";
-     $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/enhanced_aucplot.ok"));
+     $pipeliner->add_commands(new Command($cmd, "enhanced_aucplot.ok"));
      
 -    $cmd = "$utildir/make_seqLogo.Rscript $out_prefix.enhanced.+.pwm || :";
--    $pipeliner->add_commands(new Command($cmd, "$checkpoints_dir/seqlogo.enhanced.+.ok"));
+-    $pipeliner->add_commands(new Command($cmd, "seqlogo.enhanced.+.ok"));
 -        
 -    
      $pipeliner->run();
