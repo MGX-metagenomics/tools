@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=5.5.0
+VERSION=5.7.0
 wget -q https://github.com/TransDecoder/TransDecoder/archive/TransDecoder-v${VERSION}.tar.gz
 tar xzf TransDecoder-v${VERSION}.tar.gz
 rm TransDecoder-v${VERSION}.tar.gz
