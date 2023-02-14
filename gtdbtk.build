@@ -32,4 +32,4 @@ if [ ! -f ${PREFIX}/bin/mash ]; then
 fi
 
 
-pip3 install --force-reinstall gtdbtk==2.2.0
+pip3 install --force-reinstall gtdbtk==2.2.1
