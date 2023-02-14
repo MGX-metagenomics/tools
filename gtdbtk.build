@@ -32,8 +32,4 @@ if [ ! -f ${PREFIX}/bin/mash ]; then
 fi
 
 
-pip3 install --force-reinstall gtdbtk==2.1.1
-
-# https://github.com/Ecogenomics/GTDBTk/issues/420#issuecomment-1256022944
-cat patches/gtdbtk_pipefix.patch | \
-    ( cd $PREFIX/lib/python3.*/site-packages/gtdbtk/external/; patch -p0 )
+pip3 install --force-reinstall gtdbtk==2.2.0
