@@ -31,7 +31,7 @@ Conveyor.Blast.DIAMOND.Configuration.databaseMapping=/vol/biodb/eggNOG/3.0/prote
 Conveyor.ComputeCluster.ClusterExecution.allowFreeFlow=False
 Conveyor.ComputeCluster.ClusterExecution.batchExecutionClassMap=
 Conveyor.ComputeCluster.ClusterExecution.classSizes=Conveyor.Blast.GetNCBITaxonsForEntry`1=100
-Conveyor.ComputeCluster.ClusterExecution.defaultBatchExecutionClass=(CeBiTec.Batch.DRMAA)CeBiTec.Batch.DRMAA.OrderedBatchExecution
+Conveyor.ComputeCluster.ClusterExecution.defaultBatchExecutionClass=(CeBiTec.Batch.SLURM)CeBiTec.Batch.SLURM.BatchExecution
 Conveyor.ComputeCluster.ClusterExecution.defaultJobOptions=
 Conveyor.ComputeCluster.ClusterExecution.defaultJobSize=3000
 Conveyor.Database.UniProt.Configuration.uniProtDatabases=SwissProt=SwissProt part of UniProt database,/vol/biodb/local_databases/MGX/uniprot_swissprot/current/uniprot_sprot.dat,/vol/biodb/local_databases/MGX/current/uniprot_swissprot/uniprot_sprot.fasta|TrEMBL=Translated EMBL part of Uniprot database,/vol/biodb/uniprot/uniprot_trembl.dat,/vol/biodb/uniprot/uniprot_trembl.fasta
