@@ -11,11 +11,6 @@ if [ -d PREFIX/lib/dotnet ]; then
     export DOTNET_ROOT=PREFIX/lib/dotnet
 fi
 
-MONO=PREFIX/bin/mono
-MONO_GC_PARAMS=nursery-size=8g
-MONO_CFG_DIR=PREFIX/lib/etc
-export MONO MONO_GC_PARAMS MONO_CFG_DIR
-
 GRAPHRUN=PREFIX/lib/Conveyor/GraphRun.exe
 PLUGINDUMPER=PREFIX/lib/Conveyor/PluginDumper.exe
 
