@@ -98,4 +98,9 @@ Conveyor.Minimap2.Configuration.publicIndexDirectories=/vol/biodb/local_database
 Conveyor.FASTP.Configuration.fastp=PREFIX/bin/fastp
 Conveyor.AMRFinderPlus.Configuration.amrfinder=PREFIX/bin/amrfinder
 Conveyor.AMRFinderPlus.Configuration.amrDatabase=/vol/biodb/local_databases/MGX/AMR/current
-
+CeBiTec.Batch.SLURM.Configuration.pollStartInterval=5
+CeBiTec.Batch.SLURM.Configuration.pollMaxInterval=60
+CeBiTec.Batch.SLURM.Configuration.sacct=/usr/bin/sacct
+CeBiTec.Batch.SLURM.Configuration.scontrol=/usr/bin/scontrol
+CeBiTec.Batch.SLURM.Configuration.scancel=/usr/bin/scancel
+CeBiTec.Batch.SLURM.Configuration.sbatch=/usr/bin/sbatch
