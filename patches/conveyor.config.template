@@ -7,19 +7,8 @@ if [ ! -r ${CEBITEC_SETTINGS_FILE} ]; then
     exit 1
 fi
 
-
-if [ -f /etc/default/gridengine ]; then
-  . /etc/default/gridengine
-  export SGE_ROOT
-  export SGE_CELL
-else
-  # CeBiTec UGE
-  export SGE_CELL=default
-  export SGE_ROOT=/vol/codine-8.3
-  export SGE_CLUSTER_NAME=p6444
-  if [ -d /vol/codine-8.3/bin/sol-amd64/ ]; then
-    export PATH=${PATH}:/vol/codine-8.3/bin/sol-amd64/
-  fi
+if [ -d PREFIX/lib/dotnet ]; then
+    export DOTNET_ROOT=PREFIX/lib/dotnet
 fi
 
 MONO=PREFIX/bin/mono
