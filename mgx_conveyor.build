@@ -8,17 +8,6 @@ cp ../patches/PluginDumper.template PluginDumper
 cp ../patches/GraphValidate.template GraphValidate
 cp ../patches/GraphRun.template GraphRun
 
-
-
-if [ ! -d /ceph ]; then
-    sed -i 's,ceph,vol,g' settings.config
-fi
-
-# global network dir
-if [ -d /vol/codine-tmp ]; then
-    sed -i 's,sge-tmp,codine-tmp,g' settings.config
-fi
-
 #
 # install
 #
