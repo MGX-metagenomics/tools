@@ -4,22 +4,24 @@
 set -e
 
 if [ ! -f ${PREFIX}/bin/dotnet ]; then
-    echo ".NET 5 installation missing."
+    echo ".NET installation missing."
     exit 1
 fi
 
-install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/Conveyor.NET5
+install -g ${GROUP} --mode=755 -d ${PREFIX}/lib/Conveyor
 
-git clone -b development https://git.computational.bio.uni-giessen.de/sjaenick/conveyor.git
+git clone -b development git@git.computational.bio.uni-giessen.de:sjaenick/conveyor.git
 cd conveyor
 
 dotnet build
-dotnet publish -o ${PREFIX}/lib/Conveyor.NET5
+dotnet publish -o ${PREFIX}/lib/Conveyor
 
 # remove unit tests
-rm -f ${PREFIX}/lib/Conveyor.NET5/*Test*.{dll,dll.config,pdb,deps.json} ${PREFIX}/lib/Conveyor.NET5/nunit*
+rm -f ${PREFIX}/lib/Conveyor/*Test*.{dll,dll.config,pdb,deps.json} ${PREFIX}/lib/Conveyor/nunit*
 
-chmod 644 ${PREFIX}/lib/Conveyor.NET5/*dll
+chmod 644 ${PREFIX}/lib/Conveyor/*dll
 
 cd .. && rm -rf conveyor
 
+ln -sf ${PREFIX}/lib/Conveyor/CreateEMBLGBKIndex ${PREFIX}/bin/
+ln -sf ${PREFIX}/lib/Conveyor/GraphRun ${PREFIX}/bin/
