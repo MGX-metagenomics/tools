@@ -20,28 +20,6 @@ if [ -d /vol/codine-tmp ]; then
 fi
 
 #
-# find the correct arch request
-#
-NUMSLOTS=`qhost -l 'arch=lx26-amd64' | wc -l`
-if [ ${NUMSLOTS} -eq 0 ]; then
-    # assume CeBiTec UGE
-    sed -i 's,-l arch=lx26-amd64,-P mgx -l arch=lx-amd64,g' settings.config
-fi
-
-#
-# check for presence of 'large' queue
-#
-HAS_LARGE=`qconf -sql | grep large | wc -l`
-if [ ${HAS_LARGE} -eq 0 ]; then
-    # no large complex, fallback to virtual_free request
-    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=5g',g" GraphValidate
-    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=40g',g" GraphRun
-else
-    sed -i "s,QREQ,-l 'large=1',g" GraphValidate
-    sed -i "s,QREQ,-l 'large=1',g" GraphRun
-fi
-
-#
 # install
 #
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share/config
