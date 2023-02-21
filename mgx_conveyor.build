@@ -29,16 +29,6 @@ if [ ${NUMSLOTS} -eq 0 ]; then
 fi
 
 #
-# Decypher binaries
-#
-if [ ! -f /vol/decypher/bin/dc_run ]; then
-    # assume CeBiTec
-    sed -i 's,/vol/decypher/bin,/vol/decypher/bin/cli/bin,g' settings.config
-    sed -i 's,decypher01.internal.computational.bio.uni-giessen.de,decy04.CeBiTec.Uni-Bielefeld.DE,g' \
-        settings.config
-fi
-
-#
 # check for presence of 'large' queue
 #
 HAS_LARGE=`qconf -sql | grep large | wc -l`
