@@ -11,6 +11,12 @@ if [ -d PREFIX/lib/dotnet ]; then
     export DOTNET_ROOT=PREFIX/lib/dotnet
 fi
 
+if [ ! -f ${DOTNET_ROOT}/dotnet ]; then
+    echo ".NET installation not found, aborting."
+    exit 1
+fi
+
+
 GRAPHRUN=PREFIX/lib/Conveyor/GraphRun.exe
 PLUGINDUMPER=PREFIX/lib/Conveyor/PluginDumper.exe
 
