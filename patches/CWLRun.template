@@ -34,14 +34,20 @@ unset LC_MONETARY TERM LC_NUMERIC NLSPATH \
 # required so cwltool can pickup nodejs
 export PATH=PREFIX/bin:${PATH}
 
-QSUBOUT=`qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
-     -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
-     PREFIX/bin/cwltool --disable-color --no-container --debug ${workflow} ${jobConfig}.yml`
+sbatch --job-name=${jobName} \
+        --no-requeue --wait --partition=idle --quiet \
+        --cpus-per-task=128 --mem=250G  \
+        --chdir=/vol/mgx-data/${projName}/jobs \
+        --export=PATH \
+        -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
+        --wrap="PREFIX/bin/cwltool --cachedir /vol/sge-tmp/${projName}/${jobId}/ --tmpdir-prefix /vol/sge-tmp --disable-color --no-container --debug ${workflow} ${jobConfig}.yml"
 
-if [ -z "${QSUBOUT##*Unable to run*}" ] ; then
-    echo "Job was deleted on the cluster."
-    rm -f ${jobConfig}.yml
-    exit 2
+err=$?
+
+if [ $err != 0 ]; then
+        echo "sbatch exited with return code ${err}."
+        exit ${err}
 fi
 
 rm -f ${jobConfig}.yml
+rm -rf /vol/sge-tmp/${projName}/${jobId}
