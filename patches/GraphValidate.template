@@ -38,12 +38,21 @@ jobName=validate-${projName/MGX_/}-${jobId}
 
 rm -f ${jobConfig}.stdout ${jobConfig}.stderr
 
-QSUBOUT=`qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
-     -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
-     ${MONO} ${GRAPHRUN} --validate ${conveyor_graph} ${jobConfig}`
+PREFIX/lib/Conveyor/GraphRun --validate ${conveyor_graph} ${jobConfig} \
+  > ${jobConfig}.stdout 2>${jobConfig}.stderr
 
-if [ -z "${QSUBOUT##*Unable to run*}" ] ; then
-    echo "Job was deleted on the cluster."
-    exit 2
+#sbatch --job-name=${jobName} \
+#        --no-requeue --wait --partition=chaos --quiet \
+#        --cpus-per-task=2 --mem-per-cpu=50G  \
+#        --chdir=/vol/mgx-data/${projName}/jobs \
+#        --export=CEBITEC_SETTINGS_FILE,DOTNET_ROOT \
+#        -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
+#        --wrap="PREFIX/lib/Conveyor/GraphRun --validate ${conveyor_graph} ${jobConfig}"
+
+err=$?
+
+if [ $err != 0 ]; then
+        echo "GraphValidate exited with return code ${err}."
+        exit ${err}
 fi
 

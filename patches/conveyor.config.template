@@ -17,7 +17,7 @@ if [ ! -f ${DOTNET_ROOT}/dotnet ]; then
 fi
 
 
-GRAPHRUN=PREFIX/lib/Conveyor/GraphRun.exe
-PLUGINDUMPER=PREFIX/lib/Conveyor/PluginDumper.exe
+GRAPHRUN=PREFIX/lib/Conveyor/GraphRun
+PLUGINDUMPER=PREFIX/lib/Conveyor/PluginDumper
 
 

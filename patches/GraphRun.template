@@ -30,12 +30,25 @@ unset LC_MONETARY TERM LC_NUMERIC NLSPATH \
   XFILESEARCHPATH LS_COLORS SUDO_UID SUDO_GID SUDO_USER \
   SUDO_COMMAND MAIL OLDPWD
 
+ulimit -c unlimited
 
-QSUBOUT=`qsub -N ${jobName} -cwd -b y -sync y QREQ -V \
-     -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
-     ${MONO} --debug ${GRAPHRUN} --interval 120 ${conveyor_graph} ${jobConfig}`
+sbatch --job-name=${jobName} \
+        --no-requeue --wait --partition=chaos --quiet \
+        --cpus-per-task=2 --mem-per-cpu=50G  \
+        --chdir=/vol/mgx-data/${projName}/jobs \
+        --export=CEBITEC_SETTINGS_FILE,DOTNET_ROOT \
+        -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
+        --wrap="PREFIX/lib/Conveyor/GraphRun --interval 120 ${conveyor_graph} ${jobConfig}"
 
-if [ -z "${QSUBOUT##*Unable to run*}" ] ; then
-    echo "Job was deleted on the cluster."
-    exit 2
+err=$?
+
+if [ $err != 0 ]; then
+        echo "sbatch exited with return code ${err}."
+        exit ${err}
 fi
+
+if [ ! grep -q 'GRAPHRUN COMPLETE.' ${jobConfig}.stderr ]; then
+    echo "Job did not run to completion."
+    exit 3
+fi
+
