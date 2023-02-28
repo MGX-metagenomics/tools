@@ -31,5 +31,5 @@ if [ ! -f ${PREFIX}/bin/mash ]; then
     bash mash.build
 fi
 
-pip3 install --force-reinstall gtdbtk==2.2.3
+pip3 install --force-reinstall gtdbtk==2.2.4
 
