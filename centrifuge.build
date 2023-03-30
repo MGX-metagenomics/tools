@@ -8,6 +8,8 @@ VERSION=1.0.4
 wget -q https://github.com/DaehwanKimLab/centrifuge/archive/refs/tags/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
 cd centrifuge-${VERSION}
+wget -q -O - https://github.com/DaehwanKimLab/centrifuge/commit/a5c09bb29a3a828d88be49c55353cd84b6b9bbad.patch \
+  | patch -p1
 patch -p1 < ../patches/centrifuge_cachedir.patch
 chmod 755 doc 
 make 
