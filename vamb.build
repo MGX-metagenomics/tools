@@ -1,0 +1,12 @@
+
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash python3.build
+fi
+
+pip3 install --upgrade pip
+pip3 install vamb
