@@ -24,12 +24,14 @@ if [ ! -f ${PREFIX}/bin/python3 ]; then
     bash python3.build
 fi
 
-
-pip3 install --upgrade pip
+python -m venv ${PREFIX}/lib/venvs/semibin
+source ${PREFIX}/lib/venvs/semibin/bin/activate
 
 git clone https://github.com/BigDataBiology/SemiBin.git
 cd SemiBin
 pip3 install .
 cd ..
 rm -rf SemiBin
+
+ln -sf ${PREFIX}/lib/venvs/semibin/bin/SemiBin2 ${PREFIX}/bin/
 
