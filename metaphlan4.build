@@ -15,7 +15,11 @@ if [ ! -f ${PREFIX}/bin/python3 ]; then
     bash -x python3.build
 fi
 
-VERSION=4.0.4
+python -m venv ${PREFIX}/lib/venvs/metaphlan4
+source ${PREFIX}/lib/venvs/metaphlan4/bin/activate
+
+
+VERSION=4.0.6
 
 wget -q https://github.com/biobakery/MetaPhlAn/archive/refs/tags/${VERSION}.tar.gz
 tar xzf ${VERSION}.tar.gz
@@ -27,3 +31,5 @@ pip3 install .
 cd ..
 rm -rf MetaPhlAn-${VERSION}
 
+ln -sf ${PREFIX}/lib/venvs/metaphlan4/bin/metaphlan ${PREFIX}/bin/
+ln -sf ${PREFIX}/lib/venvs/metaphlan4/bin/read_fastx.py ${PREFIX}/bin/
