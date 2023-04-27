@@ -1,0 +1,17 @@
+
+. ./tools.config
+
+set -e
+
+git clone https://github.com/fbreitwieser/krakenuniq.git
+cd krakenuniq
+mkdir -p ${PREFIX}/lib/krakenuniq/
+./install_krakenuniq.sh ${PREFIX}/lib/krakenuniq/
+for f in build_taxdb classifyExact count_unique dump_taxdb query_taxdb read_uid_mapping db_shrink db_sort classify set_lcas; do
+    strip ${PREFIX}/lib/krakenuniq/${f}
+done
+ln -sf ${PREFIX}/lib/krakenuniq/krakenuniq ${PREFIX}/bin/krakenuniq
+ln -sf ${PREFIX}/lib/krakenuniq/krakenuniq-build ${PREFIX}/bin/krakenuniq-build
+cd ..
+rm -rf krakenuniq
+
