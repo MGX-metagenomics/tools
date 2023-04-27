@@ -2,5 +2,5 @@
 
 . PREFIX/share/config/conveyor.config
 
-${MONO} ${PLUGINDUMPER} "$@" | xmllint --format /dev/fd/0
+${PLUGINDUMPER} "$@" | xmllint --format /dev/fd/0
 
