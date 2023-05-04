@@ -20,4 +20,4 @@ python -m venv ${PREFIX}/lib/venvs/cwltool
 source ${PREFIX}/lib/venvs/cwltool/bin/activate
 
 pip3 install --force-reinstall cwltool
-ln -sf ${PREFIX}/lib/venvs/cwltool/bin/cwltool ${PREFIX}/bin/
+ln -sf ${PREFIX}/lib/venvs/cwltool/bin/cwl* ${PREFIX}/bin/
