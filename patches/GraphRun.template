@@ -34,7 +34,7 @@ ulimit -c unlimited
 
 sbatch --job-name=${jobName} \
         --no-requeue --wait --partition=chaos --quiet \
-        --cpus-per-task=2 --mem-per-cpu=50G  \
+        --cpus-per-task=4 --mem-per-cpu=30G  \
         --chdir=/vol/mgx-data/${projName}/jobs \
         --export=CEBITEC_SETTINGS_FILE,DOTNET_ROOT \
         -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
