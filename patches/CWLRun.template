@@ -7,7 +7,7 @@ fi
 
 set -e
 
-umask 0007
+umask 0027
 
 workflow=$1
 projName=$2
@@ -20,9 +20,12 @@ siteConfig=PREFIX/share/config/cwlsite.config
 cd /vol/mgx-data/${projName}/jobs || exit 1
 cat ${siteConfig} ${jobConfig} > ${jobId}.yml
 
-jobName=${projName/MGX_/}-${jobId}
+jobName=${projName/MGX2_/}-${jobId}
 
 rm -f ${jobConfig}.stdout ${jobConfig}.stderr 
+
+# precreate workdir with permissions 750
+mkdir -p /vol/sge-tmp/${projName}/${jobId}
 
 unset LC_MONETARY TERM LC_NUMERIC NLSPATH \
   LC_COLLATE LC_TIME LC_MESSAGES LC_CTYPE \
@@ -36,7 +39,7 @@ export PATH=PREFIX/bin:${PATH}
 
 sbatch --job-name=${jobName} \
         --no-requeue --wait --partition=idle --quiet \
-        --cpus-per-task=128 --mem=250G  \
+        --cpus-per-task=128 --mem=500G  \
         --chdir=/vol/mgx-data/${projName}/jobs \
         --export=PATH \
         -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
