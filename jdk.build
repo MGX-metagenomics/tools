@@ -3,22 +3,10 @@
 
 set -e 
 
-wget -q -O jdk-8u201-linux-x64.tar.gz --header "Cookie: oraclelicense=a" http://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jdk-8u201-linux-x64.tar.gz
-tar xzf jdk-8u201-linux-x64.tar.gz -C ${PREFIX}/lib 
-rm jdk-8u201-linux-x64.tar.gz
+wget -q https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_linux-x64_bin.tar.gz
+tar xzf  openjdk-17.0.2_linux-x64_bin.tar.gz -C ${PREFIX}/lib 
+rm openjdk-17.0.2_linux-x64_bin.tar.gz
+chgrp -R ${GROUP} ${PREFIX}/lib/jdk-17.0.2
 
-# remove previous version
-if [ -e ${PREFIX}/lib/jdk ]; then
-    old=`readlink ${PREFIX}/lib/jdk`
-    if [ -d ${old} ]; then
-        rm -rf ${old}
-    fi
-    rm -f ${PREFIX}/lib/jdk 
-fi
+ln -sf ${PREFIX}/lib/jdk-17.0.2 ${PREFIX}/lib/jdk-17
 
-rm -f ${PREFIX}/lib/jdk1.8.0_201/{README.html,src.zip,javafx-src.zip}
-rm -rf ${PREFIX}/lib/jdk1.8.0_201/man ${PREFIX}/lib/jdk1.8.0_201/lib/visualvm
-rm -rf ${PREFIX}/lib/jdk1.8.0_201/lib/missioncontrol
-
-chgrp -R ${GROUP} ${PREFIX}/lib/jdk1.8.0_201
-ln -sf ${PREFIX}/lib/jdk1.8.0_201 ${PREFIX}/lib/jdk 
