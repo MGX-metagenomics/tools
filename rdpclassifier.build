@@ -3,6 +3,10 @@
 
 set -e 
 
+if [ ! -f ${PREFIX}/lib/jdk-17/bin/java ]; then
+    bash -x jdk.build
+fi
+
 
 VERSION=2.13
 
@@ -74,7 +78,7 @@ if [ ! -f \${INFILE} ]; then
 fi
 
 err=0
-/usr/bin/java -Xmx900m -cp \${CP} -jar \${JAR} -q \${INFILE} -g \${TRAINSET} -o /dev/fd/1 2>/dev/null || err=\$?
+${PREFIX}/lib/jdk-17/bin/java -Xmx900m -cp \${CP} -jar \${JAR} -q \${INFILE} -g \${TRAINSET} -o /dev/fd/1 2>/dev/null || err=\$?
 
 exit \${err}
 
