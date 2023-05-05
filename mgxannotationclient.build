@@ -3,6 +3,15 @@
 
 set -e
 
+if [ ! -f ${PREFIX}/lib/jdk-17/bin/java ]; then
+    bash -x jdk.build
+fi
+
+# install mvn
+wget -q https://dlcdn.apache.org/maven/maven-3/3.9.1/binaries/apache-maven-3.9.1-bin.tar.gz
+tar xzf apache-maven-3.9.1-bin.tar.gz
+export PATH=`pwd`/apache-maven-3.9.1/bin:${PREFIX}/lib/jdk-17/bin:$PATH
+
 git clone https://github.com/MGX-metagenomics/MGX-AnnotationClient.git
 cd MGX-AnnotationClient
 ./build.sh
@@ -10,9 +19,10 @@ cd MGX-AnnotationClient
 mkdir -p ${PREFIX}/lib/annotationclient 
 cp -va target/*jar ${PREFIX}/lib/annotationclient 
 
+sed -i "s,java,${PREFIX}/lib/jdk-17/bin/java,g" AnnotationClient
+
 install --mode=755 AnnotationClient ${PREFIX}/bin
 ln -sf ${PREFIX}/bin/AnnotationClient ${PREFIX}/bin/SeqRunFetcher
 cd ..
-rm -rf MGX-AnnotationClient
-
+rm -rf MGX-AnnotationClient apache-maven-3.9.1 apache-maven-3.9.1-bin.tar.gz
 
