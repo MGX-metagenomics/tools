@@ -6,17 +6,6 @@ cp ../patches/cwlsite.config cwlsite.config
 cp ../patches/CWLRun.template CWLRun
 
 #
-# check for presence of 'large' queue
-#
-HAS_LARGE=`qconf -sql | grep large | wc -l`
-if [ ${HAS_LARGE} -eq 0 ]; then
-    # no large complex, fallback to virtual_free request
-    sed -i "s,QREQ,-P mgx -l 'arch=lx-amd64\,vf=4g' -pe multislot 40,g" CWLRun
-else
-    sed -i "s,QREQ,-l 'vf=4g' -pe multislot 40,g" CWLRun
-fi
-
-#
 # install
 #
 install -g ${GROUP} --mode=755 -d ${PREFIX}/share/config
