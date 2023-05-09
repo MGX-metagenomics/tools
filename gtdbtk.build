@@ -34,5 +34,5 @@ fi
 python -m venv ${PREFIX}/lib/venvs/gtdbtk
 source ${PREFIX}/lib/venvs/gtdbtk/bin/activate
 
-pip3 install --force-reinstall gtdbtk==2.2.6
+pip3 install --force-reinstall gtdbtk==2.3.0
 ln -sf ${PREFIX}/lib/venvs/gtdbtk/bin/gtdbtk ${PREFIX}/bin/
