@@ -8,6 +8,10 @@ wget -q https://github.com/voutcn/megahit/archive/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
 rm v${VERSION}.tar.gz
 cd megahit-${VERSION}
+
+wget -q -O - https://patch-diff.githubusercontent.com/raw/voutcn/megahit/pull/349.patch | \
+    patch -p1
+
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} ..
