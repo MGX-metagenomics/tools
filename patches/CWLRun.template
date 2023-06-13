@@ -52,5 +52,13 @@ if [ $err != 0 ]; then
         exit ${err}
 fi
 
+# slurmstepd-hp-sl230-s1-l1.intra: error: *** JOB 15549930 ON hp-sl230-s1-l1.intra CANCELLED AT 2023-03-23T14:59:07 ***
+if [ grep -q 'CANCELLED AT' ${jobConfig}.stderr ]; then
+    echo "Job was cancelled." >> ${jobConfig}.stderr
+    echo "Job was cancelled."
+    exit 3
+fi
+
+
 rm -f ${jobConfig}.yml
 rm -rf /vol/sge-tmp/${projName}/${jobId}
