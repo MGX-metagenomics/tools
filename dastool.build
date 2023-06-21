@@ -42,9 +42,13 @@ wget -q https://github.com/cmks/DAS_Tool/archive/${VERSION}.tar.gz
 tar xzf ${VERSION}.tar.gz
 rm ${VERSION}.tar.gz
 cd DAS_Tool-${VERSION}
+
+patch -p1 < ../patches/dastool_endingslash.patch
+
 #${PREFIX}/bin/R CMD INSTALL ./package/DASTool_${VERSION}.tar.gz
 sed -i "s,Rscript,${PREFIX}/bin/Rscript,g" DAS_Tool
 sed -i "s,src,../lib/dastool-${VERSION},g" DAS_Tool
+sed -i "s,/src/,/,g" src/DAS_Tool.R
 install --mode=755 DAS_Tool ${PREFIX}/bin
 install --mode=755 -d ${PREFIX}/lib/dastool-${VERSION}
 for f in src/*; do

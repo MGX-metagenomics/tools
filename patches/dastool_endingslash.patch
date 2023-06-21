@@ -1,0 +1,13 @@
+diff -Nur DAS_Tool-1.1.6.orig/src/DAS_Tool.R DAS_Tool-1.1.6/src/DAS_Tool.R
+--- DAS_Tool-1.1.6.orig/src/DAS_Tool.R	2023-06-21 13:24:55.467444647 +0200
++++ DAS_Tool-1.1.6/src/DAS_Tool.R	2023-06-21 13:32:01.534297610 +0200
+@@ -343,6 +343,9 @@
+                        paste0(scriptDir,'/','db/'),
+                        arguments$dbDirectory)
+ 
++if (!endsWith(dbDirectory, '/')) {
++    dbDirectory <- paste0(dbDirectory, '/')
++}
+ 
+ ##
+ ## Check files and directories
