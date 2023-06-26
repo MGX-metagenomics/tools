@@ -22,6 +22,9 @@ if [ ! -f ${PREFIX}/bin/python3 ]; then
 fi
 
 
+python -m venv ${PREFIX}/lib/venvs/checkm
+source ${PREFIX}/lib/venvs/checkm/bin/activate
+
 pip3 install pysam matplotlib
 
 VERSION=1.2.2
@@ -35,4 +38,6 @@ python3 setup.py build
 python3 setup.py install 
 cd ..
 rm -rf CheckM-${VERSION}
+
+ln -sf ${PREFIX}/lib/venvs/checkm/bin/checkm ${PREFIX}/bin/
 
