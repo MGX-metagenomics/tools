@@ -1,0 +1,25 @@
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/lib/jdk-17/bin/java ]; then
+    bash -x jdk.build
+fi
+
+VERSION=0.39
+wget -q http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-${VERSION}.zip
+unzip -o -d ${PREFIX}/lib Trimmomatic-${VERSION}.zip
+rm Trimmomatic-${VERSION}.zip
+
+cat << EOS > ${PREFIX}/bin/trimmomatic
+#!/bin/bash
+
+set -e
+
+${PREFIX}/lib/jdk-17/bin/java -jar ${PREFIX}/lib/Trimmomatic-${VERSION}/trimmomatic-${VERSION}.jar "\$@"
+
+EOS
+
+chmod 755 ${PREFIX}/bin/trimmomatic
+
