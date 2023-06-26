@@ -80,6 +80,11 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    if (infiles.size() == 0) {
+        cerr << "Usage: mergeFC -i file1,file2,file3 -o outfile" << endl;
+        return -1;
+    }
+
     vector<string> files = split(infiles, ',');
 
     unordered_map<string, int> data;
