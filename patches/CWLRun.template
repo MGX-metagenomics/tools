@@ -43,7 +43,7 @@ sbatch --job-name=${jobName} \
         --chdir=/vol/mgx-data/${projName}/jobs \
         --export=PATH \
         -i /dev/null -o ${jobConfig}.stdout -e ${jobConfig}.stderr \
-        --wrap="PREFIX/bin/cwltool --cachedir /vol/sge-tmp/${projName}/${jobId}/ --tmpdir-prefix /vol/sge-tmp --disable-color --no-container --debug ${workflow} ${jobConfig}.yml"
+        --wrap="PREFIX/bin/cwltool --cachedir /vol/sge-tmp/${projName}/${jobId}/ --tmpdir-prefix /vol/sge-tmp/ --disable-color --no-container --debug ${workflow} ${jobConfig}.yml"
 
 err=$?
 
