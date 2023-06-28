@@ -1,0 +1,18 @@
+
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/python3 ]; then
+    bash python3.build
+fi
+
+python -m venv ${PREFIX}/lib/venvs/ribodetector
+source ${PREFIX}/lib/venvs/ribodetector/bin/activate
+
+pip3 install --upgrade torch==1.13.1
+pip3 install --upgrade ribodetector
+ln -sf ${PREFIX}/lib/venvs/ribodetector/bin/ribodetector ${PREFIX}/bin/
+ln -sf ${PREFIX}/lib/venvs/ribodetector/bin/ribodetector_cpu ${PREFIX}/bin/
+
