@@ -7,18 +7,25 @@ if [ ! -f ${PREFIX}/include/lzma.h ]; then
     bash -x lzma.build
 fi
 
+if [ ! -f ${PREFIX}/include/libdeflate.h ]; then
+    bash -x libdeflate.build
+fi
+
 VERSION=1.17
 
 wget -q --no-check-certificate -O samtools-${VERSION}.tar.bz2 https://github.com/samtools/samtools/releases/download/${VERSION}/samtools-${VERSION}.tar.bz2 
 tar xjf samtools-${VERSION}.tar.bz2 
 rm samtools-${VERSION}.tar.bz2 
 cd samtools-${VERSION}/ 
-export CFLAGS="-fPIC"
+export CFLAGS="-fPIC `pkg-config --cflags libdeflate`"
+export LDFLAGS="`pkg-config --libs libdeflate` -Wl,-rpath -Wl,${PREFIX}/lib"
+export CPPFLAGS="-Wl,-rpath -Wl,${PREFIX}/lib"
+
 ./configure --prefix=${PREFIX} \
     --libexecdir=${PREFIX}/share/libexec \
     --enable-plugins --with-plugin-path=$PWD/htslib-${VERSION} \
     --disable-libcurl --disable-bz2 \
-    --without-curses 
+    --without-curses --with-libdeflate
 make ${MAKE_FLAGS} all all-htslib
 #make check 
 make install install-htslib 
