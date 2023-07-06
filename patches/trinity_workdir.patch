@@ -1,0 +1,139 @@
+diff -Nur trinityrnaseq-v2.15.1.orig/Trinity trinityrnaseq-v2.15.1/Trinity
+--- trinityrnaseq-v2.15.1.orig/Trinity	2023-07-06 14:57:52.605864677 +0200
++++ trinityrnaseq-v2.15.1/Trinity	2023-07-06 15:01:26.674624259 +0200
+@@ -1527,6 +1527,10 @@
+                 . "#############################################################################\n"
+                 . "Finished.  Final Trinity assemblies are written to $final_Trinity_fasta_file\n"
+                 . "#############################################################################\n\n\n";
++
++            # remove work dir
++            print "Removing working directory $WORKDIR\n" if ($WORKDIR ne $output_directory);
++            system("rm -rf $WORKDIR") if ($WORKDIR ne $output_directory);
+         }
+         
+     }
+@@ -2112,7 +2116,7 @@
+             ## generate the scaffold info
+                         
+             if ($USE_PERL_SCAFFOLDER) {
+-                $cmd = "$ROOTDIR/../share/util/support_scripts/scaffold_iworm_contigs.pl $bowtie_sam_file $inchworm_file > $iworm_scaffolds_file";
++                $cmd = "$ROOTDIR/../share/util/support_scripts/scaffold_iworm_contigs.pl $bowtie_sam_file $inchworm_file $WORKDIR > $iworm_scaffolds_file";
+             }
+             else {
+                 # this c++ code needs to be updated to reflect the new clustering criteria
+@@ -2458,7 +2462,7 @@
+     my $prev_component_id = -1;
+     my $ofh = undef;
+     
+-    my $read_filenames = &create_full_path("partitioned_reads.files.list", 0);
++    my $read_filenames = &create_full_path("$WORKDIR/partitioned_reads.files.list", 0);
+     my $read_filenames_ok = &create_full_path("$read_filenames.ok");
+     if (! -e $read_filenames_ok) {
+     
+@@ -2477,7 +2481,7 @@
+                 
+                 $prev_component_id = $component_id;
+                 close $ofh if $ofh;
+-                my $base_dir = &create_full_path("read_partitions/Fb_" . (int($component_counter/$file_bins_per_dir)) . "/CBin_" . (int($component_counter/$target_files_per_dir)));
++                my $base_dir = &create_full_path($WORKDIR . "/read_partitions/Fb_" . (int($component_counter/$file_bins_per_dir)) . "/CBin_" . (int($component_counter/$target_files_per_dir)));
+                 if (! -d $base_dir) {
+                     &process_cmd("mkdir -p $base_dir");
+                 }
+@@ -2503,14 +2507,14 @@
+     
+     
+     if ($ANANAS_DIR) {
+-        &run_ANANAS($read_filenames, "read_partitions");
++        &run_ANANAS($read_filenames, $WORKDIR . "/read_partitions");
+         exit(0);
+     }
+     
+         
+-    if (! -e "recursive_trinity.cmds.ok") {
+-        &write_trinity_partitioned_cmds($read_filenames, "recursive_trinity.cmds", "GENOME-FREE_MODE");
+-        &process_cmd("touch recursive_trinity.cmds.ok");
++    if (! -e "$WORKDIR/recursive_trinity.cmds.ok") {
++        &write_trinity_partitioned_cmds($read_filenames, "$WORKDIR/recursive_trinity.cmds", "GENOME-FREE_MODE");
++        &process_cmd("touch $WORKDIR/recursive_trinity.cmds.ok");
+         print STDERR "Done prepping partitioned cmds." if $VERBOSE;
+     }
+ 
+@@ -2525,7 +2529,7 @@
+         print STDERR "**  --FORCE flag in effect, moving on to capturing earlier-assembled transcripts.\n";
+     }
+     else {
+-        &run_partitioned_cmds("recursive_trinity.cmds");
++        &run_partitioned_cmds("$WORKDIR/recursive_trinity.cmds");
+     }
+         
+     print STDERR "\n\n** Harvesting all assembled transcripts into a single multi-fasta file...\n\n" unless ($TRINITY_COMPLETE_FLAG);
+@@ -2533,7 +2537,7 @@
+ 
+     my $trinity_output_file = &create_full_path("Trinity.tmp", 0);
+     
+-    my $cmd = "find " . &create_full_path("read_partitions/",0) . " -name '*inity.fasta'  | $UTILDIR/support_scripts/partitioned_trinity_aggregator.pl --token_prefix TRINITY_DN --output_prefix $trinity_output_file";
++    my $cmd = "find " . &create_full_path($WORKDIR . "/read_partitions/",0) . " -name '*inity.fasta'  | $UTILDIR/support_scripts/partitioned_trinity_aggregator.pl --token_prefix TRINITY_DN --output_prefix $trinity_output_file";
+ 
+     &process_cmd($cmd);
+     
+@@ -2581,7 +2585,7 @@
+ 
+     if (! ($FORCE_INCHWORM_KMER_METHOD || $TRINITY_COMPLETE_FLAG) ) {
+         
+-        my $jelly_kmer_fa_file = "jellyfish.kmers.$kmer_size.$SR_flag.fa";
++        my $jelly_kmer_fa_file = $WORKDIR . "/jellyfish.kmers.$kmer_size.$SR_flag.fa";
+ 
+         
+         
+@@ -2607,7 +2611,7 @@
+             $jelly_hash_size = $JELLY_S;
+         }
+ 
+-        my $jelly_db = "mer_counts.$kmer_size.$SR_flag.jf";        
++        my $jelly_db = $WORKDIR . "/mer_counts.$kmer_size.$SR_flag.jf";        
+         
+         my $cmd = "jellyfish-2 count -t $CPU -m $kmer_size -s $jelly_hash_size -o $jelly_db";
+         
+@@ -3396,7 +3400,7 @@
+         }
+         
+         ## now merge them in one final round:
+-        my $norm_merged_dir = cwd() . "/insilico_read_normalization_altogether";
++        my $norm_merged_dir = $WORKDIR . "/insilico_read_normalization_altogether";
+         my @reads = (\@normalized_left_or_single);
+         if (@normalized_right) {
+             push (@reads, \@normalized_right);
+@@ -3407,7 +3411,7 @@
+     }
+     else {
+         ## all at once.
+-        my $normalize_outdir = cwd() . "/insilico_read_normalization";    
++        my $normalize_outdir = $WORKDIR . "/insilico_read_normalization";    
+         
+         my @ret_files = &normalize($normalize_outdir, $max_read_coverage, @read_files);
+         return(@ret_files);
+diff -Nur trinityrnaseq-v2.15.1.orig/util/support_scripts/scaffold_iworm_contigs.pl trinityrnaseq-v2.15.1/util/support_scripts/scaffold_iworm_contigs.pl
+--- trinityrnaseq-v2.15.1.orig/util/support_scripts/scaffold_iworm_contigs.pl	2023-02-05 19:46:17.000000000 +0100
++++ trinityrnaseq-v2.15.1/util/support_scripts/scaffold_iworm_contigs.pl	2023-07-06 14:58:14.513944609 +0200
+@@ -7,10 +7,11 @@
+ use lib ("$FindBin::Bin/../../PerlLib");
+ use SAM_entry;
+ 
+-my $usage = "\n\nusage: $0 nameSorted.sam iworm_fasta_file\n\n";
++my $usage = "\n\nusage: $0 nameSorted.sam iworm_fasta_file workdir\n\n";
+ 
+ my $name_sorted_sam_file = $ARGV[0] or die $usage;
+ my $iworm_fasta = $ARGV[1] or die $usage;
++my $WORKDIR = $ARGV[2];
+ 
+ 
+ my $SAM_OFH;
+@@ -18,7 +19,7 @@
+ 
+ main: {
+         
+-    open ($SAM_OFH, ">scaffolding_entries.sam") or die $!;
++    open ($SAM_OFH, '>', $WORKDIR . "/scaffolding_entries.sam") or die $!;
+     
+     my %iworm_acc_to_fasta_index;
+     {

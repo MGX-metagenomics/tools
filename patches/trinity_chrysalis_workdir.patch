@@ -1,0 +1,12 @@
+diff -Nur trinityrnaseq-v2.15.1.orig/Trinity trinityrnaseq-v2.15.1/Trinity
+--- trinityrnaseq-v2.15.1.orig/Trinity	2023-07-05 11:37:15.661682623 +0200
++++ trinityrnaseq-v2.15.1/Trinity	2023-07-05 12:02:50.975117087 +0200
+@@ -1348,7 +1348,7 @@
+         }
+         
+         if ($chrysalis_output_dir !~ /^\//) {
+-            $chrysalis_output_dir = "$output_directory/$chrysalis_output_dir";
++            $chrysalis_output_dir = "$WORKDIR/$chrysalis_output_dir";
+         }
+         
+         $chrysalis_output_dir = &create_full_path($chrysalis_output_dir, 0);

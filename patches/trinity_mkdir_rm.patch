@@ -1,0 +1,95 @@
+diff -Nur trinityrnaseq-v2.15.1.orig/Trinity trinityrnaseq-v2.15.1/Trinity
+--- trinityrnaseq-v2.15.1.orig/Trinity	2023-07-05 11:24:11.808798169 +0200
++++ trinityrnaseq-v2.15.1/Trinity	2023-07-05 11:37:15.661682623 +0200
+@@ -8,6 +8,7 @@
+ use FindBin;
+ use lib ("$FindBin::RealBin/../share/perl/");
+ use File::Basename;
++use File::Path qw(make_path remove_tree);
+ use Time::localtime;
+ use Cwd;
+ use Carp;
+@@ -1312,7 +1313,7 @@
+     }
+ 
+     if (! -d $TRINITY_PHASE1_OUTDIR) {
+-        &process_cmd("mkdir -p $TRINITY_PHASE1_OUTDIR");
++        make_path($TRINITY_PHASE1_OUTDIR);
+         $MKDIR_PHASE1_OUTDIR_FLAG = 1;
+     }
+     
+@@ -1331,7 +1332,7 @@
+         $output_directory = $WORKDIR . "-" . time(); # make unique
+         
+         unless (-d $output_directory) {
+-            &process_cmd("mkdir -p $output_directory");
++            make_path($output_directory);
+             $MKDIR_OUTDIR_FLAG = 1;
+         }
+     }
+@@ -1374,12 +1375,12 @@
+     
+     if ( (! $TRINITY_COMPLETE_FLAG) && (! -d $output_directory)) {
+         # phase - 1 mode.
+-        &process_cmd("mkdir -p $output_directory");
++        make_path($output_directory);
+         $MKDIR_OUTDIR_FLAG = 1;
+     }
+     
+     if ((! $genome_guided_bam) && (! -d $chrysalis_output_dir)) {
+-        &process_cmd("mkdir -p $chrysalis_output_dir"); # note, won't be auto-cleaned up if not in the trinity_out_dir/
++        make_path($chrysalis_output_dir); # note, won't be auto-cleaned up if not in the trinity_out_dir/
+     }
+ 
+     print STDERR "-changing dir to output dir: $output_directory\n" if $VERBOSE;
+@@ -1477,7 +1478,7 @@
+             if ($MKDIR_PHASE1_OUTDIR_FLAG) {
+                 chdir($start_dir) or die "Error, cannot cd to start dir";
+                 if ($MKDIR_PHASE1_OUTDIR_FLAG && basename($TRINITY_PHASE1_OUTDIR) =~ /trinity/i) { # ensure outdirectory as trinity in the name, just to be sure we dont delete something non-trinity related!!!
+-                    system("rm -rf $TRINITY_PHASE1_OUTDIR");
++                    remove_tree($TRINITY_PHASE1_OUTDIR);
+                 }
+                 else {
+                     print STDERR "-cannot remove output directory: $TRINITY_PHASE1_OUTDIR, either not created in this execution (resume mode) or doesnt include trinity in the directory name";
+@@ -1548,12 +1549,12 @@
+             # phase-2
+             # outputdir might be workdir
+             
+-            system("rm -rf $output_directory");
++            remove_tree($output_directory);
+             
+         }
+         
+         if ($MKDIR_PHASE1_OUTDIR_FLAG && basename($TRINITY_PHASE1_OUTDIR =~ /trinity/i) && -d $TRINITY_PHASE1_OUTDIR) {
+-            system("rm -rf $TRINITY_PHASE1_OUTDIR");
++            remove_tree($TRINITY_PHASE1_OUTDIR);
+         }
+     }
+ 
+@@ -2479,7 +2480,7 @@
+                 close $ofh if $ofh;
+                 my $base_dir = &create_full_path($WORKDIR . "/read_partitions/Fb_" . (int($component_counter/$file_bins_per_dir)) . "/CBin_" . (int($component_counter/$target_files_per_dir)));
+                 if (! -d $base_dir) {
+-                    &process_cmd("mkdir -p $base_dir");
++                    make_path($base_dir);
+                 }
+                 my $readsfile = "$base_dir/c$component_id.trinity.reads.fa";
+                 
+@@ -3218,7 +3219,7 @@
+         $collectl_output_directory = "$start_dir/collectl";
+         $collectl_output_directory = &create_full_path($collectl_output_directory, 0);
+         if (-d $collectl_output_directory) {
+-            &process_cmd("rm -rf $collectl_output_directory");
++            remove_tree($collectl_output_directory);
+         }
+         mkdir $collectl_output_directory or die "Error, cannot mkdir $collectl_output_directory";
+         
+@@ -4229,7 +4230,7 @@
+     
+     for my $outdir ($output_directory, $WORKDIR) {
+         if (! -d $outdir) {
+-            &process_cmd("mkdir -p $outdir");
++            make_path($outdir);
+         }
+     }
+         

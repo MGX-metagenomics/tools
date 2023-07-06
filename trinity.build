@@ -8,14 +8,32 @@ if [ ! -f ${PREFIX}/bin/jellyfish-2 ]; then
     bash -x jellyfish.build
 fi
 
-VERSION=2.12.0
-wget -q https://github.com/trinityrnaseq/trinityrnaseq/releases/download/v${VERSION}/trinityrnaseq-v${VERSION}.FULL.tar.gz
+if [ ! -f ${PREFIX}/bin/bowtie2 ]; then
+    bash -x bowtie2.build
+fi
+
+if [ ! -f ${PREFIX}/bin/samtools ]; then
+    bash -x samtools.build
+fi
+
+if [ ! -f ${PREFIX}/bin/salmon ]; then
+    bash -x salmon.build
+fi
+
+
+
+#pip3 install numpy
+
+VERSION=2.15.1
+wget -q https://github.com/trinityrnaseq/trinityrnaseq/releases/download/Trinity-v${VERSION}/trinityrnaseq-v${VERSION}.FULL.tar.gz
 tar xzf trinityrnaseq-v${VERSION}.FULL.tar.gz
 rm trinityrnaseq-v${VERSION}.FULL.tar.gz
 cd trinityrnaseq-v${VERSION}
 
 patch -p1 < ../patches/trinity_paths.patch
-
+patch -p1 < ../patches/trinity_workdir.patch
+patch -p1 < ../patches/trinity_chrysalis_workdir.patch
+patch -p1 < ../patches/trinity_mkdir_rm.patch
 patch -p1 < ../patches/trinity_htslib.patch
 
 sed -i "s,PREFIX,$PREFIX,g" Trinity
