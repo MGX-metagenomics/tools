@@ -1,0 +1,18 @@
+
+. ./tools.config
+
+set -e
+
+VERSION=1.18
+
+wget -q https://github.com/ebiggers/libdeflate/archive/refs/tags/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
+cd libdeflate-${VERSION}
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} ..
+make ${MAKE_FLAGS}
+make install
+
+cd ../..
+rm -rf libdeflate-${VERSION} v${VERSION}.tar.gz
