@@ -11,6 +11,7 @@ rm -rf assignBin
 
 install --mode=755 patches/tsv2bins.pl ${PREFIX}/bin
 install --mode=755 patches/filter_bin.pl ${PREFIX}/bin
+install --mode=755 patches/renameContigs.pl ${PREFIX}/bin
 
 c++ -Wall -Wpedantic -g -O3 -fPIE -Wall -Wextra -std=c++2a -o ${PREFIX}/bin/mergeFC patches/mergeFC.cpp
 
