@@ -8,7 +8,7 @@ if [ ! -f ${PREFIX}/lib/jdk-17/bin/java ]; then
 fi
 
 # install mvn
-MVNVER=3.9.2
+MVNVER=3.9.3
 wget -q https://dlcdn.apache.org/maven/maven-3/${MVNVER}/binaries/apache-maven-${MVNVER}-bin.tar.gz
 tar xzf apache-maven-${MVNVER}-bin.tar.gz
 export PATH=`pwd`/apache-maven-${MVNVER}/bin:${PREFIX}/lib/jdk-17/bin:$PATH
