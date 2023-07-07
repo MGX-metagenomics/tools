@@ -21,11 +21,16 @@ tar xzf ${VERSION}.tar.gz
 rm ${VERSION}.tar.gz
 cd CONCOCT-${VERSION}
 
+python -m venv ${PREFIX}/lib/venvs/concoct
+source ${PREFIX}/lib/venvs/concoct/bin/activate
+
+
 pip3 install setuptools six
 
 # newer pandas version fails on ubuntu xenial
 #pip3 install pandas==0.24.0
 pip3 install pandas nose numpy cython scipy
+pip3 install scikit-learn==1.1.3
 
 export CFLAGS=`pkg-config --cflags gsl`
 export LDFLAGS=`pkg-config --libs gsl`
@@ -34,6 +39,10 @@ python3 setup.py install
 
 install --mode=755 ../patches/runCONCOCT ${PREFIX}/bin
 
+ln -sf ${PREFIX}/lib/venvs/concoct/bin/concoct ${PREFIX}/bin/
+ln -sf ${PREFIX}/lib/venvs/concoct/bin/concoct_coverage_table.py ${PREFIX}/bin/
+ln -sf ${PREFIX}/lib/venvs/concoct/bin/cut_up_fasta.py ${PREFIX}/bin/
+ln -sf ${PREFIX}/lib/venvs/concoct/bin/merge_cutup_clustering.py ${PREFIX}/bin/
 
 cd .. 
 rm -rf CONCOCT-${VERSION}
