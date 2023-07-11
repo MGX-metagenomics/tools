@@ -7,13 +7,14 @@ if [ ! -f ${PREFIX}/include/lzma.h ]; then
     bash -x lzma.build
 fi
 
-
-git clone https://github.com/COMBINE-lab/salmon.git
-mkdir salmon/build
-cd salmon/build 
+VERSION=1.10.1
+wget -q https://github.com/COMBINE-lab/salmon/archive/refs/tags/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
+mkdir salmon-${VERSION}/build
+cd salmon-${VERSION}/build 
 cmake -DNO_IPO=TRUE -DFETCH_BOOST=TRUE -DCMAKE_INSTALL_PREFIX=${PREFIX} ..
 make
 make install
 cd ../..
-rm -rf salmon
+rm -rf salmon-${VERSION} v${VERSION}.tar.gz
 
