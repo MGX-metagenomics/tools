@@ -12,6 +12,18 @@ wget -q http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomat
 unzip -o -d ${PREFIX}/lib Trimmomatic-${VERSION}.zip
 rm Trimmomatic-${VERSION}.zip
 
+# fix missing \n at eof
+cd ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters
+for f in *fa; do
+  echo >> ${f}
+done
+
+cat ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/*SE* > ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/single.fa
+cat ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/*PE* > ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/paired.fa
+cat ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/single.fa \
+    ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/paired.fa \
+    > ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/all.fa
+
 cat << EOS > ${PREFIX}/bin/trimmomatic
 #!/bin/bash
 
@@ -22,4 +34,5 @@ ${PREFIX}/lib/jdk-17/bin/java -jar ${PREFIX}/lib/Trimmomatic-${VERSION}/trimmoma
 EOS
 
 chmod 755 ${PREFIX}/bin/trimmomatic
+
 
