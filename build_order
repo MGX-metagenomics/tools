@@ -1,1 +1,1 @@
-base mgxannotationclient ribodetector fastp trimmomatic smallscripts samtools megahit spades metabat semibin vamb dastool checkm prodigal featurecounts bamstats
+base mgxannotationclient ribodetector fastp trimmomatic smallscripts samtools megahit spades metabat semibin vamb dastool checkm metabuli prodigal featurecounts bamstats
