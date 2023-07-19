@@ -11,7 +11,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && apt-get -y install \
     bzip2 libbz2-dev liblzma5 liblzma-dev libcurl4 libcurl4-openssl-dev cmake \
     libboost-program-options-dev libboost-iostreams-dev \
     libboost-graph-dev libboost-system-dev libboost-filesystem-dev libboost-serialization-dev \
-    libgomp1 libxml2 libperl5.26 python python-numpy
+    libgomp1 libxml2 libperl5.34 python-is-python3 python3-minimal python3-numpy
 
 # runtime dependencies
 #
@@ -24,6 +24,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && apt-get -y install \
 RUN groupadd mgxserv && useradd -m -g mgxserv mgxserv && chown -R mgxserv /home/mgxserv
 
 COPY . /tmp/tools
+
+ENV PATH="/vol/mgx-sw/bin:${PATH}"
+
 RUN cd /tmp/tools && bash -x base.build && bash -x FRAGMENT.build
 
 
