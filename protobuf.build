@@ -1,0 +1,12 @@
+
+. tools.config
+
+set -e
+
+wget -q https://github.com/protocolbuffers/protobuf/releases/download/v23.4/protoc-23.4-linux-x86_64.zip
+
+unzip protoc-23.4-linux-x86_64.zip -d prototemp
+install --mode=755 prototemp/bin/protoc ${PREFIX}/bin/
+ln -sf ${PREFIX}/bin/protoc ${PREFIX}/bin/protoc-3
+rm -rf protoc-23.4-linux-x86_64.zip prototemp
+
