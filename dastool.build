@@ -30,7 +30,7 @@ if [ ! -f ${PREFIX}/bin/pullseq ]; then
     cd pullseq-1.0.2
     ./bootstrap
     ./configure --prefix=${PREFIX}
-    make ${MAKE_FLAGS}
+    make ${MAKE_FLAGS} CFLAGS="${CFLAGS} -fcommon"
     make install
     cd ..
     rm -rf pullseq-1.0.2 1.0.2.tar.gz
