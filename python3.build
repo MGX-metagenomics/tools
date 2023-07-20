@@ -3,7 +3,7 @@
 
 set -e 
 
-VERSION=3.11.3
+VERSION=3.11.4
 
 wget -q https://www.python.org/ftp/python/${VERSION}/Python-${VERSION}.tar.xz
 tar xf Python-${VERSION}.tar.xz
