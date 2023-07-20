@@ -7,7 +7,8 @@ LABEL maintainer="sebastian@jaenicke.org"
 # build dependencies
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && apt-get -y install \
     git wget make gcc g++ gfortran libtool zlib1g-dev unzip autoconf file cpio \
-    cython3 python3-pip xz-utils libssl-dev pkg-config libffi-dev \
+    cython3 python3-pip xz-utils libssl-dev pkg-config libffi-dev libpcre2-dev \
+    libpcre3-dev \
     bzip2 libbz2-dev liblzma5 liblzma-dev libcurl4 libcurl4-openssl-dev cmake \
     libboost-program-options-dev libboost-iostreams-dev \
     libboost-graph-dev libboost-system-dev libboost-filesystem-dev libboost-serialization-dev \
