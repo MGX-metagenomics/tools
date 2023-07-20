@@ -11,6 +11,6 @@ fi
 python -m venv ${PREFIX}/lib/venvs/vamb
 source ${PREFIX}/lib/venvs/vamb/bin/activate
 
-pip3 install --upgrade vamb
+pip3 install --upgrade vamb==4.1.3
 ln -sf ${PREFIX}/lib/venvs/vamb/bin/vamb ${PREFIX}/bin/
 
