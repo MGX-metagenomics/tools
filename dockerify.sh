@@ -4,7 +4,13 @@ set -e
 
 docker login -u sjaenick https://harbor.computational.bio.uni-giessen.de/
 
-for f in `cat build_order | sed -e 's,base,,'`; do
+if [ $# -eq 1 ]; then 
+  BUILD_IMAGES=$1
+else 
+  BUILD_IMAGES=`cat build_order | sed -e 's,base,,'`
+fi
+
+for f in $BUILD_IMAGES; do
   if [ -f docker/Dockerfile.${f} ]; then
     cp docker/Dockerfile.${f} .
   else
