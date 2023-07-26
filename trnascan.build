@@ -1,0 +1,22 @@
+
+. ./tools.config
+
+set -e
+
+if [ ! -f ${PREFIX}/bin/cmscan ]; then
+  bash -x infernal.build
+fi
+
+VERSION=2.0.12
+wget -q https://github.com/UCSC-LoweLab/tRNAscan-SE/archive/refs/tags/v${VERSION}.tar.gz
+tar xzf v${VERSION}.tar.gz
+rm v${VERSION}.tar.gz
+cd tRNAscan-SE-${VERSION}
+patch -p1 < ../patches/trnascan_prefix.patch
+./configure --prefix=${PREFIX}
+# parallel build doesn't work 
+make 
+make install
+cd .. 
+rm -rf tRNAscan-SE-${VERSION}
+

@@ -1,0 +1,11 @@
+diff -Nur tRNAscan-SE-2.0.12.orig/Makefile.in tRNAscan-SE-2.0.12/Makefile.in
+--- tRNAscan-SE-2.0.12.orig/Makefile.in	2022-11-16 19:58:08.000000000 +0100
++++ tRNAscan-SE-2.0.12/Makefile.in	2023-07-15 11:56:38.712458606 +0200
+@@ -1071,7 +1071,6 @@
+ 
+ # copy libraries. We don't have "libraries" in the libgmp.so.4 kind, but we do have data libraries, so we don't have to deal with lib_LTLIBRARIES.
+ install-data-hook:
+-	chmod u+w $(exec_prefix)
+ 	test -d $(libdir) || mkdir $(libdir)
+ 	chmod u+w $(libdir)
+ 	test -d $(libdir)/tRNAscan-SE || mkdir $(libdir)/tRNAscan-SE
