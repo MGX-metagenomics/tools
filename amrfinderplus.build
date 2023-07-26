@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=3.11.14
+VERSION=3.11.17
 
 wget -q https://github.com/ncbi/amr/archive/amrfinder_v${VERSION}.tar.gz
 tar xzf amrfinder_v${VERSION}.tar.gz
