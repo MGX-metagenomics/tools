@@ -7,6 +7,10 @@ if [ ! -f ${PREFIX}/lib/jdk-17/bin/java ]; then
     bash -x jdk.build
 fi
 
+if [ ! -f ${PREFIX}/bin/protoc ]; then
+    bash -x protobuf.build
+fi
+
 # install mvn
 MVNVER=3.9.3
 wget -q https://dlcdn.apache.org/maven/maven-3/${MVNVER}/binaries/apache-maven-${MVNVER}-bin.tar.gz

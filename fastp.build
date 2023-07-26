@@ -3,6 +3,11 @@
 
 set -e
 
+if [ ! -f ${PREFIX}/include/libdeflate.h ]; then
+    bash -x libdeflate.build
+fi
+
+
 VERSION=2.16.01
 wget -q https://www.nasm.us/pub/nasm/releasebuilds/${VERSION}/nasm-${VERSION}.tar.gz
 tar xzf nasm-${VERSION}.tar.gz
@@ -23,19 +28,6 @@ make ${MAKE_FLAGS}
 make install
 cd ..
 rm -rf isa-l nasm-${VERSION}
-
-
-VERSION=1.15
-wget -q https://github.com/ebiggers/libdeflate/archive/refs/tags/v${VERSION}.tar.gz
-tar xzf v${VERSION}.tar.gz
-rm v${VERSION}.tar.gz
-cd libdeflate-${VERSION}/
-cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX}
-cd build
-make ${MAKE_FLAGS}
-make install
-cd ../..
-rm -rf cd libdeflate-${VERSION}
 
 
 VERSION=0.23.2
