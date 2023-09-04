@@ -8,7 +8,7 @@ if [ ! -f ${PREFIX}/lib/jdk-17/bin/java ]; then
 fi
 
 
-VERSION=2.13
+VERSION=2.14
 
 wget -q --no-check-certificate -O rdp_classifier.zip https://sourceforge.net/projects/rdp-classifier/files/rdp-classifier/rdp_classifier_${VERSION}.zip/download
 unzip rdp_classifier.zip
