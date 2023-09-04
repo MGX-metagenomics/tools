@@ -59,6 +59,11 @@ if [ grep -q 'CANCELLED AT' ${jobConfig}.stderr ]; then
     exit 3
 fi
 
+if [ grep -q 'permanentFail' ${jobConfig}.stderr ]; then
+    echo "Job did not run to completion." >> ${jobConfig}.stderr
+    echo "Job did not run to completion."
+    exit 3
+fi
 
 rm -f ${jobConfig}.yml
 rm -rf /vol/sge-tmp/${projName}/${jobId}
