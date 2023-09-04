@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=3.3.2
+VERSION=3.4
 wget -q http://eddylab.org/software/hmmer/hmmer-${VERSION}.tar.gz 
 tar xzf hmmer-${VERSION}.tar.gz 
 rm hmmer-${VERSION}.tar.gz 
@@ -11,7 +11,7 @@ cd hmmer-${VERSION}
 #patch -p1 < ../patches/hmmer3-check-instdir.patch 
 #patch -p1 < ../patches/hmmer-3.1b2-manperms.patch
 #patch -p1 < ../patches/hmmer-3.1b2-hmmbuild-segfault.patch
-patch -p1 < ../patches/hmmer_seek_instead_reopen.patch 
+#patch -p1 < ../patches/hmmer_seek_instead_reopen.patch 
 #patch -p1 < ../patches/hmmer-3.1b2-mmap.patch
 
 #autoconf
@@ -20,8 +20,8 @@ patch -p1 < ../patches/hmmer_seek_instead_reopen.patch
 #cd ..
 
 ./configure --prefix=${PREFIX} \
-    --enable-pic \
-    --enable-mmap 
+    --enable-pic 
+#    --enable-mmap 
 make ${MAKE_FLAGS}
 make install-strip
 cd .. 
