@@ -12,7 +12,7 @@ if [ ! -f ${PREFIX}/bin/protoc ]; then
 fi
 
 # install mvn
-MVNVER=3.9.3
+MVNVER=3.9.4
 wget -q https://dlcdn.apache.org/maven/maven-3/${MVNVER}/binaries/apache-maven-${MVNVER}-bin.tar.gz
 tar xzf apache-maven-${MVNVER}-bin.tar.gz
 export PATH=`pwd`/apache-maven-${MVNVER}/bin:${PREFIX}/lib/jdk-17/bin:$PATH
