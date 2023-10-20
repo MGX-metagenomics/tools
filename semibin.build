@@ -27,11 +27,7 @@ fi
 python -m venv ${PREFIX}/lib/venvs/semibin
 source ${PREFIX}/lib/venvs/semibin/bin/activate
 
-git clone https://github.com/BigDataBiology/SemiBin.git
-cd SemiBin
-pip3 install .
-cd ..
-rm -rf SemiBin
+pip3 install SemiBin==2.0.0
 
 ln -sf ${PREFIX}/lib/venvs/semibin/bin/SemiBin2 ${PREFIX}/bin/
 
