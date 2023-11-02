@@ -24,6 +24,8 @@ cat ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/single.fa \
     ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/paired.fa \
     > ${PREFIX}/lib/Trimmomatic-${VERSION}/adapters/all.fa
 
+chgrp -R ${GROUP} ${PREFIX}/lib/Trimmomatic-${VERSION}/
+
 cat << EOS > ${PREFIX}/bin/trimmomatic
 #!/bin/bash
 
