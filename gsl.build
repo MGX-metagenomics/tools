@@ -13,4 +13,5 @@ make install
 cd ..
 rm -rf gsl-2.7.1
 rm -f ${PREFIX}/bin/gsl-{config,histogram,randist}
+rm -f ${PREFIX}/share/man/man1/gsl-{config,histogram,randist}.1
 
