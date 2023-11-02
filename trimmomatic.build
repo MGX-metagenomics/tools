@@ -36,5 +36,6 @@ ${PREFIX}/lib/jdk-17/bin/java -jar ${PREFIX}/lib/Trimmomatic-${VERSION}/trimmoma
 EOS
 
 chmod 755 ${PREFIX}/bin/trimmomatic
+chgrp ${GROUP} ${PREFIX}/bin/trimmomatic
 
 
