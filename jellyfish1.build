@@ -11,7 +11,7 @@ cd jellyfish-${VERSION}
 ./configure --prefix=${PREFIX} 
 make ${MAKE_FLAGS}
 make install-strip 
-mv ${PREFIX}/bin/jellyfish ${PREFIX}/bin/jellyfish-1
+mv ${PREFIX}/bin/jellyfish ${PREFIX}/bin/jellyfish-1 ${PREFIX}/share/man/man1/jellyfish.1
 cd .. 
 rm -rf jellyfish-${VERSION} jellyfish-${VERSION}.tar.gz
 
