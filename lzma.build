@@ -17,3 +17,4 @@ cd ..
 rm -rf xz-${VERSION}.tar.gz xz-${VERSION}
 
 rm -f ${PREFIX}/bin/{xzdiff,xzgrep,xzmore,xzless,xzcmp,xzegrep,xzfgrep}
+rm -f ${PREFIX}/share/man/man1/{xzdiff,xzgrep,xzmore,xzless,xzcmp,xzegrep,xzfgrep}.1
