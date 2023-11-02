@@ -14,6 +14,7 @@ if [ ! -f ${PREFIX}/bin/node ]; then
   make install
   cd ..
   rm -rf node-*
+  rm -f ${PREFIX}/share/man/man1/node.1
 fi
 
 python -m venv ${PREFIX}/lib/venvs/cwltool
