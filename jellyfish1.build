@@ -9,7 +9,7 @@ wget -q http://www.cbcb.umd.edu/software/jellyfish/jellyfish-${VERSION}.tar.gz
 tar xzf jellyfish-${VERSION}.tar.gz 
 cd jellyfish-${VERSION} 
 ./configure --prefix=${PREFIX} 
-make 
+make ${MAKE_FLAGS}
 make install-strip 
 mv ${PREFIX}/bin/jellyfish ${PREFIX}/bin/jellyfish-1
 cd .. 
