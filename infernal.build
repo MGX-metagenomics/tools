@@ -1,0 +1,28 @@
+
+. ./tools.config
+
+set -e
+
+VERSION=1.1.4
+wget -q http://eddylab.org/infernal/infernal-${VERSION}.tar.gz
+tar xzf infernal-${VERSION}.tar.gz 
+rm infernal-${VERSION}.tar.gz 
+cd infernal-${VERSION} 
+
+export CFLAGS=`pkg-config --cflags gsl`
+export LDFLAGS=`pkg-config --libs gsl`
+export LDFLAGS="${LDFLAGS} -Wl,-rpath=${PREFIX}/lib"
+
+./configure --prefix=${PREFIX} \
+    --enable-pic \
+    --enable-sse \
+    --enable-threads \
+    --with-gsl
+make ${MAKE_FLAGS}
+make install
+cd .. 
+rm -rf infernal-${VERSION}
+
+chgrp ${GROUP} ${PREFIX}/bin/{cmalign,cmbuild,cmcalibrate,cmconvert,cmemit}
+chgrp ${GROUP} ${PREFIX}/bin/{cmfetch,cmpress,cmscan,cmsearch,cmstat}
+
