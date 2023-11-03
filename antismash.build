@@ -43,6 +43,8 @@ if [ ! -f ${PREFIX}/bin/python3 ]; then
   bash -x python3.build
 fi
 
+python -m venv ${PREFIX}/lib/venvs/antismash
+source ${PREFIX}/lib/venvs/antismash/bin/activate
 
 
 VERSION=5.1.2
@@ -84,4 +86,9 @@ python3 setup.py install
 
 cd ..
 rm -rf 5-1-2.tar.gz antismash-5-1-2
+
+
+ln -sf ${PREFIX}/lib/venvs/antismash/bin/antismash ${PREFIX}/bin/
+ln -sf ${PREFIX}/lib/venvs/antismash/bin/download-antismash-databases ${PREFIX}/bin/
+chgrp -h ${GROUP} ${PREFIX}/bin/{antismash,download-antismash-databases}
 
