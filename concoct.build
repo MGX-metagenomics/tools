@@ -37,12 +37,14 @@ export LDFLAGS=`pkg-config --libs gsl`
 export LDFLAGS="${LDFLAGS} -Wl,-rpath=${PREFIX}/lib"
 python3 setup.py install
 
-install --mode=755 ../patches/runCONCOCT ${PREFIX}/bin
+install -g ${GROUP} --mode=755 ../patches/runCONCOCT ${PREFIX}/bin
 
 ln -sf ${PREFIX}/lib/venvs/concoct/bin/concoct ${PREFIX}/bin/
 ln -sf ${PREFIX}/lib/venvs/concoct/bin/concoct_coverage_table.py ${PREFIX}/bin/
 ln -sf ${PREFIX}/lib/venvs/concoct/bin/cut_up_fasta.py ${PREFIX}/bin/
 ln -sf ${PREFIX}/lib/venvs/concoct/bin/merge_cutup_clustering.py ${PREFIX}/bin/
+
+chgrp -h ${GROUP} ${PREFIX}/bin/{concoct,concoct_coverage_table.py,cut_up_fasta.py,merge_cutup_clustering.py}
 
 cd .. 
 rm -rf CONCOCT-${VERSION}
