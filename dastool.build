@@ -34,6 +34,7 @@ if [ ! -f ${PREFIX}/bin/pullseq ]; then
     make install
     cd ..
     rm -rf pullseq-1.0.2 1.0.2.tar.gz
+    chgrp ${GROUP} ${PREFIX}/bin/{pullseq,seqdiff}
 fi
 
 
