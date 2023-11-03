@@ -33,3 +33,5 @@ rm -rf MetaPhlAn-${VERSION}
 
 ln -sf ${PREFIX}/lib/venvs/metaphlan4/bin/metaphlan ${PREFIX}/bin/
 ln -sf ${PREFIX}/lib/venvs/metaphlan4/bin/read_fastx.py ${PREFIX}/bin/
+chgrp -h ${GROUP} ${PREFIX}/bin/{metaphlan,read_fastx.py}
+
