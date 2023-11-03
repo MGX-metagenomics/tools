@@ -23,3 +23,5 @@ cd ..
 
 rm -rf Mash capnproto-c++-0.10.2 capnproto-c++-0.10.2.tar.gz
 
+chgrp ${GROUP} ${PREFIX}/bin/mash
+
