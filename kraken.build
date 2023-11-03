@@ -18,6 +18,7 @@ for f in make_seqid_to_taxid_map db_shrink db_sort classify set_lcas; do
 done
 ln -sf ${PREFIX}/lib/kraken/kraken ${PREFIX}/bin/kraken
 ln -sf ${PREFIX}/lib/kraken/kraken-build ${PREFIX}/bin/kraken-build
+chgrp -h ${GROUP} ${PREFIX}/bin/kraken ${PREFIX}/bin/kraken-build
 cd ..
 rm -rf kraken
 
