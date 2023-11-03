@@ -9,9 +9,11 @@ tar xzf 14-7e284.tar.gz
 cd MMseqs2-14-7e284
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} ..
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} -DINSTALL_UTIL=0 ..
 make ${MAKE_FLAGS}
 make install 
 cd ../..
 rm -rf 14-7e284.tar.gz MMseqs2-14-7e284
+
+chgrp ${GROUP} ${PREFIX}/bin/mash
 
