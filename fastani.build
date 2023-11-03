@@ -15,3 +15,6 @@ make CPPFLAGS="-Wl,-rpath -Wl,$PREFIX/lib"
 make install
 cd ..
 rm -rf FastANI
+
+chgrp ${GROUP} ${PREFIX}/bin/fastANI
+
