@@ -30,4 +30,5 @@ source ${PREFIX}/lib/venvs/semibin/bin/activate
 pip3 install SemiBin==2.0.0
 
 ln -sf ${PREFIX}/lib/venvs/semibin/bin/SemiBin2 ${PREFIX}/bin/
+chgrp -h ${GROUP} ${PREFIX}/bin/SemiBin2
 
