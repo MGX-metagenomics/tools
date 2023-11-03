@@ -26,8 +26,9 @@ cp -va target/*jar ${PREFIX}/lib/annotationclient
 
 sed -i "s,java,${PREFIX}/lib/jdk-17/bin/java,g" AnnotationClient
 
-install --mode=755 AnnotationClient ${PREFIX}/bin
+install -g ${GROUP} --mode=755 AnnotationClient ${PREFIX}/bin
 ln -sf ${PREFIX}/bin/AnnotationClient ${PREFIX}/bin/SeqRunFetcher
+chgrp -h ${GROUP} ${PREFIX}/bin/SeqRunFetcher
 cd ..
 rm -rf MGX-AnnotationClient apache-maven-${MVNVER} apache-maven-${MVNVER}-bin.tar.gz
 
