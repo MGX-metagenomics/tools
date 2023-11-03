@@ -40,4 +40,5 @@ cd ..
 rm -rf CheckM-${VERSION}
 
 ln -sf ${PREFIX}/lib/venvs/checkm/bin/checkm ${PREFIX}/bin/
+chgrp -h ${GROUP} ${PREFIX}/bin/checkm
 
