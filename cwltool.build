@@ -22,3 +22,5 @@ source ${PREFIX}/lib/venvs/cwltool/bin/activate
 
 pip3 install --force-reinstall cwltool
 ln -sf ${PREFIX}/lib/venvs/cwltool/bin/cwl* ${PREFIX}/bin/
+chgrp -h ${GROUP} ${PREFIX}/bin/cwl*
+
