@@ -35,7 +35,7 @@ strip prodigal
 make INSTALLDIR=${PREFIX}/bin install 
 cd .. 
 rm -rf Prodigal-2.6.3
-
+chgrp ${GROUP} ${PREFIX}/bin/prodigal
 
 # add wrapper for parallel processing
 python -m venv ${PREFIX}/lib/venvs/pprodigal
@@ -43,3 +43,5 @@ source ${PREFIX}/lib/venvs/pprodigal/bin/activate
 pip3 install --force-reinstall pprodigal==1.0.1
 
 ln -sf ${PREFIX}/lib/venvs/pprodigal/bin/pprodigal ${PREFIX}/bin/
+chgrp -h ${GROUP} ${PREFIX}/bin/pprodigal
+
