@@ -36,3 +36,5 @@ source ${PREFIX}/lib/venvs/gtdbtk/bin/activate
 
 pip3 install --force-reinstall gtdbtk==2.3.2
 ln -sf ${PREFIX}/lib/venvs/gtdbtk/bin/gtdbtk ${PREFIX}/bin/
+chgrp -h ${GROUP} ${PREFIX}/bin/gtdbtk
+
