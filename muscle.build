@@ -10,7 +10,7 @@ cd muscle
 patch -p 1 < ../patches/muscle-dynamic.patch 
 patch -p 1 < ../patches/muscle-solaris.patch
 make ${MAKE_FLAGS}
-install --mode=755 muscle ${PREFIX}/bin 
+install -g ${GROUP} --mode=755 muscle ${PREFIX}/bin 
 cd .. 
 rm -rf muscle
 
