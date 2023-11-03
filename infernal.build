@@ -21,7 +21,7 @@ export LDFLAGS="${LDFLAGS} -Wl,-rpath=${PREFIX}/lib"
 make ${MAKE_FLAGS}
 make install
 cd .. 
-rm -rf infernal-${VERSION}
+rm -rf infernal-${VERSION} ${PREFIX}/share/doc/infernal
 
 chgrp ${GROUP} ${PREFIX}/bin/{cmalign,cmbuild,cmcalibrate,cmconvert,cmemit}
 chgrp ${GROUP} ${PREFIX}/bin/{cmfetch,cmpress,cmscan,cmsearch,cmstat}
