@@ -27,3 +27,6 @@ make install-strip
 cd .. 
 rm -rf hmmer-${VERSION}
 
+rm -f ${PREFIX}/share/man/man1/{hmmer,hmmalign,hmmbuild,hmmemit,hmmconvert,hmmlogo,hmmfetch,hmmpgmd_shard}.1
+rm -f ${PREFIX}/share/man/man1/{hmmpgmd,hmmscan,hmmpress,hmmsim,hmmsearch,jackhmmer,hmmstat,phmmer,makehmmerdb}.1
+rm -f ${PREFIX}/share/man/man1/{nhmmer,nhmmscan,alimask}.1
