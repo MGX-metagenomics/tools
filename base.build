@@ -4,9 +4,10 @@
 set -e 
 
 mkdir -p ${PREFIX}/bin
-install -g ${GROUP} --mode=755 -d ${PREFIX}/bin
-install -g ${GROUP} --mode=755 -d ${PREFIX}/lib
-install -g ${GROUP} --mode=755 -d ${PREFIX}/share
+install -g ${GROUP} --mode=02775 -d ${PREFIX}/bin
+install -g ${GROUP} --mode=02775 -d ${PREFIX}/lib
+install -g ${GROUP} --mode=02775 -d ${PREFIX}/lib/venvs
+install -g ${GROUP} --mode=02775 -d ${PREFIX}/share
 
 if [ -d /etc/profile.d ]; then
   if [ -w /etc/profile.d ]; then
