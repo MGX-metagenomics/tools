@@ -23,6 +23,10 @@ make install
 cd .. 
 rm -rf infernal-${VERSION} ${PREFIX}/share/doc/infernal
 
+# delete man pages
+rm -f ${PREFIX}/share/man/man1/{cmbuild,cmconvert,cmstat,cmfetch,cmemit,cmalign}.1
+rm -f ${PREFIX}/share/man/man1/{cmsearch,infernal,cmpress,cmcalibrate,cmscan}.1
+
 chgrp ${GROUP} ${PREFIX}/bin/{cmalign,cmbuild,cmcalibrate,cmconvert,cmemit}
 chgrp ${GROUP} ${PREFIX}/bin/{cmfetch,cmpress,cmscan,cmsearch,cmstat}
 
