@@ -15,4 +15,5 @@ pip3 install --upgrade torch==1.13.1
 pip3 install --upgrade ribodetector
 ln -sf ${PREFIX}/lib/venvs/ribodetector/bin/ribodetector ${PREFIX}/bin/
 ln -sf ${PREFIX}/lib/venvs/ribodetector/bin/ribodetector_cpu ${PREFIX}/bin/
+chgrp -h ${GROUP} ${PREFIX}/bin/ribodetector*
 
