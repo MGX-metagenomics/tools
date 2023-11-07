@@ -13,6 +13,7 @@ cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=${PREFIX} ..
 make ${MAKE_FLAGS}
 make install
+rm -f ${PREFIX}/bin/{libdeflate-gzip,libdeflate-gunzip}
 
 cd ../..
 rm -rf libdeflate-${VERSION} v${VERSION}.tar.gz
