@@ -28,7 +28,7 @@ make ${MAKE_FLAGS}
 make install
 cd ..
 rm -rf isa-l nasm-${VERSION}
-rm -f ${PREFIX}/share/man/man1/igzip.1
+rm -f ${PREFIX}/bin/igzip ${PREFIX}/share/man/man1/igzip.1
 
 
 VERSION=0.23.2
@@ -37,7 +37,7 @@ tar xzf v${VERSION}.tar.gz
 cd fastp-${VERSION}
 make ${MAKE_FLAGS} INCLUDE_DIRS=${PREFIX}/include LIBRARY_DIRS=${PREFIX}/lib LD_FLAGS="-L${PREFIX}/lib -Wl,-rpath,${PREFIX}/lib -lisal -ldeflate -lpthread"
 strip fastp
-install --mode=755 fastp ${PREFIX}/bin/
+install -g ${GROUP} --mode=755 fastp ${PREFIX}/bin/
 cd ..
 rm -rf fastp-${VERSION}/ v${VERSION}.tar.gz
 
