@@ -15,5 +15,5 @@ make install
 cd ../..
 rm -rf 14-7e284.tar.gz MMseqs2-14-7e284
 
-chgrp ${GROUP} ${PREFIX}/bin/mash
+chgrp ${GROUP} ${PREFIX}/bin/mmseqs
 
