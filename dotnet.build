@@ -3,13 +3,13 @@
 
 set -e
 
-#wget -q https://download.visualstudio.microsoft.com/download/pr/8468e541-a99a-4191-8470-654fa0747a9a/cb32548d2fd3d60ef3fe8fc80cd735ef/dotnet-sdk-5.0.302-linux-x64.tar.gz
-wget -q https://download.visualstudio.microsoft.com/download/pr/40bc5873-1a39-4a47-9df5-b481869594a6/8455eab2092cc1321ac055f016ef90cf/dotnet-sdk-6.0.404-linux-x64.tar.gz
+wget -q https://download.visualstudio.microsoft.com/download/pr/8468e541-a99a-4191-8470-654fa0747a9a/cb32548d2fd3d60ef3fe8fc80cd735ef/dotnet-sdk-5.0.302-linux-x64.tar.gz
+#wget -q https://download.visualstudio.microsoft.com/download/pr/40bc5873-1a39-4a47-9df5-b481869594a6/8455eab2092cc1321ac055f016ef90cf/dotnet-sdk-6.0.404-linux-x64.tar.gz
 
 rm -rf ${PREFIX}/lib/dotnet
 mkdir -p ${PREFIX}/lib/dotnet
-tar xzf dotnet-sdk-6.0.404-linux-x64.tar.gz -C ${PREFIX}/lib/dotnet
+tar xzf dotnet-sdk-5.0.302-linux-x64.tar.gz -C ${PREFIX}/lib/dotnet
 ln -sf ${PREFIX}/lib/dotnet/dotnet ${PREFIX}/bin/
 chgrp -h ${GROUP} ${PREFIX}/bin/dotnet
-rm dotnet-sdk-6.0.404-linux-x64.tar.gz
+rm dotnet-sdk-5.0.302-linux-x64.tar.gz
 
