@@ -24,6 +24,7 @@ for f in PluginDumper GraphValidate GraphRun; do
     install -g ${GROUP} --mode=755 ${f} ${PREFIX}/share/exec/
     y=`basename ${f}`
     ln -sf ${PREFIX}/share/exec/${y} ${PREFIX}/bin/
+    chgrp -h ${GROUP} ${PREFIX}/bin/${y}
 done
 
 cd .. && \
