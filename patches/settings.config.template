@@ -57,7 +57,7 @@ Conveyor.Kraken.Configuration.krakenuniqBinary=PREFIX/bin/krakenuniq
 Conveyor.Kraken.Configuration.krakenuniqDatabaseList=RefSeq-Microbial=/vol/biodb/local_databases/MGX/kraken/current|EuPathDB46=/vol/biodb/local_databases/MGX/krakenuniq/EuPathDB46
 Conveyor.Kraken.Configuration.kraken2Binary=PREFIX/bin/kraken2
 Conveyor.Kraken.Configuration.kraken2DatabaseList=RefSeq-Microbial=/vol/biodb/local_databases/MGX/kraken2/current
-Conveyor.Kraken.Configuration.kraken2aaDatabaseList=RefSeq-Microbial-AA=/vol/biodb/local_databases/MGX/kraken2/kraken2-aa-20230323
+Conveyor.Kraken.Configuration.kraken2aaDatabaseList=RefSeq-Microbial-AA=/vol/biodb/local_databases/MGX/kraken2/kraken2-aa-20231107
 Conveyor.Metabuli.Configuration.metabuliBinary=PREFIX/bin/metabuli
 Conveyor.Metabuli.Configuration.metabuliDatabaseList=RefSeq-ProkViral=/vol/biodb/local_databases/MGX/metabuli/refseq|RefSeq217=/vol/biodb/local_databases/MGX/metabuli/refseq_release217
 Conveyor.MGX.GetMGXJob.dbTimeout=600
