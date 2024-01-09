@@ -38,13 +38,11 @@ if [ ! -f ${PREFIX}/bin/pullseq ]; then
 fi
 
 
-VERSION=1.1.6
+VERSION=1.1.7
 wget -q https://github.com/cmks/DAS_Tool/archive/${VERSION}.tar.gz
 tar xzf ${VERSION}.tar.gz
 rm ${VERSION}.tar.gz
 cd DAS_Tool-${VERSION}
-
-patch -p1 < ../patches/dastool_endingslash.patch
 
 #${PREFIX}/bin/R CMD INSTALL ./package/DASTool_${VERSION}.tar.gz
 sed -i "s,Rscript,${PREFIX}/bin/Rscript,g" DAS_Tool
