@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=2.1.8
+VERSION=2.1.9
 
 wget -q -O diamond.tar.gz https://github.com/bbuchfink/diamond/archive/refs/tags/v${VERSION}.tar.gz
 tar xzf diamond.tar.gz 
