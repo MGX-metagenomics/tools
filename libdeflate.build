@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=1.18
+VERSION=1.19
 
 wget -q https://github.com/ebiggers/libdeflate/archive/refs/tags/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
