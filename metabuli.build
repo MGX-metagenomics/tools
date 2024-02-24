@@ -3,7 +3,7 @@
 
 set -e
 
-VERSION=1.0.1
+VERSION=1.0.3
 wget -q https://github.com/steineggerlab/Metabuli/archive/refs/tags/${VERSION}.tar.gz
 tar xzf ${VERSION}.tar.gz
 cd Metabuli-${VERSION}
