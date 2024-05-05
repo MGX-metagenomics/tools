@@ -7,7 +7,7 @@ if [ ! -f ${PREFIX}/include/lzma.h ]; then
     bash -x lzma.build
 fi
 
-VERSION=2.31.0
+VERSION=2.31.1
 
 wget -q https://github.com/arq5x/bedtools2/archive/refs/tags/v${VERSION}.tar.gz
 tar xzf v${VERSION}.tar.gz
