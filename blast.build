@@ -5,7 +5,7 @@ set -e
 
 
 VERSION=2.15.0
-LMDBVER=0.9.29
+LMDBVER=0.9.31
 
 wget -q https://github.com/LMDB/lmdb/archive/LMDB_${LMDBVER}.tar.gz
 tar xzf LMDB_${LMDBVER}.tar.gz
@@ -16,73 +16,68 @@ make prefix=$PREFIX install
 cd ../../..
 rm -rf lmdb-LMDB_${LMDBVER}
 
-
-wget -q ftp://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz 
-tar xzf ncbi-blast-${VERSION}+-src.tar.gz 
-rm ncbi-blast-${VERSION}+-src.tar.gz 
-cd ncbi-blast-${VERSION}+-src/c++ 
+wget -q https://ftp.ncbi.nih.gov/blast/executables/blast+/${VERSION}/ncbi-blast-${VERSION}+-src.tar.gz
+tar xzf ncbi-blast-${VERSION}+-src.tar.gz
+rm ncbi-blast-${VERSION}+-src.tar.gz
+cd ncbi-blast-${VERSION}+-src/c++
 
 patch -p 2 < ../../patches/blast_disable_reporting.patch
-patch -p 2 < ../../patches/blast-check-instdir.patch 
-#patch -p 2 < ../../patches/blast-fix-header-install.patch
+patch -p 2 < ../../patches/blast-check-instdir.patch
 
-#sed -i 's,cgi,-cgi,g' scripts/projects/blast/project.lst
+LIB_INSTALL_DIR=$PREFIX/lib/ncbi-blast+
+
+export AR="ar rcs"
 
 ./configure --prefix=${PREFIX} \
-   --without-downloaded-vdb --without-lzo --without-libxlsxwriter \
    --libdir=${PREFIX}/lib/ncbi-blast+ \
+   --with-lmdb=$PREFIX \
+   --with-bin-release \
    --with-64 \
-   --with-lfs \
-   --with-strip \
-   --without-gui \
-   --without-mysql \
-   --without-krb5 \
-   --without-gcrypt \
-   --without-boost \
-   --without-python \
-   --without-perl \
-   --with-lmdb=${PREFIX} \
-   --without-libxslt \
-   --without-openssl \
-   --without-vdb \
-   --without-wxwidgets \
-   --without-sqlite3 \
-   --without-icu \
-   --without-libxml \
-   --without-sge \
-   --without-curl \
-   --without-png --without-gif --without-jpeg --without-tiff \
-   --without-hdf5 \
-   --without-xerces \
-   --without-gnutls \
-   --without-expat \
-   --without-bz2 \
+   --with-mt \
+   --with-dll \
+   --with-openmp \
+   --without-autodep \
+   --without-makefile-auto-update \
+   --with-flat-makefile \
+   --without-caution \
    --without-lzo \
-   --without-pcre \
-   --without-gbench \
+   --without-debug \
+   --with-strip \
+   --without-krb5 \
+   --without-gnutls \
+   --without-boost \
    --without-fastcgi \
-   --without-sasl2 \
-   --without-cassandra --without-mongodb --without-libssh2  \
-   --without-connext \
-   --with-dll --without-debug --with-mt \
-   --with-projects=scripts/projects/blast/project.lst && \
-cd ReleaseMT/build && \
-make ${MAKE_FLAGS} all_p && \
-cd ../.. && \
-make install
+   --without-fastcgipp
 
-for file in seqdb_demo seqdb_perf gene_info_reader legacy_blast.pl update_blastdb.pl test_pcre datatool project_tree_builder windowmasker_2.2.22_adapter.py run_with_lock gc_cli; do
+apps="blastp.exe blastn.exe blastx.exe tblastn.exe tblastx.exe"
+apps="$apps makeblastdb.exe"
+apps="$apps blastdbcmd.exe blastdb_aliastool.exe"
+apps="$apps blastdbcheck.exe blast_formatter.exe"
+cd ReleaseMT
+
+mkdir -p $LIB_INSTALL_DIR
+
+if [ ! -e $LIB_INSTALL_DIR/lib ]; then
+    ln -s `pwd`/lib $LIB_INSTALL_DIR
+fi
+
+cd build
+
+# parallel builds fail, so -j1
+make -j1 -f Makefile.flat $apps
+rm -rf $LIB_INSTALL_DIR/lib
+
+mkdir -p $PREFIX/bin $PREFIX/lib/ncbi-blast+
+chmod +x ../bin/*
+cp ../bin/* $PREFIX/bin/
+cp ../lib/* $PREFIX/lib/ncbi-blast+/
+
+
+for file in legacy_blast.pl get_species_taxids.sh datatool cleanup-blastdb-volumes.py update_blastdb.pl test_pcre run_with_lock project_tree_builder; do
    rm -f ${PREFIX}/bin/${file}
 done
 
-rm -f ${PREFIX}/lib/ncbi-blast+/libtest*
-rm -f ${PREFIX}/lib/ncbi-blast+/lib*\.a
-rm -rf ${PREFIX}/include/ncbi-tools++/
-
-chgrp ${GROUP} ${PREFIX}/lib/ncbi-blast+
-chgrp ${GROUP} ${PREFIX}/lib/ncbi-blast+/*
-
-cd ../.. && \
+cd ../../../..
 rm -rf ncbi-blast-${VERSION}+-src
 
 rm -f ${PREFIX}/include/lmdb.h
@@ -90,4 +85,5 @@ rm -f ${PREFIX}/share/man/man1/mdb_*
 rm -f ${PREFIX}/bin/mdb_{copy,dump,load,stat}
 rm -f ${PREFIX}/bin/lmdbxx_sample
 rm -f ${PREFIX}/lib/liblmdb.a
+
 
